@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Murati Systems - Websites, Automatisierung und interne Tools</title>
+  <meta name="description" content="Murati Systems entwickelt Webauftritte, Automationen, interne Tools und betreute digitale Abläufe für Unternehmen, die weniger manuell nachfassen wollen." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --cyan: #8beeff;
+      --blue: #4ca8ff;
+      --paper: #f7fcff;
+      --muted: #95a3ad;
+      --line: rgba(203, 243, 255, .14);
+      --cursor-x: 50vw;
+      --cursor-y: 18vh;
+      --orbit-x: 0px;
+      --orbit-y: 0px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: #020305;
+      color: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,.72) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 80% 10%, rgba(139,238,255,.68) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 72% 42%, rgba(255,255,255,.42) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 24% 65%, rgba(139,238,255,.38) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 48% 28%, rgba(255,255,255,.3) 0 1px, transparent 1.5px);
+      background-size: 320px 240px, 420px 320px, 280px 260px, 360px 300px, 510px 420px;
+      opacity: .5;
+      mask-image: linear-gradient(to bottom, black 0 72%, transparent);
+      transform: translate(var(--star-x, 0px), var(--star-y, 0px));
+      transition: transform .35s ease-out;
+      will-change: transform;
+    }
+    .cursor-glow {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(139,238,255,.24), rgba(76,168,255,.1) 12rem, transparent 25rem),
+        linear-gradient(115deg, transparent 0 42%, rgba(139,238,255,.035) 48%, transparent 55%);
+      mix-blend-mode: screen;
+      opacity: var(--glow-opacity, .64);
+      transition: opacity .35s ease;
+    }
+    .hero-orbit {
+      position: absolute;
+      left: 50%;
+      top: -28rem;
+      width: min(90rem, 148vw);
+      aspect-ratio: 1;
+      transform: translateX(calc(-50% + var(--orbit-x))) translateY(var(--orbit-y));
+      border-radius: 9999px;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0 42%, rgba(139,238,255,.06) 43%, rgba(139,238,255,.2) 44%, transparent 47%),
+        conic-gradient(from 210deg, transparent 0deg, rgba(139,238,255,.09) 46deg, rgba(139,238,255,.82) 78deg, rgba(255,255,255,.42) 102deg, transparent 140deg, transparent 222deg, rgba(76,168,255,.54) 258deg, transparent 296deg, transparent);
+      filter: drop-shadow(0 0 80px rgba(139,238,255,.32)) blur(.2px);
+      opacity: .95;
+      animation: spin 46s linear infinite;
+    }
+    .hero-orbit:before,
+    .hero-orbit:after {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border-radius: inherit;
+      border: 1px solid rgba(139,238,255,.16);
+      box-shadow: inset 0 0 90px rgba(139,238,255,.08), 0 0 70px rgba(76,168,255,.08);
+    }
+    .hero-orbit:after {
+      inset: 26%;
+      border-color: rgba(255,255,255,.09);
+      transform: rotate(24deg);
+    }
+    .event-horizon {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: min(56rem, 100vw);
+      height: 27rem;
+      transform: translateX(calc(-50% + var(--horizon-x, 0px))) translateY(var(--horizon-y, 0px));
+      background: radial-gradient(ellipse at 50% 0%, rgba(139,238,255,.22), rgba(76,168,255,.08) 30%, transparent 70%);
+      filter: blur(38px);
+      opacity: .95;
+      pointer-events: none;
+    }
+    #particle-field {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: .7;
+    }
+    @keyframes spin { to { transform: translateX(calc(-50% + var(--orbit-x))) translateY(var(--orbit-y)) rotate(360deg); } }
+    .brand-mark {
+      position: relative;
+      display: grid;
+      height: 2.9rem;
+      width: 2.9rem;
+      place-items: center;
+      overflow: hidden;
+      flex: 0 0 auto;
+      border-radius: 1rem;
+      border: 1px solid rgba(203,243,255,.2);
+      background:
+        radial-gradient(circle at 50% 8%, rgba(139,238,255,.28), transparent 54%),
+        linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 0 38px rgba(139,238,255,.1);
+    }
+    .brand-mark svg {
+      height: 2rem;
+      width: 2rem;
+      overflow: visible;
+    }
+    .glass {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.024));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 24px 70px rgba(0,0,0,.34);
+      backdrop-filter: blur(14px);
+    }
+    .core-pill {
+      border: 1px solid rgba(139,238,255,.16);
+      background: rgba(139,238,255,.055);
+    }
+    .hero-content {
+      transform: translateY(-2.8rem);
+    }
+    .system-path {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .55rem;
+      color: rgba(222, 247, 255, .76);
+      font-size: .82rem;
+    }
+    .system-path span {
+      border-bottom: 1px solid rgba(139,238,255,.28);
+      padding: .25rem .05rem .4rem;
+    }
+    .cta-line {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      color: rgba(222,247,255,.74);
+      font-size: .9rem;
+    }
+    .cta-line:before {
+      content: "";
+      height: .45rem;
+      width: .45rem;
+      border-radius: 999px;
+      background: var(--cyan);
+      box-shadow: 0 0 24px rgba(139,238,255,.9);
+    }
+    .word-row {
+      border-top: 1px solid rgba(203,243,255,.12);
+      display: grid;
+      gap: 1rem;
+      padding: 1.35rem 0;
+    }
+    .word-row:first-child { border-top: 0; padding-top: 0; }
+    .section-band {
+      position: relative;
+      border-block: 1px solid rgba(255,255,255,.1);
+      background:
+        radial-gradient(circle at 12% 12%, rgba(139,238,255,.11), transparent 19rem),
+        linear-gradient(180deg, #070b0f 0%, #030507 100%);
+    }
+    .section-band:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(139,238,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,238,255,.04) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: radial-gradient(circle at 50% 40%, black, transparent 75%);
+      opacity: .38;
+    }
+    .service-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    .service-card {
+      min-height: 14rem;
+      border: 1px solid rgba(203,243,255,.18);
+      border-radius: 1.35rem;
+      background:
+        radial-gradient(circle at 16% 10%, rgba(139,238,255,.12), transparent 12rem),
+        rgba(255,255,255,.045);
+      padding: 1.4rem;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 24px 70px rgba(0,0,0,.3);
+    }
+    .service-card p,
+    .contrast-copy {
+      color: #b8c5cf;
+    }
+    .mini-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid rgba(139,238,255,.28);
+      background: rgba(139,238,255,.08);
+      padding: .8rem 1rem;
+      color: #f4fdff;
+      font-size: .9rem;
+      font-weight: 700;
+      transition: border-color .2s ease, background .2s ease, transform .2s ease;
+    }
+    .mini-cta:hover {
+      border-color: rgba(139,238,255,.6);
+      background: rgba(139,238,255,.14);
+      transform: translateY(-1px);
+    }
+    .proof-strip {
+      display: grid;
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid rgba(203,243,255,.12);
+      border-radius: 1.2rem;
+      background: rgba(203,243,255,.12);
+    }
+    .proof-strip div {
+      background: rgba(2,3,5,.74);
+      padding: 1rem;
+    }
+    .case-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    .case-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 18rem;
+      border: 1px solid rgba(203,243,255,.16);
+      border-radius: 1.4rem;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.065), rgba(255,255,255,.024)),
+        radial-gradient(circle at 82% 10%, rgba(139,238,255,.13), transparent 13rem);
+      padding: 1.35rem;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 28px 78px rgba(0,0,0,.25);
+    }
+    .case-card:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgba(139,238,255,.12), transparent);
+      transform: translateX(-100%);
+      opacity: .35;
+      transition: transform .8s ease;
+    }
+    .case-card:hover:before {
+      transform: translateX(100%);
+    }
+    .case-card .label,
+    .principle-card .label {
+      color: rgba(139,238,255,.76);
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .case-card dl {
+      display: grid;
+      gap: .55rem;
+      margin-top: 1.2rem;
+    }
+    .case-card dt {
+      color: #f7fcff;
+      font-size: .78rem;
+      font-weight: 800;
+    }
+    .case-card dd {
+      margin: 0;
+      color: #b8c5cf;
+      font-size: .9rem;
+      line-height: 1.55;
+    }
+    .review-panel {
+      border: 1px solid rgba(139,238,255,.2);
+      border-radius: 1.5rem;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(139,238,255,.16), transparent 18rem),
+        rgba(255,255,255,.045);
+      padding: 1.5rem;
+    }
+    .review-steps {
+      display: grid;
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid rgba(203,243,255,.14);
+      border-radius: 1rem;
+      background: rgba(203,243,255,.14);
+    }
+    .review-steps div {
+      background: rgba(2,3,5,.78);
+      padding: 1rem;
+    }
+    .principles-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    .principle-card {
+      border-top: 1px solid rgba(203,243,255,.18);
+      padding-top: 1.1rem;
+    }
+    .innovation-core {
+      position: relative;
+      min-height: 25rem;
+      overflow: hidden;
+      border-radius: 1.5rem;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 48%, rgba(139,238,255,.2), transparent 11rem),
+        radial-gradient(circle at 50% 48%, rgba(76,168,255,.16), transparent 17rem),
+        rgba(255,255,255,.03);
+    }
+    .innovation-core:before,
+    .innovation-core:after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 22rem;
+      aspect-ratio: 1;
+      border-radius: 999px;
+      border: 1px solid rgba(139,238,255,.18);
+      transform: translate(-50%, -50%) rotate(18deg);
+    }
+    .innovation-core:after {
+      width: 15rem;
+      transform: translate(-50%, -50%) rotate(-18deg);
+      border-color: rgba(255,255,255,.12);
+    }
+    .node {
+      position: absolute;
+      z-index: 2;
+      width: 10rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(203,243,255,.14);
+      background: rgba(4, 8, 12, .72);
+      padding: .85rem;
+      box-shadow: 0 18px 54px rgba(0,0,0,.34);
+    }
+    .node strong { display: block; font-size: .92rem; color: white; }
+    .node span { display: block; margin-top: .3rem; color: #8fa0aa; font-size: .72rem; line-height: 1.35; }
+    .scanline {
+      position: absolute;
+      inset: auto 0 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139,238,255,.7), transparent);
+      opacity: .8;
+    }
+    .cta-button {
+      border-radius: 999px;
+      background: #fff;
+      color: #071017;
+      font-weight: 750;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .cta-button:hover { background: #dff9ff; transform: translateY(-1px); }
+    .outline-button {
+      border-radius: 999px;
+      border: 1px solid rgba(203,243,255,.18);
+      color: white;
+      transition: border-color .2s ease, background .2s ease, transform .2s ease;
+    }
+    .outline-button:hover {
+      border-color: rgba(139,238,255,.48);
+      background: rgba(139,238,255,.08);
+      transform: translateY(-1px);
+    }
+    @media (max-width: 700px) {
+      .hero-orbit { top: -17.5rem; width: 55rem; }
+      .event-horizon { height: 19rem; }
+      .hero-content { transform: translateY(-1rem); }
+      .innovation-core { min-height: 31rem; }
+      .node { width: 8.8rem; }
+    }
+    @media (min-width: 760px) {
+      .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .proof-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .case-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .case-card.featured { grid-column: span 2; }
+      .review-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .principles-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .hero-orbit { animation: none; }
+      #particle-field { display: none; }
+      .stars { transform: none !important; }
+      .cursor-glow { display: none; }
+      *, *:before, *:after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <main id="top" class="relative isolate overflow-hidden">
+    <section class="relative min-h-[92vh] overflow-hidden px-5 pb-10 sm:px-8">
+      <canvas id="particle-field" aria-hidden="true"></canvas>
+      <div class="hero-orbit" aria-hidden="true"></div>
+      <div class="event-horizon" aria-hidden="true"></div>
+
+      <header class="relative z-10 mx-auto flex max-w-7xl items-center justify-between py-5">
+        <a href="#top" class="flex min-w-0 items-center gap-3" aria-label="Systems Studio">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 44 44" role="img">
+              <ellipse cx="22" cy="22" rx="18" ry="8.4" fill="none" stroke="rgba(139,238,255,.42)" stroke-width="1.15" transform="rotate(-24 22 22)" />
+              <path d="M10 30V15l6.4 10.2L22 15l5.6 10.2L34 15v15" fill="none" stroke="rgba(139,238,255,.36)" stroke-width="5.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10 30V15l6.4 10.2L22 15l5.6 10.2L34 15v15" fill="none" stroke="#f3fdff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx="34.4" cy="14.8" r="2.4" fill="#8beeff" />
+            </svg>
+          </span>
+          <span class="leading-none">
+            <span class="block text-sm font-semibold text-white">Murati</span>
+            <span class="block text-xs uppercase tracking-[.24em] text-cyan-100/65">Systems</span>
+          </span>
+        </a>
+        <nav class="hidden items-center gap-5 text-sm text-slate-300 md:flex">
+          <a class="hover:text-white" href="#angebot">Angebot</a>
+          <a class="hover:text-white" href="#beispiele">Beispiele</a>
+          <a class="hover:text-white" href="#review">Review</a>
+          <a class="hover:text-white" href="#prozess">Ablauf</a>
+          <a class="hover:text-white" href="#kontakt">Kontakt</a>
+        </nav>
+        <a href="#kontakt" class="outline-button px-4 py-2 text-sm font-semibold"><span class="sm:hidden">Prüfen</span><span class="hidden sm:inline">Website und Ablauf prüfen</span></a>
+      </header>
+
+      <div class="relative z-10 mx-auto flex min-h-[calc(92vh-5rem)] max-w-6xl flex-col items-center justify-center text-center">
+        <div class="hero-content flex flex-col items-center">
+          <div class="core-pill mb-6 inline-flex items-center gap-3 rounded-full px-3 py-2 text-xs text-cyan-50">
+            <span class="h-1.5 w-1.5 rounded-full bg-cyan-100 shadow-[0_0_24px_rgba(139,238,255,.9)]"></span>
+            Websites, Automatisierung und interne Tools
+          </div>
+          <h1 class="max-w-5xl text-5xl font-semibold leading-[.92] tracking-normal text-white sm:text-7xl lg:text-8xl">
+            Websites, Automationen und interne Tools für Betriebe.
+          </h1>
+          <p class="mt-7 max-w-2xl text-base leading-8 text-slate-300 sm:text-xl">
+            Wir bauen nicht nur die Seite, sondern auch den Ablauf dahinter: Kontaktweg, einfache Automatisierung, interne Übersicht und technische Betreuung.
+          </p>
+          <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row">
+            <a href="#kontakt" class="cta-button px-6 py-3 text-sm">Website und Ablauf prüfen lassen</a>
+            <a href="#beispiele" class="outline-button px-6 py-3 text-sm font-semibold">Beispielprojekte ansehen</a>
+          </div>
+          <div class="system-path mt-10 max-w-3xl">
+            <span>Mehr passende Anfragen.</span>
+            <span>Weniger Handarbeit.</span>
+            <span>Saubere Betreuung.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="angebot" class="section-band px-5 py-20 sm:px-8">
+      <div class="relative mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.85fr_1.15fr]">
+        <div>
+          <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Was wir machen</p>
+          <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Wir bauen nicht nur die Seite, sondern auch den Ablauf dahinter.</h2>
+          <p class="contrast-copy mt-5 max-w-xl text-base leading-7">
+            Viele Betriebe brauchen keinen großen Relaunch, sondern einen klaren Weg vom ersten Klick bis zur nächsten Aufgabe.
+          </p>
+          <a href="#review" class="mini-cta mt-8">Website und Ablauf prüfen lassen</a>
+        </div>
+        <div class="service-grid">
+          <article class="service-card">
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Kundenanfragen</p>
+            <h3 class="mt-5 text-2xl font-semibold text-white">Seiten, die erklären, was ein Kunde senden soll.</h3>
+            <p class="mt-4 text-sm leading-6">Angebot, Kontaktweg und erste Einordnung werden so gebaut, dass die Anfrage brauchbarer ankommt.</p>
+          </article>
+          <article class="service-card">
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Automatisierung</p>
+            <h3 class="mt-5 text-2xl font-semibold text-white">Weniger manuell nachfassen.</h3>
+            <p class="mt-4 text-sm leading-6">Formulare, E-Mail, Tabellen und Benachrichtigungen werden verbunden, damit Routinearbeit nicht liegen bleibt.</p>
+          </article>
+          <article class="service-card">
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Interne Systeme</p>
+            <h3 class="mt-5 text-2xl font-semibold text-white">Kleine Tools für echte Abläufe.</h3>
+            <p class="mt-4 text-sm leading-6">Übersichten, Datenpflege, Freigaben und Aufgabenlisten werden passend zum Betrieb gebaut.</p>
+          </article>
+          <article class="service-card">
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Betrieb</p>
+            <h3 class="mt-5 text-2xl font-semibold text-white">Betreuung nach dem ersten Stand.</h3>
+            <p class="mt-4 text-sm leading-6">Hosting, Wartung, Fehlerprüfung und Weiterentwicklung bleiben planbar, wenn das System wächst.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="relative px-5 py-16 sm:px-8">
+      <div class="mx-auto max-w-7xl">
+        <div class="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+          <div>
+            <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Erster Einstieg</p>
+            <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Nach dem ersten Blick weißt du, womit du starten solltest.</h2>
+          </div>
+          <p class="contrast-copy text-base leading-7">
+            Der Review ist bewusst klein gehalten: Link schicken, Engpass beschreiben, dann bekommst du eine klare Startempfehlung statt eines großen Agentur-Pakets.
+          </p>
+        </div>
+        <div class="proof-strip mt-10">
+          <div>
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">1</p>
+            <p class="mt-2 font-semibold text-white">3 konkrete Schwachstellen im aktuellen Auftritt oder Ablauf.</p>
+          </div>
+          <div>
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">2</p>
+            <p class="mt-2 font-semibold text-white">3 schnelle Verbesserungen, die ohne Großprojekt starten können.</p>
+          </div>
+          <div>
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">3</p>
+            <p class="mt-2 font-semibold text-white">Eine Empfehlung: Seite verbessern, Ablauf ordnen oder Tool bauen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="beispiele" class="relative px-5 py-20 sm:px-8">
+      <div class="mx-auto max-w-7xl">
+        <div class="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-end">
+          <div>
+            <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Beispiel-Setups</p>
+            <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Typische Projekte, mit denen wir starten.</h2>
+          </div>
+          <div>
+            <p class="contrast-copy text-base leading-7">
+              Noch keine öffentlichen Referenzen. Deshalb zeigen wir typische Projektarten, Demo-Ansichten und klare Einstiegspunkte.
+            </p>
+            <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+              <a href="#review" class="mini-cta">Website und Ablauf prüfen lassen</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-grid mt-12">
+          <article class="case-card featured">
+            <p class="label">Beispiel 01</p>
+            <h3 class="mt-4 text-2xl font-semibold text-white">Anfrage-System für Dienstleister</h3>
+            <dl>
+              <div>
+                <dt>Problem</dt>
+                <dd>Die Seite sieht ordentlich aus, aber Besucher wissen nicht, was sie senden sollen. Anfragen kommen ungeordnet an.</dd>
+              </div>
+              <div>
+                <dt>Lösung</dt>
+                <dd>Eine klare Angebotsseite, ein verständlicher Kontaktweg und eine einfache Einordnung über WhatsApp, Formular oder E-Mail.</dd>
+              </div>
+              <div>
+                <dt>Wirkung</dt>
+                <dd>Der erste Kontakt wird konkreter. Das Team kann schneller reagieren und muss weniger nachfragen.</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="case-card">
+            <p class="label">Beispiel 02</p>
+            <h3 class="mt-4 text-xl font-semibold text-white">Interne Übersicht statt Tabellenchaos</h3>
+            <dl>
+              <div>
+                <dt>Problem</dt>
+                <dd>Status, Aufgaben und Dateien liegen verstreut in Chats, Tabellen und Postfächern.</dd>
+              </div>
+              <div>
+                <dt>Lösung</dt>
+                <dd>Ein kleines internes Tool mit Rollen, Listen, Aufgaben und klaren Zuständigkeiten.</dd>
+              </div>
+              <div>
+                <dt>Wirkung</dt>
+                <dd>Weniger Suchen, bessere Übergaben und mehr Überblick im Tagesgeschäft.</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="case-card">
+            <p class="label">Beispiel 03</p>
+            <h3 class="mt-4 text-xl font-semibold text-white">Automatisierter Erstkontakt</h3>
+            <dl>
+              <div>
+                <dt>Problem</dt>
+                <dd>Jede neue Anfrage muss manuell gelesen, sortiert und beantwortet werden.</dd>
+              </div>
+              <div>
+                <dt>Lösung</dt>
+                <dd>Ein Anfrageweg mit Zusammenfassung, Vorqualifizierung und klarer nächster Aktion.</dd>
+              </div>
+              <div>
+                <dt>Wirkung</dt>
+                <dd>Schneller reagieren, ohne sofort ein großes System bauen zu müssen.</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="case-card">
+            <p class="label">Beispiel 04</p>
+            <h3 class="mt-4 text-xl font-semibold text-white">Betrieb und Weiterentwicklung</h3>
+            <dl>
+              <div>
+                <dt>Problem</dt>
+                <dd>Website oder Tool sind live, aber Technik, Updates und kleine Verbesserungen bleiben liegen.</dd>
+              </div>
+              <div>
+                <dt>Lösung</dt>
+                <dd>Betreuung mit Hosting, Wartung, Fehlerprüfung und planbaren Erweiterungen.</dd>
+              </div>
+              <div>
+                <dt>Wirkung</dt>
+                <dd>Das System bleibt nutzbar und wächst kontrolliert statt zufällig.</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="case-card">
+            <p class="label">Beispiel 05</p>
+            <h3 class="mt-4 text-xl font-semibold text-white">Review: Webauftritt und Ablauf</h3>
+            <dl>
+              <div>
+                <dt>Problem</dt>
+                <dd>Es ist unklar, ob die Seite, der Kontaktweg, der interne Ablauf oder alles zusammen bremst.</dd>
+              </div>
+              <div>
+                <dt>Lösung</dt>
+                <dd>Kurzer Blick auf Angebot, Klickweg, Anfrageweg und manuelle Arbeit dahinter.</dd>
+              </div>
+              <div>
+                <dt>Wirkung</dt>
+                <dd>Du bekommst eine klare Empfehlung für den ersten Schritt: Seite verbessern, Ablauf ordnen oder Tool bauen.</dd>
+              </div>
+            </dl>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="review" class="section-band px-5 py-20 sm:px-8">
+      <div class="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+        <div>
+          <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Review-Einstieg</p>
+          <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Erst klären, was bremst. Dann bauen.</h2>
+          <p class="contrast-copy mt-5 text-base leading-7">
+            Der einfachste Einstieg ist kein großes Projekt. Wir schauen zuerst, wo Kunden abspringen, wo Arbeit hängen bleibt und welcher digitale Baustein wirklich Sinn ergibt.
+          </p>
+          <a href="#kontakt" class="mini-cta mt-8">Website und Ablauf prüfen lassen</a>
+        </div>
+        <div class="review-panel">
+          <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Was passiert beim Klick?</p>
+          <div class="review-steps mt-5">
+            <div>
+              <p class="font-semibold text-white">1. Kurz schildern</p>
+              <p class="contrast-copy mt-2 text-sm leading-6">Du schickst Link, Ziel und das Problem: mehr Anfragen, weniger manuelle Arbeit oder besserer Überblick.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-white">2. Wir prüfen den Startpunkt</p>
+              <p class="contrast-copy mt-2 text-sm leading-6">Webauftritt, Kontaktweg und interner Ablauf werden als ein System betrachtet.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-white">3. Du bekommst eine klare Empfehlung</p>
+              <p class="contrast-copy mt-2 text-sm leading-6">Kein Ratespiel: wir sagen, ob Seite, Automatisierung, Tool oder Betreuung zuerst dran ist.</p>
+            </div>
+          </div>
+          <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+            <a href="#kontakt" class="cta-button inline-flex justify-center px-6 py-3 text-sm">Website und Ablauf prüfen lassen</a>
+            <a href="#beispiele" class="outline-button inline-flex justify-center px-6 py-3 text-sm font-semibold">Beispielprojekte ansehen</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="leistungen" class="relative px-5 py-20 sm:px-8">
+      <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
+        <div class="innovation-core">
+          <div class="absolute left-1/2 top-1/2 z-[1] grid h-28 w-28 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-cyan-100/20 bg-black/50 text-center shadow-[0_0_80px_rgba(139,238,255,.22)]">
+              <span class="text-xs uppercase tracking-[.28em] text-cyan-100/70">System</span>
+            </div>
+            <div class="node left-[8%] top-[14%]">
+            <strong>Anfragen</strong>
+            <span>Webauftritt und Kontaktweg</span>
+          </div>
+          <div class="node right-[8%] top-[18%]">
+            <strong>Daten</strong>
+            <span>Formulare, Listen, E-Mail</span>
+          </div>
+          <div class="node bottom-[14%] left-[12%]">
+            <strong>Abläufe</strong>
+            <span>Automatisierung und Aufgaben</span>
+          </div>
+          <div class="node bottom-[12%] right-[10%]">
+            <strong>Betrieb</strong>
+            <span>Wartung und Weiterentwicklung</span>
+          </div>
+        </div>
+        <div>
+          <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Systemlandkarte</p>
+          <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Website, Postfach, Tabellen und Aufgaben gehören in einen sauberen Ablauf.</h2>
+          <p class="contrast-copy mt-5 text-base leading-7">
+            Viele Unternehmen haben eine Website, ein Postfach, ein paar Tabellen und viel Handarbeit. Wir verbinden diese Punkte zu einem Ablauf, der Anfragen, Daten und Aufgaben sauber weiterführt.
+          </p>
+          <div class="mt-8 grid gap-3 sm:grid-cols-2">
+            <div class="border-t border-white/12 pt-4">
+              <h3 class="font-semibold text-white">Schnell sichtbar</h3>
+              <p class="contrast-copy mt-2 text-sm leading-6">Ein erster Stand zeigt früh, ob Angebot, Kontaktweg und Ablauf funktionieren.</p>
+            </div>
+            <div class="border-t border-white/12 pt-4">
+              <h3 class="font-semibold text-white">Langfristig betreut</h3>
+              <p class="contrast-copy mt-2 text-sm leading-6">Neue Funktionen, Wartung und Verbesserungen bleiben planbar statt zufällig.</p>
+            </div>
+          </div>
+          <a href="#kontakt" class="mini-cta mt-8">Website und Ablauf prüfen lassen</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="prinzipien" class="section-band px-5 py-20 sm:px-8">
+      <div class="relative mx-auto max-w-7xl">
+        <div class="grid gap-8 lg:grid-cols-[.75fr_1.25fr] lg:items-end">
+          <div>
+            <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Wofür wir stehen</p>
+            <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Technik soll Anfragen bringen, Arbeit sparen und im Alltag halten.</h2>
+          </div>
+          <div>
+            <p class="contrast-copy text-base leading-7">
+              Wir bauen keine losen Einzelteile. Jede Seite, Automatisierung und Oberfläche muss in den Arbeitsalltag passen und einen klaren nächsten Schritt auslösen.
+            </p>
+            <a href="#kontakt" class="mini-cta mt-6">Website und Ablauf prüfen lassen</a>
+          </div>
+        </div>
+        <div class="principles-grid mt-12">
+          <article class="principle-card">
+            <p class="label">Prinzip 01</p>
+            <h3 class="mt-3 text-xl font-semibold text-white">System vor Einzelseite</h3>
+            <p class="contrast-copy mt-3 text-sm leading-6">Eine Website ist nur der Anfang. Entscheidend ist, was nach dem Klick mit der Anfrage passiert.</p>
+          </article>
+          <article class="principle-card">
+            <p class="label">Prinzip 02</p>
+            <h3 class="mt-3 text-xl font-semibold text-white">Klarheit vor Show</h3>
+            <p class="contrast-copy mt-3 text-sm leading-6">Gutes Design muss verständlich bleiben: Angebot, Nutzen und nächster Schritt müssen sofort erkennbar sein.</p>
+          </article>
+          <article class="principle-card">
+            <p class="label">Prinzip 03</p>
+            <h3 class="mt-3 text-xl font-semibold text-white">Sichtbar starten</h3>
+            <p class="contrast-copy mt-3 text-sm leading-6">Lieber ein testbarer erster Stand als lange Theorie. Danach wird mit echtem Feedback verbessert.</p>
+          </article>
+          <article class="principle-card">
+            <p class="label">Prinzip 04</p>
+            <h3 class="mt-3 text-xl font-semibold text-white">Betrieb mitdenken</h3>
+            <p class="contrast-copy mt-3 text-sm leading-6">Ein System ist erst gut, wenn es nach dem Launch gepflegt, erweitert und verstanden werden kann.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="wir" class="section-band px-5 py-20 sm:px-8">
+      <div class="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.8fr_1.2fr]">
+        <div>
+          <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Wer wir sind</p>
+          <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Gründergeführt, technisch und direkt am Problem.</h2>
+          <a href="#kontakt" class="mini-cta mt-8">Website und Ablauf prüfen lassen</a>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2">
+          <article class="glass rounded-2xl p-6">
+            <h3 class="text-xl font-semibold text-white">Direkt am Problem, ohne Agentur-Umweg</h3>
+            <p class="contrast-copy mt-4 text-sm leading-6">Wir arbeiten direkt am Problem: Was soll verkauft, automatisiert, geordnet oder betrieben werden?</p>
+          </article>
+          <article class="glass rounded-2xl p-6">
+            <h3 class="text-xl font-semibold text-white">Für Betriebe, die Abläufe ordnen wollen</h3>
+            <p class="contrast-copy mt-4 text-sm leading-6">Passend für Dienstleister und wachsende Teams, die keine unverbundenen Tools mehr wollen.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="prozess" class="relative px-5 py-20 sm:px-8">
+      <div class="mx-auto max-w-7xl">
+        <div class="max-w-2xl">
+          <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Ablauf</p>
+          <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Vom ersten Gespräch zum laufenden System.</h2>
+        </div>
+        <div class="mt-12 grid gap-4 md:grid-cols-3">
+          <article class="glass rounded-2xl p-6">
+            <p class="text-sm text-cyan-100">01</p>
+            <h3 class="mt-5 text-xl font-semibold text-white">Vorhaben klären</h3>
+            <p class="contrast-copy mt-4 text-sm leading-6">Was soll Kunden bringen, Zeit sparen oder intern sauberer laufen?</p>
+          </article>
+          <article class="glass rounded-2xl p-6">
+            <p class="text-sm text-cyan-100">02</p>
+            <h3 class="mt-5 text-xl font-semibold text-white">Ersten Stand bauen</h3>
+            <p class="contrast-copy mt-4 text-sm leading-6">Ein Webauftritt, ein Ablauf oder ein Tool wird sichtbar und testbar.</p>
+          </article>
+          <article class="glass rounded-2xl p-6">
+            <p class="text-sm text-cyan-100">03</p>
+            <h3 class="mt-5 text-xl font-semibold text-white">Verbinden und betreuen</h3>
+            <p class="contrast-copy mt-4 text-sm leading-6">Kontaktwege, Daten und neue Funktionen wachsen kontrolliert weiter.</p>
+          </article>
+        </div>
+        <div class="proof-strip mt-10">
+          <div>
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Start</p>
+            <p class="mt-2 font-semibold text-white">Klares Ziel statt langer Vorgespräche.</p>
+          </div>
+          <div>
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Umsetzung</p>
+            <p class="mt-2 font-semibold text-white">Sichtbarer Stand, dann gezielt verbessern.</p>
+          </div>
+          <div>
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Betrieb</p>
+            <p class="mt-2 font-semibold text-white">Weiterentwicklung bleibt mitgedacht.</p>
+          </div>
+        </div>
+        <a href="#kontakt" class="mini-cta mt-10">Website und Ablauf prüfen lassen</a>
+      </div>
+    </section>
+
+    <section id="kontakt" class="relative px-5 pb-10 sm:px-8">
+      <div class="mx-auto max-w-7xl border-t border-white/10 py-12">
+        <div class="grid gap-10 lg:grid-cols-[1fr_.8fr] lg:items-end">
+          <div>
+            <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Kontakt</p>
+            <h2 class="mt-4 max-w-3xl text-3xl font-semibold text-white sm:text-5xl">Schick den Link oder beschreibe kurz den Ablauf, der gerade nervt.</h2>
+            <p class="contrast-copy mt-5 max-w-2xl text-base leading-7">Ob Kundenanfragen, Automatisierung, internes Tool oder technische Betreuung: Wir klären, womit man sinnvoll startet und was warten kann.</p>
+          </div>
+          <div class="glass rounded-2xl p-5">
+            <p class="text-sm text-slate-400">Bevorzugter Kontakt</p>
+            <a href="mailto:kontakt@murati.systems?subject=Projektanfrage%20Systems%20Studio" class="cta-button mt-4 inline-flex w-full justify-center px-6 py-3 text-sm">Review-Anfrage senden</a>
+            <div class="mt-5 border-t border-white/10 pt-5">
+              <p class="font-semibold text-white">Was du kurz schicken kannst:</p>
+              <ul class="contrast-copy mt-3 space-y-2 text-sm leading-6">
+                <li>Link oder kurzer Satz zum aktuellen Auftritt.</li>
+                <li>Was passieren soll: mehr Anfragen, weniger Handarbeit oder besserer Überblick.</li>
+                <li>Welche Tools heute schon genutzt werden.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <footer class="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+          <p>Murati Systems - Arbeitsname offen</p>
+          <div class="flex gap-5">
+            <a class="hover:text-slate-300" href="impressum.html">Impressum</a>
+            <a class="hover:text-slate-300" href="datenschutz.html">Datenschutz</a>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('particle-field');
+    const ctx = canvas.getContext('2d');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const root = document.documentElement;
+    const pointer = { x: .5, y: .18, active: false };
+    let w = 0, h = 0, dpr = 1, dots = [];
+    function moveLight(x, y) {
+      pointer.x = x / Math.max(1, window.innerWidth);
+      pointer.y = y / Math.max(1, window.innerHeight);
+      pointer.active = true;
+      if (reduce) return;
+      const dx = (pointer.x - .5);
+      const dy = (pointer.y - .18);
+      root.style.setProperty('--cursor-x', `${x}px`);
+      root.style.setProperty('--cursor-y', `${y}px`);
+      root.style.setProperty('--orbit-x', `${dx * 22}px`);
+      root.style.setProperty('--orbit-y', `${dy * 16}px`);
+      root.style.setProperty('--horizon-x', `${dx * -18}px`);
+      root.style.setProperty('--horizon-y', `${dy * 12}px`);
+      root.style.setProperty('--star-x', `${dx * -18}px`);
+      root.style.setProperty('--star-y', `${dy * -12}px`);
+      root.style.setProperty('--glow-opacity', `.82`);
+    }
+    function resize() {
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      w = canvas.offsetWidth;
+      h = canvas.offsetHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      dots = Array.from({ length: Math.min(120, Math.floor(w / 9)) }, () => ({
+        a: Math.random() * Math.PI * 2,
+        r: Math.random() * Math.min(w, h) * .52 + 40,
+        s: Math.random() * .0009 + .0002
+      }));
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      const cx = w / 2, cy = h * .08;
+      const px = pointer.x * w;
+      const py = pointer.y * h;
+      dots.forEach((p) => {
+        if (!reduce) p.a += p.s * 16;
+        const baseX = cx + Math.cos(p.a) * p.r * 1.18;
+        const baseY = cy + Math.sin(p.a) * p.r * .34 + p.r * .08;
+        const dx = px - baseX;
+        const dy = py - baseY;
+        const dist = Math.max(1, Math.hypot(dx, dy));
+        const influence = pointer.active ? Math.max(0, 1 - dist / 260) : 0;
+        const x = baseX - (dx / dist) * influence * 18;
+        const y = baseY - (dy / dist) * influence * 10;
+        if (y < h * .84) {
+          ctx.fillStyle = `rgba(139,238,255,${.42 + influence * .38})`;
+          ctx.fillRect(x, y, 1.4 + influence * 1.4, 1.4 + influence * 1.4);
+          if (influence > .38) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(px, py);
+            ctx.strokeStyle = `rgba(139,238,255,${influence * .16})`;
+            ctx.lineWidth = .8;
+            ctx.stroke();
+          }
+        }
+      });
+      requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('pointermove', (event) => moveLight(event.clientX, event.clientY), { passive: true });
+    window.addEventListener('pointerleave', () => {
+      pointer.active = false;
+      root.style.setProperty('--glow-opacity', `.58`);
+    }, { passive: true });
+    resize();
+    draw();
+  </script>
+</body>
+</html>
