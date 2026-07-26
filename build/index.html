@@ -5,421 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Murati Systems - Websites, Automatisierung und interne Tools</title>
   <meta name="description" content="Murati Systems entwickelt Webauftritte, Automationen, interne Tools und betreute digitale Abläufe für Unternehmen, die weniger manuell nachfassen wollen." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root {
-      color-scheme: dark;
-      --cyan: #8beeff;
-      --blue: #4ca8ff;
-      --paper: #f7fcff;
-      --muted: #95a3ad;
-      --line: rgba(203, 243, 255, .14);
-      --cursor-x: 50vw;
-      --cursor-y: 18vh;
-      --orbit-x: 0px;
-      --orbit-y: 0px;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      overflow-x: hidden;
-      background: #020305;
-      color: var(--paper);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      letter-spacing: 0;
-    }
-    .stars {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        radial-gradient(circle at 10% 20%, rgba(255,255,255,.72) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 80% 10%, rgba(139,238,255,.68) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 72% 42%, rgba(255,255,255,.42) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 24% 65%, rgba(139,238,255,.38) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 48% 28%, rgba(255,255,255,.3) 0 1px, transparent 1.5px);
-      background-size: 320px 240px, 420px 320px, 280px 260px, 360px 300px, 510px 420px;
-      opacity: .5;
-      mask-image: linear-gradient(to bottom, black 0 72%, transparent);
-      transform: translate(var(--star-x, 0px), var(--star-y, 0px));
-      transition: transform .35s ease-out;
-      will-change: transform;
-    }
-    .cursor-glow {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(139,238,255,.24), rgba(76,168,255,.1) 12rem, transparent 25rem),
-        linear-gradient(115deg, transparent 0 42%, rgba(139,238,255,.035) 48%, transparent 55%);
-      mix-blend-mode: screen;
-      opacity: var(--glow-opacity, .64);
-      transition: opacity .35s ease;
-    }
-    .hero-orbit {
-      position: absolute;
-      left: 50%;
-      top: -28rem;
-      width: min(90rem, 148vw);
-      aspect-ratio: 1;
-      transform: translateX(calc(-50% + var(--orbit-x))) translateY(var(--orbit-y));
-      border-radius: 9999px;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0 42%, rgba(139,238,255,.06) 43%, rgba(139,238,255,.2) 44%, transparent 47%),
-        conic-gradient(from 210deg, transparent 0deg, rgba(139,238,255,.09) 46deg, rgba(139,238,255,.82) 78deg, rgba(255,255,255,.42) 102deg, transparent 140deg, transparent 222deg, rgba(76,168,255,.54) 258deg, transparent 296deg, transparent);
-      filter: drop-shadow(0 0 80px rgba(139,238,255,.32)) blur(.2px);
-      opacity: .95;
-      animation: spin 46s linear infinite;
-    }
-    .hero-orbit:before,
-    .hero-orbit:after {
-      content: "";
-      position: absolute;
-      inset: 12%;
-      border-radius: inherit;
-      border: 1px solid rgba(139,238,255,.16);
-      box-shadow: inset 0 0 90px rgba(139,238,255,.08), 0 0 70px rgba(76,168,255,.08);
-    }
-    .hero-orbit:after {
-      inset: 26%;
-      border-color: rgba(255,255,255,.09);
-      transform: rotate(24deg);
-    }
-    .event-horizon {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      width: min(56rem, 100vw);
-      height: 27rem;
-      transform: translateX(calc(-50% + var(--horizon-x, 0px))) translateY(var(--horizon-y, 0px));
-      background: radial-gradient(ellipse at 50% 0%, rgba(139,238,255,.22), rgba(76,168,255,.08) 30%, transparent 70%);
-      filter: blur(38px);
-      opacity: .95;
-      pointer-events: none;
-    }
-    #particle-field {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      opacity: .7;
-    }
-    @keyframes spin { to { transform: translateX(calc(-50% + var(--orbit-x))) translateY(var(--orbit-y)) rotate(360deg); } }
-    .brand-mark {
-      position: relative;
-      display: grid;
-      height: 2.9rem;
-      width: 2.9rem;
-      place-items: center;
-      overflow: hidden;
-      flex: 0 0 auto;
-      border-radius: 1rem;
-      border: 1px solid rgba(203,243,255,.2);
-      background:
-        radial-gradient(circle at 50% 8%, rgba(139,238,255,.28), transparent 54%),
-        linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 0 38px rgba(139,238,255,.1);
-    }
-    .brand-mark svg {
-      height: 2rem;
-      width: 2rem;
-      overflow: visible;
-    }
-    .glass {
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.024));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 24px 70px rgba(0,0,0,.34);
-      backdrop-filter: blur(14px);
-    }
-    .core-pill {
-      border: 1px solid rgba(139,238,255,.16);
-      background: rgba(139,238,255,.055);
-    }
-    .hero-content {
-      transform: translateY(-2.8rem);
-    }
-    .system-path {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: .55rem;
-      color: rgba(222, 247, 255, .76);
-      font-size: .82rem;
-    }
-    .system-path span {
-      border-bottom: 1px solid rgba(139,238,255,.28);
-      padding: .25rem .05rem .4rem;
-    }
-    .cta-line {
-      display: inline-flex;
-      align-items: center;
-      gap: .6rem;
-      color: rgba(222,247,255,.74);
-      font-size: .9rem;
-    }
-    .cta-line:before {
-      content: "";
-      height: .45rem;
-      width: .45rem;
-      border-radius: 999px;
-      background: var(--cyan);
-      box-shadow: 0 0 24px rgba(139,238,255,.9);
-    }
-    .word-row {
-      border-top: 1px solid rgba(203,243,255,.12);
-      display: grid;
-      gap: 1rem;
-      padding: 1.35rem 0;
-    }
-    .word-row:first-child { border-top: 0; padding-top: 0; }
-    .section-band {
-      position: relative;
-      border-block: 1px solid rgba(255,255,255,.1);
-      background:
-        radial-gradient(circle at 12% 12%, rgba(139,238,255,.11), transparent 19rem),
-        linear-gradient(180deg, #070b0f 0%, #030507 100%);
-    }
-    .section-band:before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(139,238,255,.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(139,238,255,.04) 1px, transparent 1px);
-      background-size: 54px 54px;
-      mask-image: radial-gradient(circle at 50% 40%, black, transparent 75%);
-      opacity: .38;
-    }
-    .service-grid {
-      display: grid;
-      gap: 1rem;
-    }
-    .service-card {
-      min-height: 14rem;
-      border: 1px solid rgba(203,243,255,.18);
-      border-radius: 1.35rem;
-      background:
-        radial-gradient(circle at 16% 10%, rgba(139,238,255,.12), transparent 12rem),
-        rgba(255,255,255,.045);
-      padding: 1.4rem;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 24px 70px rgba(0,0,0,.3);
-    }
-    .service-card p,
-    .contrast-copy {
-      color: #b8c5cf;
-    }
-    .mini-cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      border: 1px solid rgba(139,238,255,.28);
-      background: rgba(139,238,255,.08);
-      padding: .8rem 1rem;
-      color: #f4fdff;
-      font-size: .9rem;
-      font-weight: 700;
-      transition: border-color .2s ease, background .2s ease, transform .2s ease;
-    }
-    .mini-cta:hover {
-      border-color: rgba(139,238,255,.6);
-      background: rgba(139,238,255,.14);
-      transform: translateY(-1px);
-    }
-    .proof-strip {
-      display: grid;
-      gap: 1px;
-      overflow: hidden;
-      border: 1px solid rgba(203,243,255,.12);
-      border-radius: 1.2rem;
-      background: rgba(203,243,255,.12);
-    }
-    .proof-strip div {
-      background: rgba(2,3,5,.74);
-      padding: 1rem;
-    }
-    .case-grid {
-      display: grid;
-      gap: 1rem;
-    }
-    .case-card {
-      position: relative;
-      overflow: hidden;
-      min-height: 18rem;
-      border: 1px solid rgba(203,243,255,.16);
-      border-radius: 1.4rem;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,.065), rgba(255,255,255,.024)),
-        radial-gradient(circle at 82% 10%, rgba(139,238,255,.13), transparent 13rem);
-      padding: 1.35rem;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 28px 78px rgba(0,0,0,.25);
-    }
-    .case-card:before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(90deg, transparent, rgba(139,238,255,.12), transparent);
-      transform: translateX(-100%);
-      opacity: .35;
-      transition: transform .8s ease;
-    }
-    .case-card:hover:before {
-      transform: translateX(100%);
-    }
-    .case-card .label,
-    .principle-card .label {
-      color: rgba(139,238,255,.76);
-      font-size: .72rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-    .case-card dl {
-      display: grid;
-      gap: .55rem;
-      margin-top: 1.2rem;
-    }
-    .case-card dt {
-      color: #f7fcff;
-      font-size: .78rem;
-      font-weight: 800;
-    }
-    .case-card dd {
-      margin: 0;
-      color: #b8c5cf;
-      font-size: .9rem;
-      line-height: 1.55;
-    }
-    .review-panel {
-      border: 1px solid rgba(139,238,255,.2);
-      border-radius: 1.5rem;
-      background:
-        radial-gradient(circle at 10% 0%, rgba(139,238,255,.16), transparent 18rem),
-        rgba(255,255,255,.045);
-      padding: 1.5rem;
-    }
-    .review-steps {
-      display: grid;
-      gap: 1px;
-      overflow: hidden;
-      border: 1px solid rgba(203,243,255,.14);
-      border-radius: 1rem;
-      background: rgba(203,243,255,.14);
-    }
-    .review-steps div {
-      background: rgba(2,3,5,.78);
-      padding: 1rem;
-    }
-    .principles-grid {
-      display: grid;
-      gap: 1rem;
-    }
-    .principle-card {
-      border-top: 1px solid rgba(203,243,255,.18);
-      padding-top: 1.1rem;
-    }
-    .innovation-core {
-      position: relative;
-      min-height: 25rem;
-      overflow: hidden;
-      border-radius: 1.5rem;
-      border: 1px solid var(--line);
-      background:
-        radial-gradient(circle at 50% 48%, rgba(139,238,255,.2), transparent 11rem),
-        radial-gradient(circle at 50% 48%, rgba(76,168,255,.16), transparent 17rem),
-        rgba(255,255,255,.03);
-    }
-    .innovation-core:before,
-    .innovation-core:after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 22rem;
-      aspect-ratio: 1;
-      border-radius: 999px;
-      border: 1px solid rgba(139,238,255,.18);
-      transform: translate(-50%, -50%) rotate(18deg);
-    }
-    .innovation-core:after {
-      width: 15rem;
-      transform: translate(-50%, -50%) rotate(-18deg);
-      border-color: rgba(255,255,255,.12);
-    }
-    .node {
-      position: absolute;
-      z-index: 2;
-      width: 10rem;
-      border-radius: 1rem;
-      border: 1px solid rgba(203,243,255,.14);
-      background: rgba(4, 8, 12, .72);
-      padding: .85rem;
-      box-shadow: 0 18px 54px rgba(0,0,0,.34);
-    }
-    .node strong { display: block; font-size: .92rem; color: white; }
-    .node span { display: block; margin-top: .3rem; color: #8fa0aa; font-size: .72rem; line-height: 1.35; }
-    .scanline {
-      position: absolute;
-      inset: auto 0 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(139,238,255,.7), transparent);
-      opacity: .8;
-    }
-    .cta-button {
-      border-radius: 999px;
-      background: #fff;
-      color: #071017;
-      font-weight: 750;
-      transition: background .2s ease, transform .2s ease;
-    }
-    .cta-button:hover { background: #dff9ff; transform: translateY(-1px); }
-    .outline-button {
-      border-radius: 999px;
-      border: 1px solid rgba(203,243,255,.18);
-      color: white;
-      transition: border-color .2s ease, background .2s ease, transform .2s ease;
-    }
-    .outline-button:hover {
-      border-color: rgba(139,238,255,.48);
-      background: rgba(139,238,255,.08);
-      transform: translateY(-1px);
-    }
-    @media (max-width: 700px) {
-      .hero-orbit { top: -17.5rem; width: 55rem; }
-      .event-horizon { height: 19rem; }
-      .hero-content { transform: translateY(-1rem); }
-      .innovation-core { min-height: 31rem; }
-      .node { width: 8.8rem; }
-    }
-    @media (min-width: 760px) {
-      .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .proof-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .case-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .case-card.featured { grid-column: span 2; }
-      .review-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .principles-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .hero-orbit { animation: none; }
-      #particle-field { display: none; }
-      .stars { transform: none !important; }
-      .cursor-glow { display: none; }
-      *, *:before, *:after { transition: none !important; }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/site.css" />
 </head>
 <body>
-  <div class="stars" aria-hidden="true"></div>
   <div class="cursor-glow" aria-hidden="true"></div>
   <main id="top" class="relative isolate overflow-hidden">
     <section class="relative min-h-[92vh] overflow-hidden px-5 pb-10 sm:px-8">
       <canvas id="particle-field" aria-hidden="true"></canvas>
       <div class="hero-orbit" aria-hidden="true"></div>
-      <div class="event-horizon" aria-hidden="true"></div>
 
       <header class="relative z-10 mx-auto flex max-w-7xl items-center justify-between py-5">
         <a href="#top" class="flex min-w-0 items-center gap-3" aria-label="Systems Studio">
@@ -446,21 +39,20 @@
         <a href="#kontakt" class="outline-button px-4 py-2 text-sm font-semibold"><span class="sm:hidden">Prüfen</span><span class="hidden sm:inline">Website und Ablauf prüfen</span></a>
       </header>
 
-      <div class="relative z-10 mx-auto flex min-h-[calc(92vh-5rem)] max-w-6xl flex-col items-center justify-center text-center">
-        <div class="hero-content flex flex-col items-center">
-          <div class="core-pill mb-6 inline-flex items-center gap-3 rounded-full px-3 py-2 text-xs text-cyan-50">
-            <span class="h-1.5 w-1.5 rounded-full bg-cyan-100 shadow-[0_0_24px_rgba(139,238,255,.9)]"></span>
+      <div class="relative z-10 mx-auto flex min-h-[calc(92vh-5rem)] max-w-7xl flex-col items-start justify-center text-left">
+        <div class="hero-content flex max-w-4xl flex-col items-start">
+          <div class="core-pill hero-kicker mb-6">
             Websites, Automatisierung und interne Tools
           </div>
-          <h1 class="max-w-5xl text-5xl font-semibold leading-[.92] tracking-normal text-white sm:text-7xl lg:text-8xl">
-            Websites, Automationen und interne Tools für Betriebe.
+          <h1 class="max-w-4xl text-5xl font-semibold leading-[.92] tracking-normal text-white sm:text-7xl lg:text-8xl">
+            Digitale Systeme, die Arbeit aus dem Weg räumen.
           </h1>
           <p class="mt-7 max-w-2xl text-base leading-8 text-slate-300 sm:text-xl">
-            Wir bauen nicht nur die Seite, sondern auch den Ablauf dahinter: Kontaktweg, einfache Automatisierung, interne Übersicht und technische Betreuung.
+            Murati Systems verbindet Webauftritt, Kontaktweg und interne Abläufe – für Betriebe, die weniger nachfassen und schneller handeln wollen.
           </p>
-          <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row">
+          <div class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <a href="#kontakt" class="cta-button px-6 py-3 text-sm">Website und Ablauf prüfen lassen</a>
-            <a href="#beispiele" class="outline-button px-6 py-3 text-sm font-semibold">Beispielprojekte ansehen</a>
+            <a href="#beispiele" class="text-link">Typische Setups ansehen</a>
           </div>
           <div class="system-path mt-10 max-w-3xl">
             <span>Mehr passende Anfragen.</span>
@@ -479,30 +71,38 @@
           <p class="contrast-copy mt-5 max-w-xl text-base leading-7">
             Viele Betriebe brauchen keinen großen Relaunch, sondern einen klaren Weg vom ersten Klick bis zur nächsten Aufgabe.
           </p>
-          <a href="#review" class="mini-cta mt-8">Website und Ablauf prüfen lassen</a>
+          <a href="#review" class="text-link mt-8">Leistungsmodell ansehen</a>
         </div>
-        <div class="service-grid">
-          <article class="service-card">
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Kundenanfragen</p>
-            <h3 class="mt-5 text-2xl font-semibold text-white">Seiten, die erklären, was ein Kunde senden soll.</h3>
-            <p class="mt-4 text-sm leading-6">Angebot, Kontaktweg und erste Einordnung werden so gebaut, dass die Anfrage brauchbarer ankommt.</p>
-          </article>
-          <article class="service-card">
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Automatisierung</p>
-            <h3 class="mt-5 text-2xl font-semibold text-white">Weniger manuell nachfassen.</h3>
-            <p class="mt-4 text-sm leading-6">Formulare, E-Mail, Tabellen und Benachrichtigungen werden verbunden, damit Routinearbeit nicht liegen bleibt.</p>
-          </article>
-          <article class="service-card">
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Interne Systeme</p>
-            <h3 class="mt-5 text-2xl font-semibold text-white">Kleine Tools für echte Abläufe.</h3>
-            <p class="mt-4 text-sm leading-6">Übersichten, Datenpflege, Freigaben und Aufgabenlisten werden passend zum Betrieb gebaut.</p>
-          </article>
-          <article class="service-card">
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Betrieb</p>
-            <h3 class="mt-5 text-2xl font-semibold text-white">Betreuung nach dem ersten Stand.</h3>
-            <p class="mt-4 text-sm leading-6">Hosting, Wartung, Fehlerprüfung und Weiterentwicklung bleiben planbar, wenn das System wächst.</p>
-          </article>
-        </div>
+        <ol class="service-list" aria-label="Leistungen">
+          <li class="service-row">
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">01 · Kundenanfragen</p>
+            <div>
+              <h3 class="text-2xl font-semibold text-white">Seiten, die erklären, was ein Kunde senden soll.</h3>
+              <p class="mt-3 text-sm leading-6">Angebot, Kontaktweg und erste Einordnung werden so gebaut, dass die Anfrage brauchbarer ankommt.</p>
+            </div>
+          </li>
+          <li class="service-row">
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">02 · Automatisierung</p>
+            <div>
+              <h3 class="text-2xl font-semibold text-white">Weniger manuell nachfassen.</h3>
+              <p class="mt-3 text-sm leading-6">Formulare, E-Mail, Tabellen und Benachrichtigungen werden verbunden, damit Routinearbeit nicht liegen bleibt.</p>
+            </div>
+          </li>
+          <li class="service-row">
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">03 · Interne Systeme</p>
+            <div>
+              <h3 class="text-2xl font-semibold text-white">Kleine Tools für echte Abläufe.</h3>
+              <p class="mt-3 text-sm leading-6">Übersichten, Datenpflege, Freigaben und Aufgabenlisten werden passend zum Betrieb gebaut.</p>
+            </div>
+          </li>
+          <li class="service-row">
+            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">04 · Betrieb</p>
+            <div>
+              <h3 class="text-2xl font-semibold text-white">Betreuung nach dem ersten Stand.</h3>
+              <p class="mt-3 text-sm leading-6">Hosting, Wartung, Fehlerprüfung und Weiterentwicklung bleiben planbar, wenn das System wächst.</p>
+            </div>
+          </li>
+        </ol>
       </div>
     </section>
 
@@ -546,7 +146,7 @@
               Noch keine öffentlichen Referenzen. Deshalb zeigen wir typische Projektarten, Demo-Ansichten und klare Einstiegspunkte.
             </p>
             <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-              <a href="#review" class="mini-cta">Website und Ablauf prüfen lassen</a>
+              <a href="#review" class="text-link">Beispiel-Setups prüfen</a>
             </div>
           </div>
         </div>
@@ -658,7 +258,7 @@
           <p class="contrast-copy mt-5 text-base leading-7">
             Der einfachste Einstieg ist kein großes Projekt. Wir schauen zuerst, wo Kunden abspringen, wo Arbeit hängen bleibt und welcher digitale Baustein wirklich Sinn ergibt.
           </p>
-          <a href="#kontakt" class="mini-cta mt-8">Website und Ablauf prüfen lassen</a>
+          <a href="#kontakt" class="text-link mt-8">Review anfragen</a>
         </div>
         <div class="review-panel">
           <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Was passiert beim Klick?</p>
@@ -677,8 +277,8 @@
             </div>
           </div>
           <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-            <a href="#kontakt" class="cta-button inline-flex justify-center px-6 py-3 text-sm">Website und Ablauf prüfen lassen</a>
-            <a href="#beispiele" class="outline-button inline-flex justify-center px-6 py-3 text-sm font-semibold">Beispielprojekte ansehen</a>
+            <a href="#kontakt" class="cta-button px-6 py-3">Engpass prüfen lassen</a>
+            <a href="#beispiele" class="text-link">Setups vergleichen</a>
           </div>
         </div>
       </div>
@@ -686,7 +286,7 @@
 
     <section id="leistungen" class="relative px-5 py-20 sm:px-8">
       <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
-        <div class="innovation-core">
+        <div class="system-map">
           <div class="absolute left-1/2 top-1/2 z-[1] grid h-28 w-28 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-cyan-100/20 bg-black/50 text-center shadow-[0_0_80px_rgba(139,238,255,.22)]">
               <span class="text-xs uppercase tracking-[.28em] text-cyan-100/70">System</span>
             </div>
@@ -723,7 +323,7 @@
               <p class="contrast-copy mt-2 text-sm leading-6">Neue Funktionen, Wartung und Verbesserungen bleiben planbar statt zufällig.</p>
             </div>
           </div>
-          <a href="#kontakt" class="mini-cta mt-8">Website und Ablauf prüfen lassen</a>
+          <a href="#kontakt" class="text-link mt-8">Systemlandkarte besprechen</a>
         </div>
       </div>
     </section>
@@ -739,7 +339,7 @@
             <p class="contrast-copy text-base leading-7">
               Wir bauen keine losen Einzelteile. Jede Seite, Automatisierung und Oberfläche muss in den Arbeitsalltag passen und einen klaren nächsten Schritt auslösen.
             </p>
-            <a href="#kontakt" class="mini-cta mt-6">Website und Ablauf prüfen lassen</a>
+            <a href="#kontakt" class="text-link mt-6">Arbeitsprinzipien klären</a>
           </div>
         </div>
         <div class="principles-grid mt-12">
@@ -772,17 +372,23 @@
         <div>
           <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Wer wir sind</p>
           <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Gründergeführt, technisch und direkt am Problem.</h2>
-          <a href="#kontakt" class="mini-cta mt-8">Website und Ablauf prüfen lassen</a>
+          <a href="#kontakt" class="text-link mt-8">Zusammenarbeit klären</a>
         </div>
-        <div class="grid gap-4 md:grid-cols-2">
-          <article class="glass rounded-2xl p-6">
-            <h3 class="text-xl font-semibold text-white">Direkt am Problem, ohne Agentur-Umweg</h3>
-            <p class="contrast-copy mt-4 text-sm leading-6">Wir arbeiten direkt am Problem: Was soll verkauft, automatisiert, geordnet oder betrieben werden?</p>
-          </article>
-          <article class="glass rounded-2xl p-6">
-            <h3 class="text-xl font-semibold text-white">Für Betriebe, die Abläufe ordnen wollen</h3>
-            <p class="contrast-copy mt-4 text-sm leading-6">Passend für Dienstleister und wachsende Teams, die keine unverbundenen Tools mehr wollen.</p>
-          </article>
+        <div class="editorial-list">
+          <div class="editorial-row">
+            <p class="text-sm text-cyan-100">01</p>
+            <div>
+              <h3 class="text-xl font-semibold text-white">Direkt am Problem, ohne Agentur-Umweg</h3>
+              <p class="contrast-copy mt-3 text-sm leading-6">Wir arbeiten direkt am Problem: Was soll verkauft, automatisiert, geordnet oder betrieben werden?</p>
+            </div>
+          </div>
+          <div class="editorial-row">
+            <p class="text-sm text-cyan-100">02</p>
+            <div>
+              <h3 class="text-xl font-semibold text-white">Für Betriebe, die Abläufe ordnen wollen</h3>
+              <p class="contrast-copy mt-3 text-sm leading-6">Passend für Dienstleister und wachsende Teams, die keine unverbundenen Tools mehr wollen.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -793,23 +399,29 @@
           <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Ablauf</p>
           <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Vom ersten Gespräch zum laufenden System.</h2>
         </div>
-        <div class="mt-12 grid gap-4 md:grid-cols-3">
-          <article class="glass rounded-2xl p-6">
+        <ol class="editorial-list mt-12">
+          <li class="editorial-row">
             <p class="text-sm text-cyan-100">01</p>
-            <h3 class="mt-5 text-xl font-semibold text-white">Vorhaben klären</h3>
-            <p class="contrast-copy mt-4 text-sm leading-6">Was soll Kunden bringen, Zeit sparen oder intern sauberer laufen?</p>
-          </article>
-          <article class="glass rounded-2xl p-6">
+            <div>
+              <h3 class="text-xl font-semibold text-white">Vorhaben klären</h3>
+              <p class="contrast-copy mt-3 text-sm leading-6">Was soll Kunden bringen, Zeit sparen oder intern sauberer laufen?</p>
+            </div>
+          </li>
+          <li class="editorial-row">
             <p class="text-sm text-cyan-100">02</p>
-            <h3 class="mt-5 text-xl font-semibold text-white">Ersten Stand bauen</h3>
-            <p class="contrast-copy mt-4 text-sm leading-6">Ein Webauftritt, ein Ablauf oder ein Tool wird sichtbar und testbar.</p>
-          </article>
-          <article class="glass rounded-2xl p-6">
+            <div>
+              <h3 class="text-xl font-semibold text-white">Ersten Stand bauen</h3>
+              <p class="contrast-copy mt-3 text-sm leading-6">Ein Webauftritt, ein Ablauf oder ein Tool wird sichtbar und testbar.</p>
+            </div>
+          </li>
+          <li class="editorial-row">
             <p class="text-sm text-cyan-100">03</p>
-            <h3 class="mt-5 text-xl font-semibold text-white">Verbinden und betreuen</h3>
-            <p class="contrast-copy mt-4 text-sm leading-6">Kontaktwege, Daten und neue Funktionen wachsen kontrolliert weiter.</p>
-          </article>
-        </div>
+            <div>
+              <h3 class="text-xl font-semibold text-white">Verbinden und betreuen</h3>
+              <p class="contrast-copy mt-3 text-sm leading-6">Kontaktwege, Daten und neue Funktionen wachsen kontrolliert weiter.</p>
+            </div>
+          </li>
+        </ol>
         <div class="proof-strip mt-10">
           <div>
             <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Start</p>
@@ -824,7 +436,7 @@
             <p class="mt-2 font-semibold text-white">Weiterentwicklung bleibt mitgedacht.</p>
           </div>
         </div>
-        <a href="#kontakt" class="mini-cta mt-10">Website und Ablauf prüfen lassen</a>
+        <a href="#kontakt" class="text-link mt-10">Review anfragen</a>
       </div>
     </section>
 
@@ -836,9 +448,11 @@
             <h2 class="mt-4 max-w-3xl text-3xl font-semibold text-white sm:text-5xl">Schick den Link oder beschreibe kurz den Ablauf, der gerade nervt.</h2>
             <p class="contrast-copy mt-5 max-w-2xl text-base leading-7">Ob Kundenanfragen, Automatisierung, internes Tool oder technische Betreuung: Wir klären, womit man sinnvoll startet und was warten kann.</p>
           </div>
-          <div class="glass rounded-2xl p-5">
-            <p class="text-sm text-slate-400">Bevorzugter Kontakt</p>
-            <a href="mailto:kontakt@murati.systems?subject=Projektanfrage%20Systems%20Studio" class="cta-button mt-4 inline-flex w-full justify-center px-6 py-3 text-sm">Review-Anfrage senden</a>
+          <div class="border-l border-cyan-100/20 pl-5">
+            <p class="text-sm text-slate-400">Private Vorschau</p>
+            <p class="mt-4 border border-cyan-100/20 px-5 py-3 text-sm font-semibold text-white">
+              Kontaktweg wird vor dem Livegang mit einer verifizierten Adresse ergänzt.
+            </p>
             <div class="mt-5 border-t border-white/10 pt-5">
               <p class="font-semibold text-white">Was du kurz schicken kannst:</p>
               <ul class="contrast-copy mt-3 space-y-2 text-sm leading-6">
@@ -860,81 +474,6 @@
     </section>
   </main>
 
-  <script>
-    const canvas = document.getElementById('particle-field');
-    const ctx = canvas.getContext('2d');
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const root = document.documentElement;
-    const pointer = { x: .5, y: .18, active: false };
-    let w = 0, h = 0, dpr = 1, dots = [];
-    function moveLight(x, y) {
-      pointer.x = x / Math.max(1, window.innerWidth);
-      pointer.y = y / Math.max(1, window.innerHeight);
-      pointer.active = true;
-      if (reduce) return;
-      const dx = (pointer.x - .5);
-      const dy = (pointer.y - .18);
-      root.style.setProperty('--cursor-x', `${x}px`);
-      root.style.setProperty('--cursor-y', `${y}px`);
-      root.style.setProperty('--orbit-x', `${dx * 22}px`);
-      root.style.setProperty('--orbit-y', `${dy * 16}px`);
-      root.style.setProperty('--horizon-x', `${dx * -18}px`);
-      root.style.setProperty('--horizon-y', `${dy * 12}px`);
-      root.style.setProperty('--star-x', `${dx * -18}px`);
-      root.style.setProperty('--star-y', `${dy * -12}px`);
-      root.style.setProperty('--glow-opacity', `.82`);
-    }
-    function resize() {
-      dpr = Math.min(devicePixelRatio || 1, 2);
-      w = canvas.offsetWidth;
-      h = canvas.offsetHeight;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      dots = Array.from({ length: Math.min(120, Math.floor(w / 9)) }, () => ({
-        a: Math.random() * Math.PI * 2,
-        r: Math.random() * Math.min(w, h) * .52 + 40,
-        s: Math.random() * .0009 + .0002
-      }));
-    }
-    function draw() {
-      ctx.clearRect(0, 0, w, h);
-      const cx = w / 2, cy = h * .08;
-      const px = pointer.x * w;
-      const py = pointer.y * h;
-      dots.forEach((p) => {
-        if (!reduce) p.a += p.s * 16;
-        const baseX = cx + Math.cos(p.a) * p.r * 1.18;
-        const baseY = cy + Math.sin(p.a) * p.r * .34 + p.r * .08;
-        const dx = px - baseX;
-        const dy = py - baseY;
-        const dist = Math.max(1, Math.hypot(dx, dy));
-        const influence = pointer.active ? Math.max(0, 1 - dist / 260) : 0;
-        const x = baseX - (dx / dist) * influence * 18;
-        const y = baseY - (dy / dist) * influence * 10;
-        if (y < h * .84) {
-          ctx.fillStyle = `rgba(139,238,255,${.42 + influence * .38})`;
-          ctx.fillRect(x, y, 1.4 + influence * 1.4, 1.4 + influence * 1.4);
-          if (influence > .38) {
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.lineTo(px, py);
-            ctx.strokeStyle = `rgba(139,238,255,${influence * .16})`;
-            ctx.lineWidth = .8;
-            ctx.stroke();
-          }
-        }
-      });
-      requestAnimationFrame(draw);
-    }
-    window.addEventListener('resize', resize, { passive: true });
-    window.addEventListener('pointermove', (event) => moveLight(event.clientX, event.clientY), { passive: true });
-    window.addEventListener('pointerleave', () => {
-      pointer.active = false;
-      root.style.setProperty('--glow-opacity', `.58`);
-    }, { passive: true });
-    resize();
-    draw();
-  </script>
+  <script src="assets/site.js" defer></script>
 </body>
 </html>

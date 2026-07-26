@@ -1,5 +1,22 @@
 # QA Log — Murati Systems
 
+## 2026-07-26 Anti-Slop Reference Pass
+
+- Reworked the selected Orbital Core direction directly in source instead of generating another provider variant.
+- Replaced the Tailwind Play CDN with a pinned, reproducible static CSS build.
+- Split stable CSS and interaction code into cacheable assets.
+- Changed the centered two-action hero to an asymmetric hierarchy with one primary action.
+- Reduced decorative gradients from 27 to 2 and article/card regions from 18 to 9.
+- Converted service, founder, and process cards into editorial rows.
+- Replaced repeated calls to action with section-specific language.
+- Removed the unverified `kontakt@murati.systems` address after live domain availability showed that the domain is not yet owned.
+- Verification:
+  - `npm run build` — passed.
+  - `node /home/hermes/.hermes/profiles/lux/workspace/lux-engine/scripts/ai-slop-review.mjs build/index.html --gate` — 100/100 core + 50/50 excellence = 150/150, green.
+  - `node scripts/playwright-check.mjs http://127.0.0.1:8812 /tmp/murati-150-browser-hermes` from the Lux engine — green on desktop and mobile, with no failing accessibility checks, horizontal overflow, console errors, or broken anchors.
+  - `npm test` in the Lux engine as the `hermes` user — 78/78 passed.
+- Publication remains owner-gated until the working name, contact route, legal owner data, privacy text, and domain are approved.
+
 ## 2026-06-27 Gate 1 Directions
 - Chrome/CDP prepared with `bash /data/.openclaw/scripts/chrome-up.sh lux`.
 - Claude Design attempted but blocked by weekly quota reset. Fallback path used.

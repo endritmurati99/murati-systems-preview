@@ -1,0 +1,11 @@
+{
+  "name": "murati-systems-preview",
+  "private": true,
+  "scripts": {
+    "build": "npm run build:css",
+    "build:css": "tailwindcss -i ./src/site.css -o ./build/assets/site.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}
