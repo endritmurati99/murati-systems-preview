@@ -1,940 +1,372 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Murati Systems - Websites, Automatisierung und interne Tools</title>
-  <meta name="description" content="Murati Systems entwickelt Webauftritte, Automationen, interne Tools und betreute digitale Abläufe für Unternehmen, die weniger manuell nachfassen wollen." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root {
-      color-scheme: dark;
-      --cyan: #8beeff;
-      --blue: #4ca8ff;
-      --paper: #f7fcff;
-      --muted: #95a3ad;
-      --line: rgba(203, 243, 255, .14);
-      --cursor-x: 50vw;
-      --cursor-y: 18vh;
-      --orbit-x: 0px;
-      --orbit-y: 0px;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      overflow-x: hidden;
-      background: #020305;
-      color: var(--paper);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      letter-spacing: 0;
-    }
-    .stars {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        radial-gradient(circle at 10% 20%, rgba(255,255,255,.72) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 80% 10%, rgba(139,238,255,.68) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 72% 42%, rgba(255,255,255,.42) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 24% 65%, rgba(139,238,255,.38) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 48% 28%, rgba(255,255,255,.3) 0 1px, transparent 1.5px);
-      background-size: 320px 240px, 420px 320px, 280px 260px, 360px 300px, 510px 420px;
-      opacity: .5;
-      mask-image: linear-gradient(to bottom, black 0 72%, transparent);
-      transform: translate(var(--star-x, 0px), var(--star-y, 0px));
-      transition: transform .35s ease-out;
-      will-change: transform;
-    }
-    .cursor-glow {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(139,238,255,.24), rgba(76,168,255,.1) 12rem, transparent 25rem),
-        linear-gradient(115deg, transparent 0 42%, rgba(139,238,255,.035) 48%, transparent 55%);
-      mix-blend-mode: screen;
-      opacity: var(--glow-opacity, .64);
-      transition: opacity .35s ease;
-    }
-    .hero-orbit {
-      position: absolute;
-      left: 50%;
-      top: -28rem;
-      width: min(90rem, 148vw);
-      aspect-ratio: 1;
-      transform: translateX(calc(-50% + var(--orbit-x))) translateY(var(--orbit-y));
-      border-radius: 9999px;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0 42%, rgba(139,238,255,.06) 43%, rgba(139,238,255,.2) 44%, transparent 47%),
-        conic-gradient(from 210deg, transparent 0deg, rgba(139,238,255,.09) 46deg, rgba(139,238,255,.82) 78deg, rgba(255,255,255,.42) 102deg, transparent 140deg, transparent 222deg, rgba(76,168,255,.54) 258deg, transparent 296deg, transparent);
-      filter: drop-shadow(0 0 80px rgba(139,238,255,.32)) blur(.2px);
-      opacity: .95;
-      animation: spin 46s linear infinite;
-    }
-    .hero-orbit:before,
-    .hero-orbit:after {
-      content: "";
-      position: absolute;
-      inset: 12%;
-      border-radius: inherit;
-      border: 1px solid rgba(139,238,255,.16);
-      box-shadow: inset 0 0 90px rgba(139,238,255,.08), 0 0 70px rgba(76,168,255,.08);
-    }
-    .hero-orbit:after {
-      inset: 26%;
-      border-color: rgba(255,255,255,.09);
-      transform: rotate(24deg);
-    }
-    .event-horizon {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      width: min(56rem, 100vw);
-      height: 27rem;
-      transform: translateX(calc(-50% + var(--horizon-x, 0px))) translateY(var(--horizon-y, 0px));
-      background: radial-gradient(ellipse at 50% 0%, rgba(139,238,255,.22), rgba(76,168,255,.08) 30%, transparent 70%);
-      filter: blur(38px);
-      opacity: .95;
-      pointer-events: none;
-    }
-    #particle-field {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      opacity: .7;
-    }
-    @keyframes spin { to { transform: translateX(calc(-50% + var(--orbit-x))) translateY(var(--orbit-y)) rotate(360deg); } }
-    .brand-mark {
-      position: relative;
-      display: grid;
-      height: 2.9rem;
-      width: 2.9rem;
-      place-items: center;
-      overflow: hidden;
-      flex: 0 0 auto;
-      border-radius: 1rem;
-      border: 1px solid rgba(203,243,255,.2);
-      background:
-        radial-gradient(circle at 50% 8%, rgba(139,238,255,.28), transparent 54%),
-        linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 0 38px rgba(139,238,255,.1);
-    }
-    .brand-mark svg {
-      height: 2rem;
-      width: 2rem;
-      overflow: visible;
-    }
-    .glass {
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.024));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 24px 70px rgba(0,0,0,.34);
-      backdrop-filter: blur(14px);
-    }
-    .core-pill {
-      border: 1px solid rgba(139,238,255,.16);
-      background: rgba(139,238,255,.055);
-    }
-    .hero-content {
-      transform: translateY(-2.8rem);
-    }
-    .system-path {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: .55rem;
-      color: rgba(222, 247, 255, .76);
-      font-size: .82rem;
-    }
-    .system-path span {
-      border-bottom: 1px solid rgba(139,238,255,.28);
-      padding: .25rem .05rem .4rem;
-    }
-    .cta-line {
-      display: inline-flex;
-      align-items: center;
-      gap: .6rem;
-      color: rgba(222,247,255,.74);
-      font-size: .9rem;
-    }
-    .cta-line:before {
-      content: "";
-      height: .45rem;
-      width: .45rem;
-      border-radius: 999px;
-      background: var(--cyan);
-      box-shadow: 0 0 24px rgba(139,238,255,.9);
-    }
-    .word-row {
-      border-top: 1px solid rgba(203,243,255,.12);
-      display: grid;
-      gap: 1rem;
-      padding: 1.35rem 0;
-    }
-    .word-row:first-child { border-top: 0; padding-top: 0; }
-    .section-band {
-      position: relative;
-      border-block: 1px solid rgba(255,255,255,.1);
-      background:
-        radial-gradient(circle at 12% 12%, rgba(139,238,255,.11), transparent 19rem),
-        linear-gradient(180deg, #070b0f 0%, #030507 100%);
-    }
-    .section-band:before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(139,238,255,.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(139,238,255,.04) 1px, transparent 1px);
-      background-size: 54px 54px;
-      mask-image: radial-gradient(circle at 50% 40%, black, transparent 75%);
-      opacity: .38;
-    }
-    .service-grid {
-      display: grid;
-      gap: 1rem;
-    }
-    .service-card {
-      min-height: 14rem;
-      border: 1px solid rgba(203,243,255,.18);
-      border-radius: 1.35rem;
-      background:
-        radial-gradient(circle at 16% 10%, rgba(139,238,255,.12), transparent 12rem),
-        rgba(255,255,255,.045);
-      padding: 1.4rem;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 24px 70px rgba(0,0,0,.3);
-    }
-    .service-card p,
-    .contrast-copy {
-      color: #b8c5cf;
-    }
-    .mini-cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      border: 1px solid rgba(139,238,255,.28);
-      background: rgba(139,238,255,.08);
-      padding: .8rem 1rem;
-      color: #f4fdff;
-      font-size: .9rem;
-      font-weight: 700;
-      transition: border-color .2s ease, background .2s ease, transform .2s ease;
-    }
-    .mini-cta:hover {
-      border-color: rgba(139,238,255,.6);
-      background: rgba(139,238,255,.14);
-      transform: translateY(-1px);
-    }
-    .proof-strip {
-      display: grid;
-      gap: 1px;
-      overflow: hidden;
-      border: 1px solid rgba(203,243,255,.12);
-      border-radius: 1.2rem;
-      background: rgba(203,243,255,.12);
-    }
-    .proof-strip div {
-      background: rgba(2,3,5,.74);
-      padding: 1rem;
-    }
-    .case-grid {
-      display: grid;
-      gap: 1rem;
-    }
-    .case-card {
-      position: relative;
-      overflow: hidden;
-      min-height: 18rem;
-      border: 1px solid rgba(203,243,255,.16);
-      border-radius: 1.4rem;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,.065), rgba(255,255,255,.024)),
-        radial-gradient(circle at 82% 10%, rgba(139,238,255,.13), transparent 13rem);
-      padding: 1.35rem;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 28px 78px rgba(0,0,0,.25);
-    }
-    .case-card:before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(90deg, transparent, rgba(139,238,255,.12), transparent);
-      transform: translateX(-100%);
-      opacity: .35;
-      transition: transform .8s ease;
-    }
-    .case-card:hover:before {
-      transform: translateX(100%);
-    }
-    .case-card .label,
-    .principle-card .label {
-      color: rgba(139,238,255,.76);
-      font-size: .72rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-    .case-card dl {
-      display: grid;
-      gap: .55rem;
-      margin-top: 1.2rem;
-    }
-    .case-card dt {
-      color: #f7fcff;
-      font-size: .78rem;
-      font-weight: 800;
-    }
-    .case-card dd {
-      margin: 0;
-      color: #b8c5cf;
-      font-size: .9rem;
-      line-height: 1.55;
-    }
-    .review-panel {
-      border: 1px solid rgba(139,238,255,.2);
-      border-radius: 1.5rem;
-      background:
-        radial-gradient(circle at 10% 0%, rgba(139,238,255,.16), transparent 18rem),
-        rgba(255,255,255,.045);
-      padding: 1.5rem;
-    }
-    .review-steps {
-      display: grid;
-      gap: 1px;
-      overflow: hidden;
-      border: 1px solid rgba(203,243,255,.14);
-      border-radius: 1rem;
-      background: rgba(203,243,255,.14);
-    }
-    .review-steps div {
-      background: rgba(2,3,5,.78);
-      padding: 1rem;
-    }
-    .principles-grid {
-      display: grid;
-      gap: 1rem;
-    }
-    .principle-card {
-      border-top: 1px solid rgba(203,243,255,.18);
-      padding-top: 1.1rem;
-    }
-    .innovation-core {
-      position: relative;
-      min-height: 25rem;
-      overflow: hidden;
-      border-radius: 1.5rem;
-      border: 1px solid var(--line);
-      background:
-        radial-gradient(circle at 50% 48%, rgba(139,238,255,.2), transparent 11rem),
-        radial-gradient(circle at 50% 48%, rgba(76,168,255,.16), transparent 17rem),
-        rgba(255,255,255,.03);
-    }
-    .innovation-core:before,
-    .innovation-core:after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 22rem;
-      aspect-ratio: 1;
-      border-radius: 999px;
-      border: 1px solid rgba(139,238,255,.18);
-      transform: translate(-50%, -50%) rotate(18deg);
-    }
-    .innovation-core:after {
-      width: 15rem;
-      transform: translate(-50%, -50%) rotate(-18deg);
-      border-color: rgba(255,255,255,.12);
-    }
-    .node {
-      position: absolute;
-      z-index: 2;
-      width: 10rem;
-      border-radius: 1rem;
-      border: 1px solid rgba(203,243,255,.14);
-      background: rgba(4, 8, 12, .72);
-      padding: .85rem;
-      box-shadow: 0 18px 54px rgba(0,0,0,.34);
-    }
-    .node strong { display: block; font-size: .92rem; color: white; }
-    .node span { display: block; margin-top: .3rem; color: #8fa0aa; font-size: .72rem; line-height: 1.35; }
-    .scanline {
-      position: absolute;
-      inset: auto 0 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(139,238,255,.7), transparent);
-      opacity: .8;
-    }
-    .cta-button {
-      border-radius: 999px;
-      background: #fff;
-      color: #071017;
-      font-weight: 750;
-      transition: background .2s ease, transform .2s ease;
-    }
-    .cta-button:hover { background: #dff9ff; transform: translateY(-1px); }
-    .outline-button {
-      border-radius: 999px;
-      border: 1px solid rgba(203,243,255,.18);
-      color: white;
-      transition: border-color .2s ease, background .2s ease, transform .2s ease;
-    }
-    .outline-button:hover {
-      border-color: rgba(139,238,255,.48);
-      background: rgba(139,238,255,.08);
-      transform: translateY(-1px);
-    }
-    @media (max-width: 700px) {
-      .hero-orbit { top: -17.5rem; width: 55rem; }
-      .event-horizon { height: 19rem; }
-      .hero-content { transform: translateY(-1rem); }
-      .innovation-core { min-height: 31rem; }
-      .node { width: 8.8rem; }
-    }
-    @media (min-width: 760px) {
-      .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .proof-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .case-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .case-card.featured { grid-column: span 2; }
-      .review-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .principles-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .hero-orbit { animation: none; }
-      #particle-field { display: none; }
-      .stars { transform: none !important; }
-      .cursor-glow { display: none; }
-      *, *:before, *:after { transition: none !important; }
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Murati Systems – Websites für Betriebe im Ruhrgebiet | Dortmund</title>
+  <meta name="description" content="Websites für Handwerk, Praxen und Dienstleister im Ruhrgebiet. Kostenloser Website-Check mit 3 Schwachstellen, 3 Verbesserungen und 1 Empfehlung in 48 Stunden. Festpreise ab 790 €. Murati Systems aus Dortmund.">
+  <link rel="canonical" href="https://muratisystems.de/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content="Murati Systems – Websites für Betriebe im Ruhrgebiet">
+  <meta property="og:description" content="Klare Websites mit Kontaktweg, Festpreisen und Betreuung. Kostenloser Website-Check.">
+  <meta property="og:url" content="https://muratisystems.de/">
+  <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1214" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script>
+    // Theme vor dem ersten Zeichnen setzen: ?theme=dark|light > gespeicherte Wahl > Systemeinstellung.
+    (function () {
+      var t = new URLSearchParams(location.search).get("theme");
+      try { if (!t) t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "dark" && t !== "light") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/tokens.css">
+  <link rel="stylesheet" href="assets/site.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Murati Systems",
+    "description": "Websites, Anfrage-Automatisierung und Betreuung für lokale Betriebe im Ruhrgebiet.",
+    "url": "https://muratisystems.de/",
+    "email": "kontakt@muratisystems.de",
+    "telephone": "+49 162 7760311",
+    "founder": "Endrit Murati",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Enscheder Straße 5",
+      "postalCode": "44145",
+      "addressLocality": "Dortmund",
+      "addressCountry": "DE"
+    },
+    "areaServed": ["Dortmund", "Ruhrgebiet"],
+    "priceRange": "ab 790 €"
+  }
+  </script>
 </head>
 <body>
-  <div class="stars" aria-hidden="true"></div>
-  <div class="cursor-glow" aria-hidden="true"></div>
-  <main id="top" class="relative isolate overflow-hidden">
-    <section class="relative min-h-[92vh] overflow-hidden px-5 pb-10 sm:px-8">
-      <canvas id="particle-field" aria-hidden="true"></canvas>
-      <div class="hero-orbit" aria-hidden="true"></div>
-      <div class="event-horizon" aria-hidden="true"></div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2A9.7 9.7 0 0 0 3.7 16.9L2.3 21.8l5-1.3A9.7 9.7 0 1 0 12 2.2Zm0 17.7c-1.5 0-2.9-.4-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 19.9Zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1l-.5-.2Z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3.5 6.5h17v11h-17z M3.8 7l8.2 6 8.2-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5h2.7l1.4 4-1.9 1.3a11 11 0 0 0 6.4 6.4l1.3-1.9 4 1.4v2.7a2 2 0 0 1-2.2 2A16 16 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21Z M12 12.2a2.6 2.6 0 1 0 0-5.2 2.6 2.6 0 0 0 0 5.2Z" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-site" viewBox="0 0 24 24"><path d="M3.5 5.5h17v13h-17z M3.5 9h17 M7 7.3h.01 M9.5 7.3h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-flow" viewBox="0 0 24 24"><path d="M4 6h6v5H4z M14 13h6v5h-6z M10 8.5h3a2 2 0 0 1 2 2V13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-care" viewBox="0 0 24 24"><path d="M12 3.5l7 3v5.2c0 4.2-3 7.6-7 8.8-4-1.2-7-4.6-7-8.8V6.5z M8.8 12l2.2 2.2 4.2-4.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><path d="M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Z M12 2.5v2 M12 19.5v2 M2.5 12h2 M19.5 12h2 M5.3 5.3l1.4 1.4 M17.3 17.3l1.4 1.4 M5.3 18.7l1.4-1.4 M17.3 6.7l1.4-1.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-logo" viewBox="0 0 44 44"><path d="M10 31V14l6.4 10.4L22 14l5.6 10.4L34 14v17" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="34.2" cy="8.6" r="2.6" style="fill: var(--color-accent-secondary)"/></symbol>
+  </svg>
 
-      <header class="relative z-10 mx-auto flex max-w-7xl items-center justify-between py-5">
-        <a href="#top" class="flex min-w-0 items-center gap-3" aria-label="Systems Studio">
-          <span class="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 44 44" role="img">
-              <ellipse cx="22" cy="22" rx="18" ry="8.4" fill="none" stroke="rgba(139,238,255,.42)" stroke-width="1.15" transform="rotate(-24 22 22)" />
-              <path d="M10 30V15l6.4 10.2L22 15l5.6 10.2L34 15v15" fill="none" stroke="rgba(139,238,255,.36)" stroke-width="5.8" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M10 30V15l6.4 10.2L22 15l5.6 10.2L34 15v15" fill="none" stroke="#f3fdff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
-              <circle cx="34.4" cy="14.8" r="2.4" fill="#8beeff" />
-            </svg>
-          </span>
-          <span class="leading-none">
-            <span class="block text-sm font-semibold text-white">Murati</span>
-            <span class="block text-xs uppercase tracking-[.24em] text-cyan-100/65">Systems</span>
-          </span>
-        </a>
-        <nav class="hidden items-center gap-5 text-sm text-slate-300 md:flex">
-          <a class="hover:text-white" href="#angebot">Angebot</a>
-          <a class="hover:text-white" href="#beispiele">Beispiele</a>
-          <a class="hover:text-white" href="#review">Review</a>
-          <a class="hover:text-white" href="#prozess">Ablauf</a>
-          <a class="hover:text-white" href="#kontakt">Kontakt</a>
-        </nav>
-        <a href="#kontakt" class="outline-button px-4 py-2 text-sm font-semibold"><span class="sm:hidden">Prüfen</span><span class="hidden sm:inline">Website und Ablauf prüfen</span></a>
-      </header>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
 
-      <div class="relative z-10 mx-auto flex min-h-[calc(92vh-5rem)] max-w-6xl flex-col items-center justify-center text-center">
-        <div class="hero-content flex flex-col items-center">
-          <div class="core-pill mb-6 inline-flex items-center gap-3 rounded-full px-3 py-2 text-xs text-cyan-50">
-            <span class="h-1.5 w-1.5 rounded-full bg-cyan-100 shadow-[0_0_24px_rgba(139,238,255,.9)]"></span>
-            Websites, Automatisierung und interne Tools
-          </div>
-          <h1 class="max-w-5xl text-5xl font-semibold leading-[.92] tracking-normal text-white sm:text-7xl lg:text-8xl">
-            Websites, Automationen und interne Tools für Betriebe.
-          </h1>
-          <p class="mt-7 max-w-2xl text-base leading-8 text-slate-300 sm:text-xl">
-            Wir bauen nicht nur die Seite, sondern auch den Ablauf dahinter: Kontaktweg, einfache Automatisierung, interne Übersicht und technische Betreuung.
-          </p>
-          <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row">
-            <a href="#kontakt" class="cta-button px-6 py-3 text-sm">Website und Ablauf prüfen lassen</a>
-            <a href="#beispiele" class="outline-button px-6 py-3 text-sm font-semibold">Beispielprojekte ansehen</a>
-          </div>
-          <div class="system-path mt-10 max-w-3xl">
-            <span>Mehr passende Anfragen.</span>
-            <span>Weniger Handarbeit.</span>
-            <span>Saubere Betreuung.</span>
-          </div>
-        </div>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="#top" aria-label="Murati Systems – zur Startseite">
+        <svg aria-hidden="true"><use href="#i-logo"/></svg>
+        <span class="brand-text"><strong>Murati</strong><span>Systems</span></span>
+      </a>
+      <nav class="nav" aria-label="Hauptnavigation">
+        <a href="#check">Website-Check</a>
+        <a href="#preise">Preise</a>
+        <a href="#ablauf">Ablauf</a>
+        <a href="#faq">FAQ</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Hell/Dunkel umschalten">
+          <svg class="icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+          <svg class="icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+        </button>
+        <a class="btn btn-primary header-cta" href="#check">Kostenloser Check</a>
+        <details class="menu">
+          <summary aria-label="Menü öffnen"><svg aria-hidden="true"><use href="#i-menu"/></svg></summary>
+          <nav class="menu-panel" aria-label="Mobile Navigation">
+            <a href="#check">Kostenloser Website-Check</a>
+            <a href="#preise">Preise</a>
+            <a href="#fuer-wen">Für wen</a>
+            <a href="#ablauf">Ablauf</a>
+            <a href="#faq">FAQ</a>
+            <a href="#kontakt">Kontakt</a>
+          </nav>
+        </details>
       </div>
-    </section>
+    </div>
+  </header>
 
-    <section id="angebot" class="section-band px-5 py-20 sm:px-8">
-      <div class="relative mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.85fr_1.15fr]">
+  <main id="inhalt">
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
         <div>
-          <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Was wir machen</p>
-          <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Wir bauen nicht nur die Seite, sondern auch den Ablauf dahinter.</h2>
-          <p class="contrast-copy mt-5 max-w-xl text-base leading-7">
-            Viele Betriebe brauchen keinen großen Relaunch, sondern einen klaren Weg vom ersten Klick bis zur nächsten Aufgabe.
-          </p>
-          <a href="#review" class="mini-cta mt-8">Website und Ablauf prüfen lassen</a>
+          <p class="eyebrow">Webdesign aus Dortmund für Betriebe im Ruhrgebiet</p>
+          <h1 style="margin-top: var(--space-6)">Websites für Betriebe im Ruhrgebiet, die den nächsten Schritt <em>einfach</em> machen.</h1>
+          <p class="lead">Murati Systems entwickelt klare, schnelle Websites für Handwerk, Praxen und lokale Dienstleister – mit verständlichen Leistungen, direktem Kontakt und auf Wunsch einfachen Automatisierungen dahinter.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#check">Kostenlosen Website-Check anfordern</a>
+            <a class="btn btn-whatsapp" href="https://wa.me/491627760311?text=Hallo%20Murati%20Systems%2C%20ich%20interessiere%20mich%20f%C3%BCr%20den%20Website-Check." target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg>Per WhatsApp schreiben</a>
+          </div>
+          <p class="microcopy">3 Schwachstellen · 3 schnelle Verbesserungen · 1 klare Empfehlung · Antwort innerhalb von 48 Stunden</p>
         </div>
-        <div class="service-grid">
-          <article class="service-card">
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Kundenanfragen</p>
-            <h3 class="mt-5 text-2xl font-semibold text-white">Seiten, die erklären, was ein Kunde senden soll.</h3>
-            <p class="mt-4 text-sm leading-6">Angebot, Kontaktweg und erste Einordnung werden so gebaut, dass die Anfrage brauchbarer ankommt.</p>
-          </article>
-          <article class="service-card">
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Automatisierung</p>
-            <h3 class="mt-5 text-2xl font-semibold text-white">Weniger manuell nachfassen.</h3>
-            <p class="mt-4 text-sm leading-6">Formulare, E-Mail, Tabellen und Benachrichtigungen werden verbunden, damit Routinearbeit nicht liegen bleibt.</p>
-          </article>
-          <article class="service-card">
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Interne Systeme</p>
-            <h3 class="mt-5 text-2xl font-semibold text-white">Kleine Tools für echte Abläufe.</h3>
-            <p class="mt-4 text-sm leading-6">Übersichten, Datenpflege, Freigaben und Aufgabenlisten werden passend zum Betrieb gebaut.</p>
-          </article>
-          <article class="service-card">
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Betrieb</p>
-            <h3 class="mt-5 text-2xl font-semibold text-white">Betreuung nach dem ersten Stand.</h3>
-            <p class="mt-4 text-sm leading-6">Hosting, Wartung, Fehlerprüfung und Weiterentwicklung bleiben planbar, wenn das System wächst.</p>
-          </article>
-        </div>
+        <aside class="hero-card" aria-labelledby="hero-card-title">
+          <p class="eyebrow"><span class="num">Beispiel</span> So sieht Ihr kostenloser Check aus</p>
+          <h2 id="hero-card-title" style="margin-top: var(--space-5)">Website-Check: Malerbetrieb</h2>
+          <dl class="sample-check">
+            <div><dt>Schwachstelle</dt><dd>Auf dem Handy steht die Telefonnummer erst ganz unten.</dd></div>
+            <div><dt>Schnelle Verbesserung</dt><dd>Anruf- und WhatsApp-Button fest in den oberen Bereich.</dd></div>
+            <div><dt>Empfehlung</dt><dd>Leistungen nach Kundenanliegen ordnen, nicht nach Fachbegriffen.</dd></div>
+          </dl>
+          <p class="muted small">Muster – kein echter Kundenfall.</p>
+        </aside>
+      </div>
+      <div class="wrap">
+        <ul class="trust-bar" aria-label="Das Wichtigste auf einen Blick">
+          <li><svg aria-hidden="true"><use href="#i-pin"/></svg>Aus Dortmund</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Klare Festpreise</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Antwort auf den Check innerhalb von 48 Stunden</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Betreuung ohne Agentur-Umwege</li>
+        </ul>
       </div>
     </section>
 
-    <section class="relative px-5 py-16 sm:px-8">
-      <div class="mx-auto max-w-7xl">
-        <div class="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
-          <div>
-            <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Erster Einstieg</p>
-            <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Nach dem ersten Blick weißt du, womit du starten solltest.</h2>
-          </div>
-          <p class="contrast-copy text-base leading-7">
-            Der Review ist bewusst klein gehalten: Link schicken, Engpass beschreiben, dann bekommst du eine klare Startempfehlung statt eines großen Agentur-Pakets.
-          </p>
-        </div>
-        <div class="proof-strip mt-10">
-          <div>
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">1</p>
-            <p class="mt-2 font-semibold text-white">3 konkrete Schwachstellen im aktuellen Auftritt oder Ablauf.</p>
-          </div>
-          <div>
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">2</p>
-            <p class="mt-2 font-semibold text-white">3 schnelle Verbesserungen, die ohne Großprojekt starten können.</p>
-          </div>
-          <div>
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">3</p>
-            <p class="mt-2 font-semibold text-white">Eine Empfehlung: Seite verbessern, Ablauf ordnen oder Tool bauen.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="beispiele" class="relative px-5 py-20 sm:px-8">
-      <div class="mx-auto max-w-7xl">
-        <div class="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-end">
-          <div>
-            <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Beispiel-Setups</p>
-            <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Typische Projekte, mit denen wir starten.</h2>
-          </div>
-          <div>
-            <p class="contrast-copy text-base leading-7">
-              Noch keine öffentlichen Referenzen. Deshalb zeigen wir typische Projektarten, Demo-Ansichten und klare Einstiegspunkte.
-            </p>
-            <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-              <a href="#review" class="mini-cta">Website und Ablauf prüfen lassen</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="case-grid mt-12">
-          <article class="case-card featured">
-            <p class="label">Beispiel 01</p>
-            <h3 class="mt-4 text-2xl font-semibold text-white">Anfrage-System für Dienstleister</h3>
-            <dl>
-              <div>
-                <dt>Problem</dt>
-                <dd>Die Seite sieht ordentlich aus, aber Besucher wissen nicht, was sie senden sollen. Anfragen kommen ungeordnet an.</dd>
-              </div>
-              <div>
-                <dt>Lösung</dt>
-                <dd>Eine klare Angebotsseite, ein verständlicher Kontaktweg und eine einfache Einordnung über WhatsApp, Formular oder E-Mail.</dd>
-              </div>
-              <div>
-                <dt>Wirkung</dt>
-                <dd>Der erste Kontakt wird konkreter. Das Team kann schneller reagieren und muss weniger nachfragen.</dd>
-              </div>
-            </dl>
-          </article>
-
-          <article class="case-card">
-            <p class="label">Beispiel 02</p>
-            <h3 class="mt-4 text-xl font-semibold text-white">Interne Übersicht statt Tabellenchaos</h3>
-            <dl>
-              <div>
-                <dt>Problem</dt>
-                <dd>Status, Aufgaben und Dateien liegen verstreut in Chats, Tabellen und Postfächern.</dd>
-              </div>
-              <div>
-                <dt>Lösung</dt>
-                <dd>Ein kleines internes Tool mit Rollen, Listen, Aufgaben und klaren Zuständigkeiten.</dd>
-              </div>
-              <div>
-                <dt>Wirkung</dt>
-                <dd>Weniger Suchen, bessere Übergaben und mehr Überblick im Tagesgeschäft.</dd>
-              </div>
-            </dl>
-          </article>
-
-          <article class="case-card">
-            <p class="label">Beispiel 03</p>
-            <h3 class="mt-4 text-xl font-semibold text-white">Automatisierter Erstkontakt</h3>
-            <dl>
-              <div>
-                <dt>Problem</dt>
-                <dd>Jede neue Anfrage muss manuell gelesen, sortiert und beantwortet werden.</dd>
-              </div>
-              <div>
-                <dt>Lösung</dt>
-                <dd>Ein Anfrageweg mit Zusammenfassung, Vorqualifizierung und klarer nächster Aktion.</dd>
-              </div>
-              <div>
-                <dt>Wirkung</dt>
-                <dd>Schneller reagieren, ohne sofort ein großes System bauen zu müssen.</dd>
-              </div>
-            </dl>
-          </article>
-
-          <article class="case-card">
-            <p class="label">Beispiel 04</p>
-            <h3 class="mt-4 text-xl font-semibold text-white">Betrieb und Weiterentwicklung</h3>
-            <dl>
-              <div>
-                <dt>Problem</dt>
-                <dd>Website oder Tool sind live, aber Technik, Updates und kleine Verbesserungen bleiben liegen.</dd>
-              </div>
-              <div>
-                <dt>Lösung</dt>
-                <dd>Betreuung mit Hosting, Wartung, Fehlerprüfung und planbaren Erweiterungen.</dd>
-              </div>
-              <div>
-                <dt>Wirkung</dt>
-                <dd>Das System bleibt nutzbar und wächst kontrolliert statt zufällig.</dd>
-              </div>
-            </dl>
-          </article>
-
-          <article class="case-card">
-            <p class="label">Beispiel 05</p>
-            <h3 class="mt-4 text-xl font-semibold text-white">Review: Webauftritt und Ablauf</h3>
-            <dl>
-              <div>
-                <dt>Problem</dt>
-                <dd>Es ist unklar, ob die Seite, der Kontaktweg, der interne Ablauf oder alles zusammen bremst.</dd>
-              </div>
-              <div>
-                <dt>Lösung</dt>
-                <dd>Kurzer Blick auf Angebot, Klickweg, Anfrageweg und manuelle Arbeit dahinter.</dd>
-              </div>
-              <div>
-                <dt>Wirkung</dt>
-                <dd>Du bekommst eine klare Empfehlung für den ersten Schritt: Seite verbessern, Ablauf ordnen oder Tool bauen.</dd>
-              </div>
-            </dl>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="review" class="section-band px-5 py-20 sm:px-8">
-      <div class="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+    <section class="section" id="check" aria-labelledby="check-title">
+      <div class="wrap check-grid">
         <div>
-          <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Review-Einstieg</p>
-          <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Erst klären, was bremst. Dann bauen.</h2>
-          <p class="contrast-copy mt-5 text-base leading-7">
-            Der einfachste Einstieg ist kein großes Projekt. Wir schauen zuerst, wo Kunden abspringen, wo Arbeit hängen bleibt und welcher digitale Baustein wirklich Sinn ergibt.
-          </p>
-          <a href="#kontakt" class="mini-cta mt-8">Website und Ablauf prüfen lassen</a>
+          <p class="eyebrow"><span class="num">01</span> Kostenloser Website-Check</p>
+          <h2 id="check-title" style="margin-top: var(--space-6)">Schicken Sie uns Ihre Website. Wir sagen Ihnen, wo Sie zuerst ansetzen sollten.</h2>
+          <p class="lead" style="margin-top: var(--space-6)">Für den Check brauchen wir keine lange Projektbeschreibung. Senden Sie uns einfach Ihre Website und kurz, was Sie daran aktuell stört.</p>
+          <ol class="steps-inline">
+            <li><div><strong>3 konkrete Schwachstellen</strong><p class="muted small">Was Interessenten heute abhält – auf dem Handy und am Computer.</p></div></li>
+            <li><div><strong>3 schnelle Verbesserungen</strong><p class="muted small">Dinge, die Sie sofort ändern können, auch ohne uns.</p></div></li>
+            <li><div><strong>1 klare Empfehlung</strong><p class="muted small">Womit Sie aus unserer Sicht zuerst anfangen sollten.</p></div></li>
+          </ol>
+          <p class="muted small" style="margin-top: var(--space-7)">Der Check ist kostenlos und verpflichtet Sie zu nichts. Ein Beratungsgespräch ist danach nicht nötig.</p>
         </div>
-        <div class="review-panel">
-          <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Was passiert beim Klick?</p>
-          <div class="review-steps mt-5">
-            <div>
-              <p class="font-semibold text-white">1. Kurz schildern</p>
-              <p class="contrast-copy mt-2 text-sm leading-6">Du schickst Link, Ziel und das Problem: mehr Anfragen, weniger manuelle Arbeit oder besserer Überblick.</p>
+        <form class="form" id="check-form" data-to="kontakt@muratisystems.de" novalidate>
+          <div class="field">
+            <label for="f-site">Ihre Website</label>
+            <input id="f-site" name="website" inputmode="url" autocomplete="url" placeholder="www.ihr-betrieb.de">
+            <span class="hint">Noch keine Website? Dann beschreiben Sie Ihren Betrieb unten kurz.</span>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-name">Name *</label>
+              <input id="f-name" name="name" autocomplete="name" required>
             </div>
-            <div>
-              <p class="font-semibold text-white">2. Wir prüfen den Startpunkt</p>
-              <p class="contrast-copy mt-2 text-sm leading-6">Webauftritt, Kontaktweg und interner Ablauf werden als ein System betrachtet.</p>
-            </div>
-            <div>
-              <p class="font-semibold text-white">3. Du bekommst eine klare Empfehlung</p>
-              <p class="contrast-copy mt-2 text-sm leading-6">Kein Ratespiel: wir sagen, ob Seite, Automatisierung, Tool oder Betreuung zuerst dran ist.</p>
+            <div class="field">
+              <label for="f-mail">E-Mail *</label>
+              <input id="f-mail" name="email" type="email" autocomplete="email" required>
             </div>
           </div>
-          <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-            <a href="#kontakt" class="cta-button inline-flex justify-center px-6 py-3 text-sm">Website und Ablauf prüfen lassen</a>
-            <a href="#beispiele" class="outline-button inline-flex justify-center px-6 py-3 text-sm font-semibold">Beispielprojekte ansehen</a>
+          <div class="field">
+            <label for="f-msg">Was möchten Sie verbessern?</label>
+            <textarea id="f-msg" name="nachricht" placeholder="z. B. Über die Website kommen kaum Anfragen."></textarea>
+            <span class="hint">Bitte keine Gesundheits- oder Patientendaten eintragen.</span>
           </div>
+          <div class="field">
+            <label for="f-tel">Telefon oder WhatsApp <span class="muted">(optional)</span></label>
+            <input id="f-tel" name="telefon" type="tel" autocomplete="tel">
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">Kostenlosen Check anfordern</button>
+          <p class="consent">Wir verwenden Ihre Angaben ausschließlich zur Bearbeitung Ihrer Anfrage. Weitere Informationen finden Sie in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="preise" aria-labelledby="preise-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow"><span class="num">02</span> Pakete &amp; Preise</p>
+          <h2 id="preise-title">Klare Preise, bevor Sie etwas beauftragen.</h2>
+          <p class="lead">Vor Projektbeginn erhalten Sie einen klar definierten Umfang und einen Festpreis.</p>
+        </div>
+        <div class="pricing pricing-2">
+          <article class="plan featured">
+            <h3>Start</h3>
+            <p class="price"><small>ab</small> 790 €</p>
+            <p><strong>Alles Wichtige auf einer starken Seite.</strong></p>
+            <p class="muted small">Für Betriebe mit einem klaren Angebot, die professionell auftreten und Interessenten ohne Umwege zum Kontakt führen möchten.</p>
+            <ul>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Konzeption und Gestaltung einer Inhaltsseite</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>fürs Handy optimiert, klare Seitenstruktur</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Kontaktweg per Formular, WhatsApp und Telefon</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>technische SEO-Grundlage</li>
+            </ul>
+            <p class="plan-note">Impressum und Datenschutz werden separat eingebunden. Rechtstexte werden nicht rechtlich erstellt oder geprüft.</p>
+            <a class="btn btn-primary" href="#check">Mit dem kostenlosen Check starten</a>
+          </article>
+          <article class="plan">
+            <h3>Betrieb</h3>
+            <p class="price"><small>ab</small> 1.490 €</p>
+            <p><strong>Mehr Platz für Leistungen, Unternehmen und Vertrauen.</strong></p>
+            <p class="muted small">Für Betriebe, die mehrere Leistungen sauber erklären und bei lokalen Interessenten professionell auftreten möchten.</p>
+            <ul>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>bis zu fünf Inhaltsseiten mit gemeinsamer Struktur</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>fürs Handy optimiert</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Kontaktformular</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>technische SEO-Basis für die lokale Suche</li>
+            </ul>
+            <p class="plan-note">Umfang und Inhalte werden vor Projektstart festgelegt. Besondere Integrationen und vollständiges Copywriting werden separat kalkuliert.</p>
+            <a class="btn btn-ghost" href="#check">Mit dem kostenlosen Check starten</a>
+          </article>
+        </div>
+        <div class="addon">
+          <h3>Website soll mehr können?</h3>
+          <dl class="addon-list">
+            <div><dt>Anfrage-Automatisierung <span>ab 690 €</span></dt><dd>Weniger Übertragen, Sortieren und Nachfragen: Formular, Eingangsbestätigung und strukturierte Weitergabe an E-Mail oder bestehende Listen. Für einen klar abgegrenzten Ablauf.</dd></div>
+            <div><dt>Betreuung Basis <span>49 € / Monat</span></dt><dd>Ein Ansprechpartner bleibt erreichbar: technische Fragen, laufende Prüfung und Unterstützung nach dem Go-live. Inhaltsänderungen separat.</dd></div>
+            <div><dt>Betreuung Plus <span>79 € / Monat</span></dt><dd>Wie Basis, zusätzlich ein fest vereinbartes kleines Kontingent für Änderungen pro Monat.</dd></div>
+            <div><dt>Interne Tools <span>ab 2.500 €</span></dt><dd>Kleine Werkzeuge für Abläufe, die heute über Listen und Zurufe laufen. Wir prüfen zuerst, ob ein eigenes Tool überhaupt die sinnvollste Lösung ist.</dd></div>
+          </dl>
+        </div>
+        <p class="price-note">Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</p>
+      </div>
+    </section>
+
+    <section class="section" id="fuer-wen" aria-labelledby="fuer-wen-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow"><span class="num">03</span> Für wen</p>
+          <h2 id="fuer-wen-title">Für Betriebe, deren Kunden schnell wissen wollen, wie sie Sie erreichen.</h2>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <span class="icon"><svg aria-hidden="true"><use href="#i-site"/></svg></span>
+            <h3>Handwerk</h3>
+            <p class="muted">Leistungen schnell erfassbar, mobil erreichbar, Anfrage mit Fotos oder konkretem Anliegen.</p>
+          </article>
+          <article class="card">
+            <span class="icon"><svg aria-hidden="true"><use href="#i-care"/></svg></span>
+            <h3>Praxen</h3>
+            <p class="muted">Leistungen, Standort, Erreichbarkeit und Kontakt ohne unnötige Werbesprache – und ohne Gesundheitsdaten über ein normales Kontaktformular.</p>
+          </article>
+          <article class="card">
+            <span class="icon"><svg aria-hidden="true"><use href="#i-flow"/></svg></span>
+            <h3>Lokale Dienstleister</h3>
+            <p class="muted">Angebot verständlich ordnen und Interessenten ohne Umwege zur Anfrage führen.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="leistungen" class="relative px-5 py-20 sm:px-8">
-      <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
-        <div class="innovation-core">
-          <div class="absolute left-1/2 top-1/2 z-[1] grid h-28 w-28 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-cyan-100/20 bg-black/50 text-center shadow-[0_0_80px_rgba(139,238,255,.22)]">
-              <span class="text-xs uppercase tracking-[.28em] text-cyan-100/70">System</span>
-            </div>
-            <div class="node left-[8%] top-[14%]">
-            <strong>Anfragen</strong>
-            <span>Webauftritt und Kontaktweg</span>
-          </div>
-          <div class="node right-[8%] top-[18%]">
-            <strong>Daten</strong>
-            <span>Formulare, Listen, E-Mail</span>
-          </div>
-          <div class="node bottom-[14%] left-[12%]">
-            <strong>Abläufe</strong>
-            <span>Automatisierung und Aufgaben</span>
-          </div>
-          <div class="node bottom-[12%] right-[10%]">
-            <strong>Betrieb</strong>
-            <span>Wartung und Weiterentwicklung</span>
-          </div>
+    <section class="section" id="arbeit" aria-labelledby="arbeit-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow"><span class="num">04</span> Arbeitsproben</p>
+          <h2 id="arbeit-title">So sieht unsere Arbeit aus.</h2>
+        </div>
+        <div class="examples">
+          <article class="example">
+            <span class="tag">Demo – kein Kundenprojekt</span>
+            <h3>Website für einen Handwerksbetrieb</h3>
+            <p class="muted small">Konzeptprojekt zur Darstellung von Aufbau, Mobilansicht und Anfrageweg.</p>
+            <dl>
+              <div><dt>Umfang</dt><dd>Paket Start</dd></div>
+              <div><dt>Schwerpunkt</dt><dd>Leistungen, Einsatzgebiet, Anruf- und WhatsApp-Button</dd></div>
+            </dl>
+          </article>
+          <article class="example">
+            <span class="tag">Muster</span>
+            <h3>Website-Check</h3>
+            <p class="muted small">Beispiel, wie wir Schwachstellen priorisieren – genau so bekommen Sie Ihre Auswertung.</p>
+            <dl>
+              <div><dt>Ergebnis</dt><dd>3 Schwachstellen, 3 Verbesserungen, 1 Empfehlung</dd></div>
+              <div><dt>Dauer</dt><dd>Antwort innerhalb von 48 Stunden</dd></div>
+            </dl>
+          </article>
+          <article class="example">
+            <span class="tag">Demo – kein Kundenprojekt</span>
+            <h3>Anfrageablauf</h3>
+            <p class="muted small">So kann aus einem Website-Formular eine strukturierte Anfrage werden.</p>
+            <dl>
+              <div><dt>Ablauf</dt><dd>Formular → Eingangsbestätigung → sortierte E-Mail → Eintrag in Ihrer Liste</dd></div>
+              <div><dt>Umfang</dt><dd>Anfrage-Automatisierung</dd></div>
+            </dl>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ablauf" aria-labelledby="ablauf-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow"><span class="num">05</span> Ablauf</p>
+          <h2 id="ablauf-title">So läuft ein Projekt ab.</h2>
+        </div>
+        <ol class="timeline">
+          <li><span class="step">1</span><h3>Anfrage und kurze Klärung</h3><p class="muted">Wir klären Ziel, Seitenumfang und benötigte Inhalte.</p></li>
+          <li><span class="step">2</span><h3>Festpreis</h3><p class="muted">Sie erhalten ein verbindliches Angebot mit klarem Umfang.</p></li>
+          <li><span class="step">3</span><h3>Entwurf und Korrektur</h3><p class="muted">Sie prüfen die Vorschau und geben Ihre Änderungswünsche gebündelt zurück.</p></li>
+          <li><span class="step">4</span><h3>Go-live</h3><p class="muted">Erst nach Ihrer Freigabe geht die Website unter Ihrer Domain online.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="faq" aria-labelledby="faq-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow"><span class="num">06</span> Häufige Fragen</p>
+          <h2 id="faq-title">Häufige Fragen</h2>
+        </div>
+        <div class="faq">
+          <details><summary>Was kostet eine Website bei Murati Systems?</summary><p>Ein kompakter Onepager startet bei 790 €. Ein Unternehmensauftritt mit bis zu fünf Inhaltsseiten startet bei 1.490 €. Vor Projektbeginn erhalten Sie einen klar definierten Umfang und Preis. Besondere Funktionen, vollständiges Copywriting oder Integrationen werden separat kalkuliert. Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</p></details>
+          <details><summary>Was bekomme ich beim kostenlosen Website-Check?</summary><p>Sie schicken uns den Link zu Ihrer aktuellen Website. Innerhalb von 48 Stunden erhalten Sie drei konkrete Schwachstellen, drei schnelle Verbesserungen und eine Empfehlung, womit Sie aus unserer Sicht zuerst anfangen sollten. Der Check ist kostenlos und verpflichtet Sie nicht zu einem Projekt.</p></details>
+          <details><summary>Muss ich danach ein Beratungsgespräch führen?</summary><p>Nein. Sie erhalten den Website-Check auch dann, wenn daraus kein Projekt entsteht. Wenn eine Überarbeitung sinnvoll ist, können wir anschließend Umfang und Preis besprechen.</p></details>
+          <details><summary>Wie läuft ein Website-Projekt ab?</summary><p>Zuerst klären wir Ziel, Seitenumfang und benötigte Inhalte. Danach erhalten Sie ein verbindliches Angebot. Wir setzen die vereinbarte Struktur um, Sie prüfen die Vorschau und geben Ihre Änderungswünsche gebündelt zurück. Erst nach Freigabe geht die Website unter Ihrer Domain online.</p></details>
+          <details><summary>Wie lange dauert die Erstellung?</summary><p>Das hängt vor allem vom Umfang ab und davon, wann Texte, Bilder und Freigaben vorliegen. Einen konkreten Zieltermin legen wir deshalb im Angebot fest.</p></details>
+          <details><summary>Muss ich Texte und Bilder fertig liefern?</summary><p>Sie müssen keine perfekten Webtexte vorbereiten. Wir benötigen aber die fachlichen Informationen zu Ihrem Unternehmen, Ihren Leistungen und Ihrem Kontaktweg. Wir strukturieren und redigieren diese für die Website. Vollständige Texterstellung oder Bildbeschaffung kann bei Bedarf separat vereinbart werden.</p></details>
+          <details><summary>Kann ich die Website später selbst bearbeiten?</summary><p>Unsere schlanken Websites werden in der Regel ohne klassisches CMS umgesetzt. Das hält Technik und Wartung übersichtlich, bedeutet aber auch, dass es kein WordPress-ähnliches Bearbeitungsmenü gibt. Änderungen können wir im Rahmen der Betreuung übernehmen; die vereinbarten Projektdateien bleiben nachvollziehbar dokumentiert.</p></details>
+          <details><summary>Was passiert mit Domain und Hosting?</summary><p>Ihre Domain bleibt auf Ihren Namen beziehungsweise Ihr Unternehmen registriert. Nach Projektabschluss erhalten Sie die vereinbarten Dateien und Zugänge. Eine laufende Betreuung ist optional.</p></details>
+          <details><summary>Können Sie auch Formulare und Abläufe automatisieren?</summary><p>Ja – wenn dadurch tatsächlich Arbeit entfällt. Ein sinnvoller erster Schritt kann zum Beispiel sein, Anfragen strukturiert zu erfassen, automatisch zu bestätigen und intern an der richtigen Stelle abzulegen. Komplexere Automatisierungen und interne Tools kalkulieren wir erst nach einer kurzen Anforderungsaufnahme.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="kontakt" aria-labelledby="kontakt-title">
+      <div class="wrap contact-grid">
+        <div>
+          <p class="eyebrow"><span class="num">07</span> Kontakt</p>
+          <h2 id="kontakt-title" style="margin-top: var(--space-6)">Lieber direkt schreiben?</h2>
+          <p class="lead" style="margin-top: var(--space-6)">Murati Systems ist ein inhabergeführtes IT-Einzelunternehmen aus Dortmund. Sie sprechen direkt mit dem, der Ihre Website baut.</p>
+          <a class="btn btn-primary" style="margin-top: var(--space-8)" href="#check">Kostenlosen Website-Check anfordern</a>
         </div>
         <div>
-          <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Systemlandkarte</p>
-          <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Website, Postfach, Tabellen und Aufgaben gehören in einen sauberen Ablauf.</h2>
-          <p class="contrast-copy mt-5 text-base leading-7">
-            Viele Unternehmen haben eine Website, ein Postfach, ein paar Tabellen und viel Handarbeit. Wir verbinden diese Punkte zu einem Ablauf, der Anfragen, Daten und Aufgaben sauber weiterführt.
-          </p>
-          <div class="mt-8 grid gap-3 sm:grid-cols-2">
-            <div class="border-t border-white/12 pt-4">
-              <h3 class="font-semibold text-white">Schnell sichtbar</h3>
-              <p class="contrast-copy mt-2 text-sm leading-6">Ein erster Stand zeigt früh, ob Angebot, Kontaktweg und Ablauf funktionieren.</p>
-            </div>
-            <div class="border-t border-white/12 pt-4">
-              <h3 class="font-semibold text-white">Langfristig betreut</h3>
-              <p class="contrast-copy mt-2 text-sm leading-6">Neue Funktionen, Wartung und Verbesserungen bleiben planbar statt zufällig.</p>
-            </div>
-          </div>
-          <a href="#kontakt" class="mini-cta mt-8">Website und Ablauf prüfen lassen</a>
+          <ul class="contact-list">
+            <li><a href="https://wa.me/491627760311?text=Hallo%20Murati%20Systems%2C%20ich%20interessiere%20mich%20f%C3%BCr%20den%20Website-Check." target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span><strong>WhatsApp öffnen</strong><span>0162 7760311</span></span></a></li>
+            <li><a href="mailto:kontakt@muratisystems.de"><svg aria-hidden="true"><use href="#i-mail"/></svg><span><strong>E-Mail senden</strong><span>kontakt@muratisystems.de</span></span></a></li>
+            <li><a href="tel:+491627760311"><svg aria-hidden="true"><use href="#i-phone"/></svg><span><strong>Anrufen</strong><span>0162 7760311</span></span></a></li>
+          </ul>
+          <p class="consent" style="margin-top: var(--space-5)">Beim Klick auf WhatsApp verlassen Sie unsere Website und öffnen den Dienst WhatsApp.</p>
         </div>
-      </div>
-    </section>
-
-    <section id="prinzipien" class="section-band px-5 py-20 sm:px-8">
-      <div class="relative mx-auto max-w-7xl">
-        <div class="grid gap-8 lg:grid-cols-[.75fr_1.25fr] lg:items-end">
-          <div>
-            <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Wofür wir stehen</p>
-            <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Technik soll Anfragen bringen, Arbeit sparen und im Alltag halten.</h2>
-          </div>
-          <div>
-            <p class="contrast-copy text-base leading-7">
-              Wir bauen keine losen Einzelteile. Jede Seite, Automatisierung und Oberfläche muss in den Arbeitsalltag passen und einen klaren nächsten Schritt auslösen.
-            </p>
-            <a href="#kontakt" class="mini-cta mt-6">Website und Ablauf prüfen lassen</a>
-          </div>
-        </div>
-        <div class="principles-grid mt-12">
-          <article class="principle-card">
-            <p class="label">Prinzip 01</p>
-            <h3 class="mt-3 text-xl font-semibold text-white">System vor Einzelseite</h3>
-            <p class="contrast-copy mt-3 text-sm leading-6">Eine Website ist nur der Anfang. Entscheidend ist, was nach dem Klick mit der Anfrage passiert.</p>
-          </article>
-          <article class="principle-card">
-            <p class="label">Prinzip 02</p>
-            <h3 class="mt-3 text-xl font-semibold text-white">Klarheit vor Show</h3>
-            <p class="contrast-copy mt-3 text-sm leading-6">Gutes Design muss verständlich bleiben: Angebot, Nutzen und nächster Schritt müssen sofort erkennbar sein.</p>
-          </article>
-          <article class="principle-card">
-            <p class="label">Prinzip 03</p>
-            <h3 class="mt-3 text-xl font-semibold text-white">Sichtbar starten</h3>
-            <p class="contrast-copy mt-3 text-sm leading-6">Lieber ein testbarer erster Stand als lange Theorie. Danach wird mit echtem Feedback verbessert.</p>
-          </article>
-          <article class="principle-card">
-            <p class="label">Prinzip 04</p>
-            <h3 class="mt-3 text-xl font-semibold text-white">Betrieb mitdenken</h3>
-            <p class="contrast-copy mt-3 text-sm leading-6">Ein System ist erst gut, wenn es nach dem Launch gepflegt, erweitert und verstanden werden kann.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="wir" class="section-band px-5 py-20 sm:px-8">
-      <div class="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.8fr_1.2fr]">
-        <div>
-          <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Wer wir sind</p>
-          <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Gründergeführt, technisch und direkt am Problem.</h2>
-          <a href="#kontakt" class="mini-cta mt-8">Website und Ablauf prüfen lassen</a>
-        </div>
-        <div class="grid gap-4 md:grid-cols-2">
-          <article class="glass rounded-2xl p-6">
-            <h3 class="text-xl font-semibold text-white">Direkt am Problem, ohne Agentur-Umweg</h3>
-            <p class="contrast-copy mt-4 text-sm leading-6">Wir arbeiten direkt am Problem: Was soll verkauft, automatisiert, geordnet oder betrieben werden?</p>
-          </article>
-          <article class="glass rounded-2xl p-6">
-            <h3 class="text-xl font-semibold text-white">Für Betriebe, die Abläufe ordnen wollen</h3>
-            <p class="contrast-copy mt-4 text-sm leading-6">Passend für Dienstleister und wachsende Teams, die keine unverbundenen Tools mehr wollen.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="prozess" class="relative px-5 py-20 sm:px-8">
-      <div class="mx-auto max-w-7xl">
-        <div class="max-w-2xl">
-          <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Ablauf</p>
-          <h2 class="mt-4 text-3xl font-semibold text-white sm:text-5xl">Vom ersten Gespräch zum laufenden System.</h2>
-        </div>
-        <div class="mt-12 grid gap-4 md:grid-cols-3">
-          <article class="glass rounded-2xl p-6">
-            <p class="text-sm text-cyan-100">01</p>
-            <h3 class="mt-5 text-xl font-semibold text-white">Vorhaben klären</h3>
-            <p class="contrast-copy mt-4 text-sm leading-6">Was soll Kunden bringen, Zeit sparen oder intern sauberer laufen?</p>
-          </article>
-          <article class="glass rounded-2xl p-6">
-            <p class="text-sm text-cyan-100">02</p>
-            <h3 class="mt-5 text-xl font-semibold text-white">Ersten Stand bauen</h3>
-            <p class="contrast-copy mt-4 text-sm leading-6">Ein Webauftritt, ein Ablauf oder ein Tool wird sichtbar und testbar.</p>
-          </article>
-          <article class="glass rounded-2xl p-6">
-            <p class="text-sm text-cyan-100">03</p>
-            <h3 class="mt-5 text-xl font-semibold text-white">Verbinden und betreuen</h3>
-            <p class="contrast-copy mt-4 text-sm leading-6">Kontaktwege, Daten und neue Funktionen wachsen kontrolliert weiter.</p>
-          </article>
-        </div>
-        <div class="proof-strip mt-10">
-          <div>
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Start</p>
-            <p class="mt-2 font-semibold text-white">Klares Ziel statt langer Vorgespräche.</p>
-          </div>
-          <div>
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Umsetzung</p>
-            <p class="mt-2 font-semibold text-white">Sichtbarer Stand, dann gezielt verbessern.</p>
-          </div>
-          <div>
-            <p class="text-sm uppercase tracking-[.18em] text-cyan-100/70">Betrieb</p>
-            <p class="mt-2 font-semibold text-white">Weiterentwicklung bleibt mitgedacht.</p>
-          </div>
-        </div>
-        <a href="#kontakt" class="mini-cta mt-10">Website und Ablauf prüfen lassen</a>
-      </div>
-    </section>
-
-    <section id="kontakt" class="relative px-5 pb-10 sm:px-8">
-      <div class="mx-auto max-w-7xl border-t border-white/10 py-12">
-        <div class="grid gap-10 lg:grid-cols-[1fr_.8fr] lg:items-end">
-          <div>
-            <p class="text-sm uppercase tracking-[.22em] text-cyan-100/70">Kontakt</p>
-            <h2 class="mt-4 max-w-3xl text-3xl font-semibold text-white sm:text-5xl">Schick den Link oder beschreibe kurz den Ablauf, der gerade nervt.</h2>
-            <p class="contrast-copy mt-5 max-w-2xl text-base leading-7">Ob Kundenanfragen, Automatisierung, internes Tool oder technische Betreuung: Wir klären, womit man sinnvoll startet und was warten kann.</p>
-          </div>
-          <div class="glass rounded-2xl p-5">
-            <p class="text-sm text-slate-400">Bevorzugter Kontakt</p>
-            <a href="mailto:kontakt@murati.systems?subject=Projektanfrage%20Systems%20Studio" class="cta-button mt-4 inline-flex w-full justify-center px-6 py-3 text-sm">Review-Anfrage senden</a>
-            <div class="mt-5 border-t border-white/10 pt-5">
-              <p class="font-semibold text-white">Was du kurz schicken kannst:</p>
-              <ul class="contrast-copy mt-3 space-y-2 text-sm leading-6">
-                <li>Link oder kurzer Satz zum aktuellen Auftritt.</li>
-                <li>Was passieren soll: mehr Anfragen, weniger Handarbeit oder besserer Überblick.</li>
-                <li>Welche Tools heute schon genutzt werden.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <footer class="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
-          <p>Murati Systems - Arbeitsname offen</p>
-          <div class="flex gap-5">
-            <a class="hover:text-slate-300" href="impressum.html">Impressum</a>
-            <a class="hover:text-slate-300" href="datenschutz.html">Datenschutz</a>
-          </div>
-        </footer>
       </div>
     </section>
   </main>
 
-  <script>
-    const canvas = document.getElementById('particle-field');
-    const ctx = canvas.getContext('2d');
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const root = document.documentElement;
-    const pointer = { x: .5, y: .18, active: false };
-    let w = 0, h = 0, dpr = 1, dots = [];
-    function moveLight(x, y) {
-      pointer.x = x / Math.max(1, window.innerWidth);
-      pointer.y = y / Math.max(1, window.innerHeight);
-      pointer.active = true;
-      if (reduce) return;
-      const dx = (pointer.x - .5);
-      const dy = (pointer.y - .18);
-      root.style.setProperty('--cursor-x', `${x}px`);
-      root.style.setProperty('--cursor-y', `${y}px`);
-      root.style.setProperty('--orbit-x', `${dx * 22}px`);
-      root.style.setProperty('--orbit-y', `${dy * 16}px`);
-      root.style.setProperty('--horizon-x', `${dx * -18}px`);
-      root.style.setProperty('--horizon-y', `${dy * 12}px`);
-      root.style.setProperty('--star-x', `${dx * -18}px`);
-      root.style.setProperty('--star-y', `${dy * -12}px`);
-      root.style.setProperty('--glow-opacity', `.82`);
-    }
-    function resize() {
-      dpr = Math.min(devicePixelRatio || 1, 2);
-      w = canvas.offsetWidth;
-      h = canvas.offsetHeight;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      dots = Array.from({ length: Math.min(120, Math.floor(w / 9)) }, () => ({
-        a: Math.random() * Math.PI * 2,
-        r: Math.random() * Math.min(w, h) * .52 + 40,
-        s: Math.random() * .0009 + .0002
-      }));
-    }
-    function draw() {
-      ctx.clearRect(0, 0, w, h);
-      const cx = w / 2, cy = h * .08;
-      const px = pointer.x * w;
-      const py = pointer.y * h;
-      dots.forEach((p) => {
-        if (!reduce) p.a += p.s * 16;
-        const baseX = cx + Math.cos(p.a) * p.r * 1.18;
-        const baseY = cy + Math.sin(p.a) * p.r * .34 + p.r * .08;
-        const dx = px - baseX;
-        const dy = py - baseY;
-        const dist = Math.max(1, Math.hypot(dx, dy));
-        const influence = pointer.active ? Math.max(0, 1 - dist / 260) : 0;
-        const x = baseX - (dx / dist) * influence * 18;
-        const y = baseY - (dy / dist) * influence * 10;
-        if (y < h * .84) {
-          ctx.fillStyle = `rgba(139,238,255,${.42 + influence * .38})`;
-          ctx.fillRect(x, y, 1.4 + influence * 1.4, 1.4 + influence * 1.4);
-          if (influence > .38) {
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.lineTo(px, py);
-            ctx.strokeStyle = `rgba(139,238,255,${influence * .16})`;
-            ctx.lineWidth = .8;
-            ctx.stroke();
-          }
-        }
-      });
-      requestAnimationFrame(draw);
-    }
-    window.addEventListener('resize', resize, { passive: true });
-    window.addEventListener('pointermove', (event) => moveLight(event.clientX, event.clientY), { passive: true });
-    window.addEventListener('pointerleave', () => {
-      pointer.active = false;
-      root.style.setProperty('--glow-opacity', `.58`);
-    }, { passive: true });
-    resize();
-    draw();
-  </script>
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <p><strong style="color: var(--color-text-primary)">Murati Systems</strong> · Inhabergeführtes IT-Einzelunternehmen aus Dortmund</p>
+        <p>Websites und digitale Abläufe für Betriebe im Ruhrgebiet</p>
+              </div>
+      <nav class="footer-links" aria-label="Rechtliches">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <span>© 2026 Murati Systems</span>
+      </nav>
+    </div>
+  </footer>
+
+  <nav class="mobile-bar" aria-label="Schnellkontakt">
+    <a class="btn btn-whatsapp" href="https://wa.me/491627760311?text=Hallo%20Murati%20Systems%2C%20ich%20interessiere%20mich%20f%C3%BCr%20den%20Website-Check." target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+    <a class="btn btn-primary" href="#check">Kostenloser Check</a>
+  </nav>
+
+  <script src="assets/site.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,215 @@
+/*
+ * Murati Systems — Design Tokens
+ * Philosophie: sachliche Editorial-Klarheit (Swiss/Editorial), 8px-Basis.
+ * Logo-Basis „Variante 07“: Schwarz / Off-White / Weiß, Cyan nur als digitaler Akzent.
+ * Hell ist Standard; dunkel per [data-theme="dark"] oder Systemeinstellung.
+ */
+
+@font-face {
+  font-family: "Schibsted Grotesk";
+  src: url("fonts/schibsted-grotesk-latin-wght-normal.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+
+  /* Farbe — hell: warmes Off-White, fast schwarze Schrift, Petrol als Akzent */
+  --color-bg-primary: #f6f5f1;
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #ecebe6;
+  --color-bg-inverse: #121517;
+
+  --color-text-primary: #121517;
+  --color-text-secondary: #474f56;
+  --color-text-tertiary: #636b72;
+  --color-text-inverse: #f6f5f1;
+  --color-text-link: #0b6b78;
+
+  --color-border-primary: #d9d7d0;
+  --color-border-secondary: #e7e5df;
+  --color-border-focus: #0b6b78;
+
+  --color-accent-primary: #121517;
+  --color-accent-primary-hover: #2a3035;
+  --color-accent-primary-active: #000000;
+  --color-accent-on-primary: #ffffff;
+  --color-accent-secondary: #0b6b78;
+  --color-accent-soft: #dff1f3;
+
+  --color-whatsapp: #147a3f;
+  --color-whatsapp-hover: #0f6333;
+  --color-on-whatsapp: #ffffff;
+
+  --color-status-success: #1d7a3e;
+  --color-status-warning: #8a5a00;
+  --color-status-error: #b3261e;
+  --color-status-info: #0b6b78;
+
+  --color-surface-overlay: rgba(18, 21, 23, 0.5);
+
+  /* Abstand — 8px-Basis */
+  --space-0: 0;
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 6px;
+  --space-4: 8px;
+  --space-5: 12px;
+  --space-6: 16px;
+  --space-7: 24px;
+  --space-8: 32px;
+  --space-9: 48px;
+  --space-10: 64px;
+  --space-11: 96px;
+  --space-12: 128px;
+
+  /* Typografie — Schibsted Grotesk (Variable, selbst gehostet, OFL), Kontrast über Gewicht und Größe */
+  --font-family-display: "Schibsted Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-family-body: "Schibsted Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-family-mono: ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  --font-size-xs: 0.8125rem;
+  --font-size-sm: 0.9375rem;
+  --font-size-base: 1.0625rem;
+  --font-size-md: 1.1875rem;
+  --font-size-lg: 1.375rem;
+  --font-size-xl: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+  --font-size-2xl: clamp(1.875rem, 1.4rem + 1.8vw, 2.5rem);
+  --font-size-3xl: clamp(2.25rem, 1.6rem + 2.6vw, 3.25rem);
+  --font-size-4xl: clamp(2.5rem, 1.6rem + 4vw, 4.5rem);
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.08;
+  --line-height-snug: 1.25;
+  --line-height-normal: 1.55;
+  --line-height-relaxed: 1.7;
+
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.08em;
+
+  /* Layout */
+  --max-width-content: 68ch;
+  --max-width-wide: 1120px;
+  --max-width-page: 1280px;
+
+  --border-radius-sm: 6px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 16px;
+  --border-radius-full: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(18, 21, 23, 0.06);
+  --shadow-md: 0 4px 16px rgba(18, 21, 23, 0.07);
+  --shadow-lg: 0 16px 40px rgba(18, 21, 23, 0.10);
+  --shadow-focus: 0 0 0 3px var(--color-bg-primary), 0 0 0 5px var(--color-border-focus);
+
+  /* Bewegung — sparsam */
+  --duration-instant: 50ms;
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+
+  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-in: cubic-bezier(0.4, 0, 1, 1);
+  --easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --easing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Breakpoints (Referenz; in Media Queries als Zahlen verwenden) */
+  --breakpoint-sm: 375px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* Dunkel: kühles Anthrazit statt Reinschwarz, Cyan aus dem Logo als Akzent */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg-primary: #0f1214;
+  --color-bg-secondary: #161a1d;
+  --color-bg-tertiary: #1d2226;
+  --color-bg-inverse: #eceff1;
+
+  --color-text-primary: #eceff1;
+  --color-text-secondary: #a9b3ba;
+  --color-text-tertiary: #87919a;
+  --color-text-inverse: #0f1214;
+  --color-text-link: #7fe3f2;
+
+  --color-border-primary: #2b3237;
+  --color-border-secondary: #222a2f;
+  --color-border-focus: #7fe3f2;
+
+  --color-accent-primary: #eceff1;
+  --color-accent-primary-hover: #ffffff;
+  --color-accent-primary-active: #cfd6db;
+  --color-accent-on-primary: #0f1214;
+  --color-accent-secondary: #7fe3f2;
+  --color-accent-soft: #15333a;
+
+  --color-whatsapp: #25d366;
+  --color-whatsapp-hover: #3ee07a;
+  --color-on-whatsapp: #0f1214;
+
+  --color-status-success: #5fd38a;
+  --color-status-warning: #f0b449;
+  --color-status-error: #ff8a80;
+  --color-status-info: #7fe3f2;
+
+  --color-surface-overlay: rgba(0, 0, 0, 0.6);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --color-bg-primary: #0f1214;
+    --color-bg-secondary: #161a1d;
+    --color-bg-tertiary: #1d2226;
+    --color-bg-inverse: #eceff1;
+
+    --color-text-primary: #eceff1;
+    --color-text-secondary: #a9b3ba;
+    --color-text-tertiary: #87919a;
+    --color-text-inverse: #0f1214;
+    --color-text-link: #7fe3f2;
+
+    --color-border-primary: #2b3237;
+    --color-border-secondary: #222a2f;
+    --color-border-focus: #7fe3f2;
+
+    --color-accent-primary: #eceff1;
+    --color-accent-primary-hover: #ffffff;
+    --color-accent-primary-active: #cfd6db;
+    --color-accent-on-primary: #0f1214;
+    --color-accent-secondary: #7fe3f2;
+    --color-accent-soft: #15333a;
+
+    --color-whatsapp: #25d366;
+    --color-whatsapp-hover: #3ee07a;
+    --color-on-whatsapp: #0f1214;
+
+    --color-status-success: #5fd38a;
+    --color-status-warning: #f0b449;
+    --color-status-error: #ff8a80;
+    --color-status-info: #7fe3f2;
+
+    --color-surface-overlay: rgba(0, 0, 0, 0.6);
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
+  }
+}
