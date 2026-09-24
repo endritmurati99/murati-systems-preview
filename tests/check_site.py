@@ -99,8 +99,8 @@ def main() -> int:
         text = page.read_text(encoding="utf-8")
         parser = PageParser()
         parser.feed(text)
-        if '<meta name="robots" content="noindex">' not in text:
-            errors.append(f"{page.relative_to(ROOT)}: preview must keep noindex")
+        if "noindex" in text and page.parent == ROOT:
+            errors.append(f"{page.relative_to(ROOT)}: live page must not be noindex")
         if parser.h1_count != 1:
             errors.append(f"{page.relative_to(ROOT)}: expected one h1, got {parser.h1_count}")
         for kind, value in parser.links:
@@ -133,7 +133,7 @@ def main() -> int:
         print("Site check failed:")
         print("\n".join(f"- {error}" for error in errors))
         return 1
-    print(f"Site check passed: {len(pages)} preview page(s), local targets, noindex, h1, local assets, prices, JSON-LD.")
+    print(f"Site check passed: {len(pages)} preview page(s), local targets, indexable, h1, local assets, prices, JSON-LD.")
     return 0
 
 
