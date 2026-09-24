@@ -6,25 +6,26 @@
   <meta name="description" content="Geführter Website-Check von Murati Systems: Beschreiben Sie Ihre Website, Ihre Probleme und Ziele in wenigen Schritten.">
   <meta name="robots" content="noindex">
   <link rel="canonical" href="https://muratisystems.de/website-check.html">
-  <link rel="icon" href="assets/favicon.svg?v=3" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon.svg?v=4" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/redesign.css?v=5">
-  <script src="assets/redesign.js" defer></script>
+  <link rel="stylesheet" href="assets/redesign.css?v=6">
+  <script src="assets/redesign.js?v=2" defer></script>
   <title>Kostenloser Website-Check – Murati Systems</title>
-<meta name="theme-color" content="#763d35">
+<meta name="theme-color" content="#242424">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="de_DE">
   <meta property="og:site_name" content="Murati Systems">
   <meta property="og:title" content="Kostenloser Website-Check – Murati Systems">
   <meta property="og:description" content="Geführter Website-Check von Murati Systems: Beschreiben Sie Ihre Website, Ihre Probleme und Ziele in wenigen Schritten.">
   <meta property="og:url" content="https://muratisystems.de/website-check.html">
+<script src="assets/privacy.js" defer></script>
 </head>
 <body class="website_check">
   <a class="skip" href="#inhalt">Zum Inhalt springen</a>
   <header class="site-header">
     <div class="shell header-inner">
       <a class="brand" href="index.html" aria-label="Murati Systems – Startseite">
-        <img src="assets/favicon.svg?v=3" alt="" width="36" height="36">
+        <img src="assets/favicon.svg?v=4" alt="" width="36" height="36">
         <span><strong>Murati</strong><small>SYSTEMS</small></span>
       </a>
       <nav class="desktop-nav" aria-label="Hauptnavigation">
@@ -37,19 +38,20 @@
   <main id="inhalt">
   <section class="page-hero check-hero"><div class="shell"><p class="eyebrow"><span class="eyebrow-line"></span> KOSTENLOSER WEBSITE-CHECK</p><h1>Was bremst<br><em>Ihre Website?</em></h1><p>Ein paar Antworten reichen. Wir schauen persönlich hin und melden uns mit konkreten Hinweisen.</p></div></section>
   <section class="section check-section"><div class="shell check-layout"><div class="check-aside"><span class="index-label">SO FUNKTIONIERT ES</span><h2>Ein genauer Blick auf Ihren Auftritt.</h2><p>Bitte keine Gesundheits- oder Patientendaten eintragen.</p><a class="text-link" href="https://wa.me/491627760311" target="_blank" rel="noopener noreferrer">Lieber per WhatsApp schreiben ↗</a></div>
-    <form id="guided-check" class="wizard" data-to="info@muratisystems.de" novalidate>
+    <noscript><div class="detail-panel"><h2>Check per E-Mail anfragen</h2><p>Für das geführte Formular benötigen Sie JavaScript. Sie können uns Ihre Website und Ihr Anliegen auch direkt schreiben.</p><a class="button primary" href="mailto:info@muratisystems.de">E-Mail schreiben</a></div></noscript>
+<form id="guided-check" class="wizard" hidden data-to="info@muratisystems.de" novalidate>
       <div class="wizard-top"><span id="step-label">SCHRITT 1 VON 3</span><span>KOSTENLOS & UNVERBINDLICH</span></div><div class="progress"><span id="progress-fill"></span></div>
       <fieldset data-step="1"><legend tabindex="-1">Was trifft auf Ihre Situation zu?</legend><p class="field-help">Wählen Sie alles aus, was Sie gerade beschäftigt. Bitte keine Gesundheits- oder Patientendaten eintragen.</p>
         <div class="choices"><label><input type="checkbox" name="problem" value="Unsere Website wirkt veraltet"><span>Unsere Website wirkt veraltet</span></label><label><input type="checkbox" name="problem" value="Wir bekommen zu wenige Anfragen"><span>Wir bekommen zu wenige Anfragen</span></label><label><input type="checkbox" name="problem" value="Auf dem Handy funktioniert sie schlecht"><span>Auf dem Handy funktioniert sie schlecht</span></label><label><input type="checkbox" name="problem" value="Anfragen landen an der falschen Stelle"><span>Anfragen landen an der falschen Stelle</span></label><label><input type="checkbox" name="problem" value="Wir haben noch keine Website"><span>Wir haben noch keine Website</span></label></div>
-        <label class="field">Ihre Website <small>(falls vorhanden)</small><input type="url" name="website" placeholder="https://www.ihr-betrieb.de" inputmode="url"></label>
+        <label class="field">Ihre Website <small>(falls vorhanden)</small><input type="url" name="website" maxlength="250" placeholder="https://www.ihr-betrieb.de" inputmode="url"></label>
       </fieldset>
       <fieldset data-step="2" hidden><legend tabindex="-1">Was soll sich zuerst verbessern?</legend><p class="field-help">Eine Richtung genügt. Wir stellen bei Bedarf Rückfragen.</p>
         <div class="choices"><label><input type="radio" name="ziel" value="Mehr passende Anfragen" required><span>Mehr passende Anfragen</span></label><label><input type="radio" name="ziel" value="Leistungen verständlicher zeigen"><span>Leistungen verständlicher zeigen</span></label><label><input type="radio" name="ziel" value="Abläufe nach der Anfrage vereinfachen"><span>Abläufe nach der Anfrage vereinfachen</span></label><label><input type="radio" name="ziel" value="Erst Orientierung bekommen"><span>Erst Orientierung bekommen</span></label></div>
-        <label class="field">Was sollten wir zusätzlich wissen? <small>(optional)</small><textarea name="hinweis" rows="3" placeholder="Ein Satz reicht."></textarea></label>
+        <label class="field">Was sollten wir zusätzlich wissen? <small>(optional)</small><textarea name="hinweis" rows="3" maxlength="500" placeholder="Ein Satz reicht."></textarea></label>
       </fieldset>
       <fieldset data-step="3" hidden><legend tabindex="-1">Wie erreichen wir Sie?</legend><p class="field-help">Wir benötigen einen Kontaktweg für Ihre persönliche Rückmeldung.</p>
-        <div class="field-pair"><label class="field">Name <input name="name" autocomplete="name" required></label><label class="field">E-Mail <input type="email" name="email" autocomplete="email" required></label></div>
-        <label class="field">Telefon / WhatsApp <small>(optional)</small><input type="tel" name="telefon" autocomplete="tel"></label>
+        <div class="field-pair"><label class="field">Name <input name="name" maxlength="100" autocomplete="name" required></label><label class="field">E-Mail <input type="email" name="email" maxlength="254" autocomplete="email" required></label></div>
+        <label class="field">Telefon / WhatsApp <small>(optional)</small><input type="tel" name="telefon" maxlength="40" autocomplete="tel"></label>
         <div class="channel"><span>Bevorzugte Antwort</span><label><input type="radio" name="kanal" value="E-Mail" checked> E-Mail</label><label><input type="radio" name="kanal" value="WhatsApp"> WhatsApp</label></div>
         <p class="fineprint">Ihre Angaben nutzen wir für diesen Check. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
       </fieldset>
@@ -63,7 +65,14 @@
     <div><a class="footer-brand" href="index.html">Murati Systems</a><p>Websites und digitale Abläufe für Betriebe im Ruhrgebiet.</p></div>
     <nav aria-label="Footer"><a href="leistungen.html">Leistungen</a><a href="ki-automatisierung.html">KI &amp; IT-Beratung</a><a href="website-check.html" aria-current="page">Website-Check</a><a href="kontakt.html">Kontakt</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav>
     <span class="copyright">© 2026 Murati Systems</span>
-  </div></footer>
+  </div><div class="shell"><a class="cookie-settings" href="datenschutz.html#cookies" data-cookie-info>Cookies &amp; Datenschutz</a></div></footer>
 <div class="mobile-contact"><a href="https://wa.me/491627760311" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="website-check.html" aria-current="page">Website-Check</a></div>
+<dialog id="cookie-dialog" class="cookie-dialog" aria-labelledby="cookie-title">
+<h2 id="cookie-title">Cookies &amp; Datenschutz</h2>
+<p>Diese Website verwendet keine Cookies und keine Analyse- oder Werbedienste. Schriftarten und Gestaltungselemente werden vom eigenen Server geladen.</p>
+<dl class="cookie-summary"><dt>Cookies und dauerhafter Browserspeicher</dt><dd>Nicht verwendet</dd><dt>Statistik und Werbung</dt><dd>Nicht eingebunden</dd><dt>Externe Dienste</dt><dd>WhatsApp öffnet sich erst, wenn Sie einen entsprechenden Link anklicken.</dd></dl>
+<p>Es sind keine optionalen Dienste aktiv. Deshalb gibt es aktuell keine Einwilligungseinstellungen. Dieser Dialog speichert keine Auswahl.</p>
+<div class="cookie-actions"><a class="button subtle" href="datenschutz.html#cookies">Datenschutz lesen</a><button type="button" class="button primary" data-cookie-close autofocus>Schließen</button></div>
+</dialog>
 </body>
 </html>

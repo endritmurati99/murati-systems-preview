@@ -2,7 +2,13 @@
 
 Stand: 24.09.2026. Arbeitsstand der unveröffentlichten Vorschau. Maßgeblich bleiben `handoff.md` und `business-context.md` im übergeordneten Projektordner.
 
-## Korrektur nach Nutzerfeedback
+## Aktueller Stand: neutrale Gestaltung und Datenschutzprüfung
+
+Auch die warme Farbpalette wurde vom Inhaber verworfen. Die aktive Gestaltung ist nun weiß, hellgrau und anthrazit, ohne farbige Akzente; Überschriften verwenden die vorhandene Sans-Schrift statt Georgia. Farbwerte ausschließlich aus der aktuellen CSS-Datei übernehmen. Alle neun Seiten haben einen erreichbaren Cookie-Informationsdialog, der keine Auswahl speichert. Es sind keine optionalen Dienste aktiv. Die rechtliche Prüfung und noch offene Betreiberangaben stehen in LEGAL-REVIEW.md. Datenschutzerklärung und Impressum sind ausdrücklich Entwürfe, keine Veröffentlichungsfreigabe.
+
+Prüfungen zusätzlich: `node tests/check_privacy.cjs`; Browser mit deaktiviertem JavaScript (E-Mail-Fallback, Cookie-Link auf Datenschutz), Dialog öffnen/schließen/Escape/Fokusrückgabe. Die schärfere CSP im Deployment-Template ist nur vorbereitet, nicht produktiv aktiviert.
+
+## Historisch: Korrektur nach Nutzerfeedback
 
 Der Inhaber bewertete den Kobalt-Entwurf mit 10/100 und lehnte Blau ausdrücklich ab. Außerdem wirkten die Bilder uneinheitlich groß. Die aktive Richtung ist jetzt warm und editorial: zentrierter Einstieg, Serif-Akzent, zwei kompakte Visualisierungen im gleichen Format. Keine großen abstrakten Bildflächen auf Start- oder Unterseiten.
 

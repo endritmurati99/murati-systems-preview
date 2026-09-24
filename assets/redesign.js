@@ -73,4 +73,6 @@ if (check) {
     window.location.href = "mailto:" + check.dataset.to + "?subject=" + encodeURIComponent("Website-Check: " + data.get("name")) + "&body=" + encodeURIComponent(body);
     status.textContent = "Ihr E-Mail-Programm öffnet sich. Bitte senden Sie die vorbereitete Nachricht dort ab.";
   });
+  // Reveal only after submit interception is installed; no-JS fallback is mailto.
+  check.hidden = false;
 }
