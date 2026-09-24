@@ -2,19 +2,23 @@
 
 Stand: 24.09.2026. Arbeitsstand der unveröffentlichten Vorschau. Maßgeblich bleiben `handoff.md` und `business-context.md` im übergeordneten Projektordner.
 
+## Korrektur nach Nutzerfeedback
+
+Der Inhaber bewertete den Kobalt-Entwurf mit 10/100 und lehnte Blau ausdrücklich ab. Außerdem wirkten die Bilder uneinheitlich groß. Die aktive Richtung ist jetzt warm und editorial: zentrierter Einstieg, Serif-Akzent, zwei kompakte Visualisierungen im gleichen Format. Keine großen abstrakten Bildflächen auf Start- oder Unterseiten.
+
 ## Ein gemeinsames Farbsystem
 
-Porzellan, Graphit und Kobalt ersetzen die frühere Mischung aus Petrol, Salbei und Kupfer. Die aktiven Regeln stehen in `assets/redesign.css`; neue Seiten verwenden diese Datei, keine zusätzlichen Farbsysteme.
+Papierweiß, Anthrazit und dunkles Rostrot ersetzen den verworfenen Kobalt-Entwurf. Die aktiven Regeln stehen in `assets/redesign.css`; neue Seiten verwenden diese Datei, keine zusätzlichen Farbsysteme.
 
 | Rolle | CSS-Variable | Wert |
 | --- | --- | --- |
-| Hintergrund | `--bg` | `#f7f8fa` |
-| Inhaltsfläche | `--surface` | `#ffffff` |
-| Text | `--text` | `#20242c` |
-| Sekundärtext | `--muted` | `#576171` |
-| Aktion und Akzent | `--accent` | `#284be8` |
-| Helle Akzentfläche | `--accent-soft`, `--raised` | `#e9edff` |
-| Trennlinie | `--line` | `#dce0e8` |
+| Hintergrund | `--bg` | `#f6f4ef` |
+| Inhaltsfläche | `--surface` | `#fffdf8` |
+| Text | `--text` | `#262522` |
+| Sekundärtext | `--muted` | `#65615c` |
+| Aktion und Akzent | `--accent` | `#763d35` |
+| Helle Akzentfläche | `--accent-soft`, `--raised` | `#ece5da` |
+| Trennlinie | `--line` | `#d8d0c5` |
 
 Schibsted Grotesk wird lokal geladen. Native HTML-Elemente, CSS Grid und das vorhandene kleine JavaScript reichen für Navigation und Website-Check; dieser Durchlauf führt keine neue Abhängigkeit ein. Leistungszeilen, klare Trenner und kurze Texte halten die Seiten übersichtlich. Eine Hauptaktion pro Abschnitt; WhatsApp bleibt eine erkennbare Alternative. Fokusmarkierungen, mobile Kontaktleiste und reduzierte Bewegung gehören zum gemeinsamen Muster.
 
@@ -22,7 +26,7 @@ Die Galerie unter `/design/` (`design/index.html`) zeigt Farben, Typografie, Akt
 
 ## Bilder, Zeichen und Sprache
 
-`assets/system-hero.webp` und `assets/system-detail.webp` wurden für diesen Entwurf generiert: abstrakte Architektur aus weißen und kobaltblauen Flächen. Das erste Bild steht neben der Startseitenüberschrift, das zweite dient als dekorativer Hintergrund auf Unterseiten. Es sind weder Kundenreferenzen noch Fotografien eines realen Betriebs. Herkunft und Verwendungszweck sind in der Galerie sichtbar dokumentiert. `assets/favicon.svg` enthält das schlichte weiße M auf Kobaltblau und wird auch als Markenzeichen in der Navigation verwendet.
+Die beiden blauen Architektur-Bilder sind verworfene Entwurfsassets und werden nicht mehr auf den aktiven Seiten geladen. Die neue Startseite zeigt zwei gleich große, native HTML-/SVG-Muster: eine ausdrücklich beispielhafte Handwerker-Website und einen möglichen Anfrageablauf. Auf Desktop sind beide Ansichten 280 Pixel hoch, mobil 220 Pixel. Das Logo ist monochrom. Die Unterseiten verwenden kompakte Textköpfe ohne Dekobild. Ein lokaler Georgia-Serif-Fallback ergänzt die vorhandene Schibsted-Schrift; keine externen Schriften.
 
 Der Humanizer-Skill wurde auf die sichtbaren Texte der vier Unterseiten angewendet: Wiederholungen streichen, konkrete Tätigkeiten nennen, keine neuen Leistungsversprechen ergänzen. Wortzählung innerhalb von `<main>` nach dieser Copy-Runde:
 
@@ -58,4 +62,4 @@ Die aktive Vorschau bindet keine Tracking-Skripte ein und setzt keinen Cookie-Ba
 
 Für lokale Auffindbarkeit und GEO stehen verständliche Leistungsseiten, Dortmund/Ruhrgebiet und überprüfbare Unternehmensangaben im Vordergrund. Die [Google-Hinweise zu generativer Suche](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide) stützen klare technische Strukturen und hilfreiche Inhalte; spezielle KI-Dateien und Sonder-Markup sind dafür nicht erforderlich. Es wird kein Ranking versprochen.
 
-Organization-JSON-LD auf der Startseite sowie Metadaten zum Teilen sind vorbereitet. Die Vorschau bleibt absichtlich `noindex`. Das Open-Graph-Bild verweist bereits auf die spätere Produktionsadresse; das neue Asset ist dort erst nach einem Deployment verfügbar. Vor Veröffentlichung müssen Hosting, rechtliche Angaben und tatsächliche Kontaktziele bestätigt und die Produktionsmetadaten geprüft werden. Veröffentlichung und Entfernen von `noindex` sind ein eigener Schritt.
+Organization-JSON-LD auf der Startseite sowie Textmetadaten zum Teilen sind vorbereitet. Die Vorschau bleibt absichtlich `noindex`. Die Open-Graph-Bildverweise des verworfenen Entwurfs wurden entfernt. Vor Veröffentlichung müssen Hosting, rechtliche Angaben und tatsächliche Kontaktziele bestätigt und die Produktionsmetadaten geprüft werden. Veröffentlichung und Entfernen von `noindex` sind ein eigener Schritt.
