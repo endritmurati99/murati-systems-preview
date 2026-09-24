@@ -3,370 +3,57 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Murati Systems – Websites für Betriebe im Ruhrgebiet | Dortmund</title>
-  <meta name="description" content="Websites für Handwerk, Praxen und Dienstleister im Ruhrgebiet. Kostenloser Website-Check mit 3 Schwachstellen, 3 Verbesserungen und 1 Empfehlung in 48 Stunden. Festpreise ab 790 €. Murati Systems aus Dortmund.">
+  <meta name="description" content="Murati Systems gestaltet Websites für Betriebe im Ruhrgebiet. Klarer Auftritt, direkter Kontakt und ein kostenloser Website-Check.">
+  <meta name="robots" content="noindex">
   <link rel="canonical" href="https://muratisystems.de/">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="de_DE">
-  <meta property="og:title" content="Murati Systems – Websites für Betriebe im Ruhrgebiet">
-  <meta property="og:description" content="Klare Websites mit Kontaktweg, Festpreisen und Betreuung. Kostenloser Website-Check.">
-  <meta property="og:url" content="https://muratisystems.de/">
-  <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0f1214" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <script>
-    // Theme vor dem ersten Zeichnen setzen: ?theme=dark|light > gespeicherte Wahl > Systemeinstellung.
-    (function () {
-      var t = new URLSearchParams(location.search).get("theme");
-      try { if (!t) t = localStorage.getItem("theme"); } catch (e) {}
-      if (t !== "dark" && t !== "light") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      document.documentElement.setAttribute("data-theme", t);
-    })();
-  </script>
-  <link rel="stylesheet" href="assets/tokens.css">
-  <link rel="stylesheet" href="assets/site.css">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Murati Systems",
-    "description": "Websites, Anfrage-Automatisierung und Betreuung für lokale Betriebe im Ruhrgebiet.",
-    "url": "https://muratisystems.de/",
-    "email": "info@muratisystems.de",
-    "telephone": "+49 162 7760311",
-    "founder": "Endrit Murati",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Enscheder Straße 5",
-      "postalCode": "44145",
-      "addressLocality": "Dortmund",
-      "addressCountry": "DE"
-    },
-    "areaServed": ["Dortmund", "Ruhrgebiet"],
-    "priceRange": "ab 790 €"
-  }
-  </script>
+  <link rel="stylesheet" href="assets/redesign.css">
+  <script src="assets/redesign.js" defer></script>
+  <title>Websites und digitale Abläufe aus Dortmund – Murati Systems</title>
 </head>
-<body>
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2A9.7 9.7 0 0 0 3.7 16.9L2.3 21.8l5-1.3A9.7 9.7 0 1 0 12 2.2Zm0 17.7c-1.5 0-2.9-.4-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 19.9Zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1l-.5-.2Z"/></symbol>
-    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3.5 6.5h17v11h-17z M3.8 7l8.2 6 8.2-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
-    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5h2.7l1.4 4-1.9 1.3a11 11 0 0 0 6.4 6.4l1.3-1.9 4 1.4v2.7a2 2 0 0 1-2.2 2A16 16 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
-    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21Z M12 12.2a2.6 2.6 0 1 0 0-5.2 2.6 2.6 0 0 0 0 5.2Z" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
-    <symbol id="i-site" viewBox="0 0 24 24"><path d="M3.5 5.5h17v13h-17z M3.5 9h17 M7 7.3h.01 M9.5 7.3h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
-    <symbol id="i-flow" viewBox="0 0 24 24"><path d="M4 6h6v5H4z M14 13h6v5h-6z M10 8.5h3a2 2 0 0 1 2 2V13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
-    <symbol id="i-care" viewBox="0 0 24 24"><path d="M12 3.5l7 3v5.2c0 4.2-3 7.6-7 8.8-4-1.2-7-4.6-7-8.8V6.5z M8.8 12l2.2 2.2 4.2-4.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></symbol>
-    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
-    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
-    <symbol id="i-sun" viewBox="0 0 24 24"><path d="M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Z M12 2.5v2 M12 19.5v2 M2.5 12h2 M19.5 12h2 M5.3 5.3l1.4 1.4 M17.3 17.3l1.4 1.4 M5.3 18.7l1.4-1.4 M17.3 6.7l1.4-1.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
-    <symbol id="i-logo" viewBox="0 0 44 44"><path d="M10 31V14l6.4 10.4L22 14l5.6 10.4L34 14v17" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="34.2" cy="8.6" r="2.6" style="fill: var(--color-accent-secondary)"/></symbol>
-  </svg>
-
-  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
-
+<body class="index">
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
   <header class="site-header">
-    <div class="wrap header-row">
-      <a class="brand" href="#top" aria-label="Murati Systems – zur Startseite">
-        <svg aria-hidden="true"><use href="#i-logo"/></svg>
-        <span class="brand-text"><strong>Murati</strong><span>Systems</span></span>
+    <div class="shell header-inner">
+      <a class="brand" href="index.html" aria-label="Murati Systems – Startseite">
+        <img src="assets/favicon.svg" alt="" width="36" height="36">
+        <span><strong>Murati</strong><small>SYSTEMS</small></span>
       </a>
-      <nav class="nav" aria-label="Hauptnavigation">
-        <a href="#check">Website-Check</a>
-        <a href="#preise">Preise</a>
-        <a href="#ablauf">Ablauf</a>
-        <a href="#faq">FAQ</a>
-        <a href="#kontakt">Kontakt</a>
+      <nav class="desktop-nav" aria-label="Hauptnavigation">
+        <a href="index.html">Start</a><a href="leistungen.html">Leistungen</a><a href="arbeitsweise.html">Arbeitsweise</a><a href="kontakt.html">Kontakt</a>
       </nav>
-      <div class="header-actions">
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Hell/Dunkel umschalten">
-          <svg class="icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
-          <svg class="icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
-        </button>
-        <a class="btn btn-primary header-cta" href="#check">Kostenloser Check</a>
-        <details class="menu">
-          <summary aria-label="Menü öffnen"><svg aria-hidden="true"><use href="#i-menu"/></svg></summary>
-          <nav class="menu-panel" aria-label="Mobile Navigation">
-            <a href="#check">Kostenloser Website-Check</a>
-            <a href="#preise">Preise</a>
-            <a href="#fuer-wen">Für wen</a>
-            <a href="#ablauf">Ablauf</a>
-            <a href="#faq">FAQ</a>
-            <a href="#kontakt">Kontakt</a>
-          </nav>
-        </details>
-      </div>
+      <a class="header-cta" href="website-check.html">Website-Check <span aria-hidden="true">↗</span></a>
+      <details class="mobile-menu"><summary>Menü</summary><nav aria-label="Mobile Navigation"><a href="index.html">Start</a><a href="leistungen.html">Leistungen</a><a href="website-check.html">Website-Check</a><a href="arbeitsweise.html">Arbeitsweise</a><a href="kontakt.html">Kontakt</a></nav></details>
     </div>
   </header>
-
   <main id="inhalt">
-    <section class="hero" id="top">
-      <div class="wrap hero-grid">
-        <div>
-          <p class="eyebrow">Webdesign aus Dortmund für Betriebe im Ruhrgebiet</p>
-          <h1 style="margin-top: var(--space-6)">Websites für Betriebe im Ruhrgebiet, die den nächsten Schritt <em>einfach</em> machen.</h1>
-          <p class="lead">Murati Systems entwickelt klare, schnelle Websites für Handwerk, Praxen und lokale Dienstleister – mit verständlichen Leistungen, direktem Kontakt und auf Wunsch einfachen Automatisierungen dahinter.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#check">Kostenlosen Website-Check anfordern</a>
-            <a class="btn btn-whatsapp" href="https://wa.me/491627760311?text=Hallo%20Murati%20Systems%2C%20ich%20interessiere%20mich%20f%C3%BCr%20den%20Website-Check." target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg>Per WhatsApp schreiben</a>
-          </div>
-          <p class="microcopy">3 Schwachstellen · 3 schnelle Verbesserungen · 1 klare Empfehlung · Antwort innerhalb von 48 Stunden</p>
-        </div>
-        <aside class="hero-card" aria-labelledby="hero-card-title">
-          <p class="eyebrow"><span class="num">Beispiel</span> So sieht Ihr kostenloser Check aus</p>
-          <h2 id="hero-card-title" style="margin-top: var(--space-5)">Website-Check: Malerbetrieb</h2>
-          <dl class="sample-check">
-            <div><dt>Schwachstelle</dt><dd>Auf dem Handy steht die Telefonnummer erst ganz unten.</dd></div>
-            <div><dt>Schnelle Verbesserung</dt><dd>Anruf- und WhatsApp-Button fest in den oberen Bereich.</dd></div>
-            <div><dt>Empfehlung</dt><dd>Leistungen nach Kundenanliegen ordnen, nicht nach Fachbegriffen.</dd></div>
-          </dl>
-          <p class="muted small">Muster – kein echter Kundenfall.</p>
-        </aside>
-      </div>
-      <div class="wrap">
-        <ul class="trust-bar" aria-label="Das Wichtigste auf einen Blick">
-          <li><svg aria-hidden="true"><use href="#i-pin"/></svg>Aus Dortmund</li>
-          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Klare Festpreise</li>
-          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Antwort auf den Check innerhalb von 48 Stunden</li>
-          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Betreuung ohne Agentur-Umwege</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section" id="check" aria-labelledby="check-title">
-      <div class="wrap check-grid">
-        <div>
-          <p class="eyebrow"><span class="num">01</span> Kostenloser Website-Check</p>
-          <h2 id="check-title" style="margin-top: var(--space-6)">Schicken Sie uns Ihre Website. Wir sagen Ihnen, wo Sie zuerst ansetzen sollten.</h2>
-          <p class="lead" style="margin-top: var(--space-6)">Für den Check brauchen wir keine lange Projektbeschreibung. Senden Sie uns einfach Ihre Website und kurz, was Sie daran aktuell stört.</p>
-          <ol class="steps-inline">
-            <li><div><strong>3 konkrete Schwachstellen</strong><p class="muted small">Was Interessenten heute abhält – auf dem Handy und am Computer.</p></div></li>
-            <li><div><strong>3 schnelle Verbesserungen</strong><p class="muted small">Dinge, die Sie sofort ändern können, auch ohne uns.</p></div></li>
-            <li><div><strong>1 klare Empfehlung</strong><p class="muted small">Womit Sie aus unserer Sicht zuerst anfangen sollten.</p></div></li>
-          </ol>
-          <p class="muted small" style="margin-top: var(--space-7)">Der Check ist kostenlos und verpflichtet Sie zu nichts. Ein Beratungsgespräch ist danach nicht nötig.</p>
-        </div>
-        <form class="form" id="check-form" data-to="info@muratisystems.de" novalidate>
-          <div class="field">
-            <label for="f-site">Ihre Website</label>
-            <input id="f-site" name="website" inputmode="url" autocomplete="url" placeholder="www.ihr-betrieb.de">
-            <span class="hint">Noch keine Website? Dann beschreiben Sie Ihren Betrieb unten kurz.</span>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="f-name">Name *</label>
-              <input id="f-name" name="name" autocomplete="name" required>
-            </div>
-            <div class="field">
-              <label for="f-mail">E-Mail *</label>
-              <input id="f-mail" name="email" type="email" autocomplete="email" required>
-            </div>
-          </div>
-          <div class="field">
-            <label for="f-msg">Was möchten Sie verbessern?</label>
-            <textarea id="f-msg" name="nachricht" placeholder="z. B. Über die Website kommen kaum Anfragen."></textarea>
-            <span class="hint">Bitte keine Gesundheits- oder Patientendaten eintragen.</span>
-          </div>
-          <div class="field">
-            <label for="f-tel">Telefon oder WhatsApp <span class="muted">(optional)</span></label>
-            <input id="f-tel" name="telefon" type="tel" autocomplete="tel">
-          </div>
-          <button class="btn btn-primary btn-block" type="submit">Kostenlosen Check anfordern</button>
-          <p class="consent">Wir verwenden Ihre Angaben ausschließlich zur Bearbeitung Ihrer Anfrage. Weitere Informationen finden Sie in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
-          <p class="form-status" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
-
-    <section class="section" id="preise" aria-labelledby="preise-title">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow"><span class="num">02</span> Pakete &amp; Preise</p>
-          <h2 id="preise-title">Klare Preise, bevor Sie etwas beauftragen.</h2>
-          <p class="lead">Vor Projektbeginn erhalten Sie einen klar definierten Umfang und einen Festpreis.</p>
-        </div>
-        <div class="pricing pricing-2">
-          <article class="plan featured">
-            <h3>Start</h3>
-            <p class="price"><small>ab</small> 790 €</p>
-            <p><strong>Alles Wichtige auf einer starken Seite.</strong></p>
-            <p class="muted small">Für Betriebe mit einem klaren Angebot, die professionell auftreten und Interessenten ohne Umwege zum Kontakt führen möchten.</p>
-            <ul>
-              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Konzeption und Gestaltung einer Inhaltsseite</li>
-              <li><svg aria-hidden="true"><use href="#i-check"/></svg>fürs Handy optimiert, klare Seitenstruktur</li>
-              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Kontaktweg per Formular, WhatsApp und Telefon</li>
-              <li><svg aria-hidden="true"><use href="#i-check"/></svg>technische SEO-Grundlage</li>
-            </ul>
-            <p class="plan-note">Impressum und Datenschutz werden separat eingebunden. Rechtstexte werden nicht rechtlich erstellt oder geprüft.</p>
-            <a class="btn btn-primary" href="#check">Mit dem kostenlosen Check starten</a>
-          </article>
-          <article class="plan">
-            <h3>Betrieb</h3>
-            <p class="price"><small>ab</small> 1.490 €</p>
-            <p><strong>Mehr Platz für Leistungen, Unternehmen und Vertrauen.</strong></p>
-            <p class="muted small">Für Betriebe, die mehrere Leistungen sauber erklären und bei lokalen Interessenten professionell auftreten möchten.</p>
-            <ul>
-              <li><svg aria-hidden="true"><use href="#i-check"/></svg>bis zu fünf Inhaltsseiten mit gemeinsamer Struktur</li>
-              <li><svg aria-hidden="true"><use href="#i-check"/></svg>fürs Handy optimiert</li>
-              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Kontaktformular</li>
-              <li><svg aria-hidden="true"><use href="#i-check"/></svg>technische SEO-Basis für die lokale Suche</li>
-            </ul>
-            <p class="plan-note">Umfang und Inhalte werden vor Projektstart festgelegt. Besondere Integrationen und vollständiges Copywriting werden separat kalkuliert.</p>
-            <a class="btn btn-ghost" href="#check">Mit dem kostenlosen Check starten</a>
-          </article>
-        </div>
-        <div class="addon">
-          <h3>Website soll mehr können?</h3>
-          <dl class="addon-list">
-            <div><dt>Anfrage-Automatisierung <span>ab 690 €</span></dt><dd>Weniger Übertragen, Sortieren und Nachfragen: Formular, Eingangsbestätigung und strukturierte Weitergabe an E-Mail oder bestehende Listen. Für einen klar abgegrenzten Ablauf.</dd></div>
-            <div><dt>Betreuung Basis <span>49 € / Monat</span></dt><dd>Ein Ansprechpartner bleibt erreichbar: technische Fragen, laufende Prüfung und Unterstützung nach dem Go-live. Inhaltsänderungen separat.</dd></div>
-            <div><dt>Betreuung Plus <span>79 € / Monat</span></dt><dd>Wie Basis, zusätzlich ein fest vereinbartes kleines Kontingent für Änderungen pro Monat.</dd></div>
-            <div><dt>Interne Tools <span>ab 2.500 €</span></dt><dd>Kleine Werkzeuge für Abläufe, die heute über Listen und Zurufe laufen. Wir prüfen zuerst, ob ein eigenes Tool überhaupt die sinnvollste Lösung ist.</dd></div>
-          </dl>
-        </div>
-        <p class="price-note">Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</p>
-      </div>
-    </section>
-
-    <section class="section" id="fuer-wen" aria-labelledby="fuer-wen-title">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow"><span class="num">03</span> Für wen</p>
-          <h2 id="fuer-wen-title">Für Betriebe, deren Kunden schnell wissen wollen, wie sie Sie erreichen.</h2>
-        </div>
-        <div class="cards">
-          <article class="card">
-            <span class="icon"><svg aria-hidden="true"><use href="#i-site"/></svg></span>
-            <h3>Handwerk</h3>
-            <p class="muted">Leistungen schnell erfassbar, mobil erreichbar, Anfrage mit Fotos oder konkretem Anliegen.</p>
-          </article>
-          <article class="card">
-            <span class="icon"><svg aria-hidden="true"><use href="#i-care"/></svg></span>
-            <h3>Praxen</h3>
-            <p class="muted">Leistungen, Standort, Erreichbarkeit und Kontakt ohne unnötige Werbesprache – und ohne Gesundheitsdaten über ein normales Kontaktformular.</p>
-          </article>
-          <article class="card">
-            <span class="icon"><svg aria-hidden="true"><use href="#i-flow"/></svg></span>
-            <h3>Lokale Dienstleister</h3>
-            <p class="muted">Angebot verständlich ordnen und Interessenten ohne Umwege zur Anfrage führen.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="arbeit" aria-labelledby="arbeit-title">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow"><span class="num">04</span> Arbeitsproben</p>
-          <h2 id="arbeit-title">So sieht unsere Arbeit aus.</h2>
-        </div>
-        <div class="examples">
-          <article class="example">
-            <span class="tag">Demo – kein Kundenprojekt</span>
-            <h3>Website für einen Handwerksbetrieb</h3>
-            <p class="muted small">Konzeptprojekt zur Darstellung von Aufbau, Mobilansicht und Anfrageweg.</p>
-            <dl>
-              <div><dt>Umfang</dt><dd>Paket Start</dd></div>
-              <div><dt>Schwerpunkt</dt><dd>Leistungen, Einsatzgebiet, Anruf- und WhatsApp-Button</dd></div>
-            </dl>
-          </article>
-          <article class="example">
-            <span class="tag">Muster</span>
-            <h3>Website-Check</h3>
-            <p class="muted small">Beispiel, wie wir Schwachstellen priorisieren – genau so bekommen Sie Ihre Auswertung.</p>
-            <dl>
-              <div><dt>Ergebnis</dt><dd>3 Schwachstellen, 3 Verbesserungen, 1 Empfehlung</dd></div>
-              <div><dt>Dauer</dt><dd>Antwort innerhalb von 48 Stunden</dd></div>
-            </dl>
-          </article>
-          <article class="example">
-            <span class="tag">Demo – kein Kundenprojekt</span>
-            <h3>Anfrageablauf</h3>
-            <p class="muted small">So kann aus einem Website-Formular eine strukturierte Anfrage werden.</p>
-            <dl>
-              <div><dt>Ablauf</dt><dd>Formular → Eingangsbestätigung → sortierte E-Mail → Eintrag in Ihrer Liste</dd></div>
-              <div><dt>Umfang</dt><dd>Anfrage-Automatisierung</dd></div>
-            </dl>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="ablauf" aria-labelledby="ablauf-title">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow"><span class="num">05</span> Ablauf</p>
-          <h2 id="ablauf-title">So läuft ein Projekt ab.</h2>
-        </div>
-        <ol class="timeline">
-          <li><span class="step">1</span><h3>Anfrage und kurze Klärung</h3><p class="muted">Wir klären Ziel, Seitenumfang und benötigte Inhalte.</p></li>
-          <li><span class="step">2</span><h3>Festpreis</h3><p class="muted">Sie erhalten ein verbindliches Angebot mit klarem Umfang.</p></li>
-          <li><span class="step">3</span><h3>Entwurf und Korrektur</h3><p class="muted">Sie prüfen die Vorschau und geben Ihre Änderungswünsche gebündelt zurück.</p></li>
-          <li><span class="step">4</span><h3>Go-live</h3><p class="muted">Erst nach Ihrer Freigabe geht die Website unter Ihrer Domain online.</p></li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="section" id="faq" aria-labelledby="faq-title">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow"><span class="num">06</span> Häufige Fragen</p>
-          <h2 id="faq-title">Häufige Fragen</h2>
-        </div>
-        <div class="faq">
-          <details><summary>Was kostet eine Website bei Murati Systems?</summary><p>Ein kompakter Onepager startet bei 790 €. Ein Unternehmensauftritt mit bis zu fünf Inhaltsseiten startet bei 1.490 €. Vor Projektbeginn erhalten Sie einen klar definierten Umfang und Preis. Besondere Funktionen, vollständiges Copywriting oder Integrationen werden separat kalkuliert. Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</p></details>
-          <details><summary>Was bekomme ich beim kostenlosen Website-Check?</summary><p>Sie schicken uns den Link zu Ihrer aktuellen Website. Innerhalb von 48 Stunden erhalten Sie drei konkrete Schwachstellen, drei schnelle Verbesserungen und eine Empfehlung, womit Sie aus unserer Sicht zuerst anfangen sollten. Der Check ist kostenlos und verpflichtet Sie nicht zu einem Projekt.</p></details>
-          <details><summary>Muss ich danach ein Beratungsgespräch führen?</summary><p>Nein. Sie erhalten den Website-Check auch dann, wenn daraus kein Projekt entsteht. Wenn eine Überarbeitung sinnvoll ist, können wir anschließend Umfang und Preis besprechen.</p></details>
-          <details><summary>Wie läuft ein Website-Projekt ab?</summary><p>Zuerst klären wir Ziel, Seitenumfang und benötigte Inhalte. Danach erhalten Sie ein verbindliches Angebot. Wir setzen die vereinbarte Struktur um, Sie prüfen die Vorschau und geben Ihre Änderungswünsche gebündelt zurück. Erst nach Freigabe geht die Website unter Ihrer Domain online.</p></details>
-          <details><summary>Wie lange dauert die Erstellung?</summary><p>Das hängt vor allem vom Umfang ab und davon, wann Texte, Bilder und Freigaben vorliegen. Einen konkreten Zieltermin legen wir deshalb im Angebot fest.</p></details>
-          <details><summary>Muss ich Texte und Bilder fertig liefern?</summary><p>Sie müssen keine perfekten Webtexte vorbereiten. Wir benötigen aber die fachlichen Informationen zu Ihrem Unternehmen, Ihren Leistungen und Ihrem Kontaktweg. Wir strukturieren und redigieren diese für die Website. Vollständige Texterstellung oder Bildbeschaffung kann bei Bedarf separat vereinbart werden.</p></details>
-          <details><summary>Kann ich die Website später selbst bearbeiten?</summary><p>Unsere schlanken Websites werden in der Regel ohne klassisches CMS umgesetzt. Das hält Technik und Wartung übersichtlich, bedeutet aber auch, dass es kein WordPress-ähnliches Bearbeitungsmenü gibt. Änderungen können wir im Rahmen der Betreuung übernehmen; die vereinbarten Projektdateien bleiben nachvollziehbar dokumentiert.</p></details>
-          <details><summary>Was passiert mit Domain und Hosting?</summary><p>Ihre Domain bleibt auf Ihren Namen beziehungsweise Ihr Unternehmen registriert. Nach Projektabschluss erhalten Sie die vereinbarten Dateien und Zugänge. Eine laufende Betreuung ist optional.</p></details>
-          <details><summary>Können Sie auch Formulare und Abläufe automatisieren?</summary><p>Ja – wenn dadurch tatsächlich Arbeit entfällt. Ein sinnvoller erster Schritt kann zum Beispiel sein, Anfragen strukturiert zu erfassen, automatisch zu bestätigen und intern an der richtigen Stelle abzulegen. Komplexere Automatisierungen und interne Tools kalkulieren wir erst nach einer kurzen Anforderungsaufnahme.</p></details>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="kontakt" aria-labelledby="kontakt-title">
-      <div class="wrap contact-grid">
-        <div>
-          <p class="eyebrow"><span class="num">07</span> Kontakt</p>
-          <h2 id="kontakt-title" style="margin-top: var(--space-6)">Lieber direkt schreiben?</h2>
-          <p class="lead" style="margin-top: var(--space-6)">Murati Systems ist ein inhabergeführtes IT-Einzelunternehmen aus Dortmund. Sie sprechen direkt mit dem, der Ihre Website baut.</p>
-          <a class="btn btn-primary" style="margin-top: var(--space-8)" href="#check">Kostenlosen Website-Check anfordern</a>
-        </div>
-        <div>
-          <ul class="contact-list">
-            <li><a href="https://wa.me/491627760311?text=Hallo%20Murati%20Systems%2C%20ich%20interessiere%20mich%20f%C3%BCr%20den%20Website-Check." target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span><strong>WhatsApp öffnen</strong><span>0162 7760311</span></span></a></li>
-            <li><a href="mailto:info@muratisystems.de"><svg aria-hidden="true"><use href="#i-mail"/></svg><span><strong>E-Mail senden</strong><span>info@muratisystems.de</span></span></a></li>
-            <li><a href="tel:+491627760311"><svg aria-hidden="true"><use href="#i-phone"/></svg><span><strong>Anrufen</strong><span>0162 7760311</span></span></a></li>
-          </ul>
-          <p class="consent" style="margin-top: var(--space-5)">Beim Klick auf WhatsApp verlassen Sie unsere Website und öffnen den Dienst WhatsApp.</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="wrap footer-grid">
-      <div>
-        <p><strong style="color: var(--color-text-primary)">Murati Systems</strong> · Inhabergeführtes IT-Einzelunternehmen aus Dortmund</p>
-        <p>Websites und digitale Abläufe für Betriebe im Ruhrgebiet</p>
-              </div>
-      <nav class="footer-links" aria-label="Rechtliches">
-        <a href="impressum.html">Impressum</a>
-        <a href="datenschutz.html">Datenschutz</a>
-        <span>© 2026 Murati Systems</span>
-      </nav>
+  <section class="hero">
+    <div class="hero-media" aria-hidden="true"></div>
+    <div class="shell hero-content">
+      <p class="eyebrow"><span class="eyebrow-line"></span> Aus Dortmund. Für Betriebe im Ruhrgebiet.</p>
+      <h1>Digital klar.<br><em>Im Alltag wirksam.</em></h1>
+      <p class="hero-lead">Wir gestalten Websites, die Ihr Angebot verständlich machen und Anfragen einfach zum richtigen Menschen bringen.</p>
+      <div class="actions"><a class="button primary" href="website-check.html">Website kostenlos prüfen lassen <span aria-hidden="true">↗</span></a><a class="text-link" href="leistungen.html">Leistungen ansehen <span aria-hidden="true">→</span></a></div>
+      <div class="hero-note"><span>01 / 03</span><span>Websites · Anfragewege · Betreuung</span></div>
     </div>
-  </footer>
-
-  <nav class="mobile-bar" aria-label="Schnellkontakt">
-    <a class="btn btn-whatsapp" href="https://wa.me/491627760311?text=Hallo%20Murati%20Systems%2C%20ich%20interessiere%20mich%20f%C3%BCr%20den%20Website-Check." target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
-    <a class="btn btn-primary" href="#check">Kostenloser Check</a>
-  </nav>
-
-  <script src="assets/site.js" defer></script>
+  </section>
+  <section class="section compact">
+    <div class="shell">
+      <div class="section-top"><span class="index-label">WAS WIR TUN / 01</span><h2>Weniger Reibung.<br>Mehr Klarheit.</h2><p>Ein guter Auftritt erklärt schnell, was Sie leisten, schafft Vertrauen und macht den nächsten Schritt einfach.</p></div>
+      <div class="service-grid">
+        <a class="service-card" href="leistungen.html#websites"><span class="card-number">01</span><h3>Websites</h3><p>Ein klarer Auftritt für Ihre Leistungen, Ihren Standort und den Kontakt.</p><span class="card-arrow" aria-hidden="true">↗</span></a>
+        <a class="service-card" href="leistungen.html#anfragen"><span class="card-number">02</span><h3>Anfragewege</h3><p>Weniger verlorene Nachrichten und ein nachvollziehbarer Weg bis zur Antwort.</p><span class="card-arrow" aria-hidden="true">↗</span></a>
+        <a class="service-card" href="leistungen.html#betreuung"><span class="card-number">03</span><h3>Betreuung</h3><p>Technische Unterstützung nach dem Start, passend zu Ihrem tatsächlichen Bedarf.</p><span class="card-arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+  <section class="callout"><div class="shell callout-inner"><div><span class="index-label">DER ERSTE SCHRITT / 02</span><h2>Wo verliert Ihre Website heute Anfragen?</h2><p>Im kostenlosen Check nennen wir drei konkrete Schwachstellen, drei Verbesserungen und eine Empfehlung.</p></div><a class="button primary" href="website-check.html">Check starten <span aria-hidden="true">↗</span></a></div></section>
+</main>
+  <footer class="site-footer"><div class="shell footer-inner">
+    <div><a class="footer-brand" href="index.html">Murati Systems</a><p>Websites und digitale Abläufe für Betriebe im Ruhrgebiet.</p></div>
+    <nav aria-label="Footer"><a href="leistungen.html">Leistungen</a><a href="website-check.html">Website-Check</a><a href="kontakt.html">Kontakt</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav>
+    <span class="copyright">© 2026 Murati Systems</span>
+  </div></footer>
 </body>
 </html>

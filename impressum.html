@@ -1,35 +1,26 @@
 <!doctype html>
-<html lang="de">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Impressum – Murati Systems</title>
-  <meta name="robots" content="noindex">
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <script>
-    (function () {
-      var t = new URLSearchParams(location.search).get("theme");
-      try { if (!t) t = localStorage.getItem("theme"); } catch (e) {}
-      if (t !== "dark" && t !== "light") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      document.documentElement.setAttribute("data-theme", t);
-    })();
-  </script>
-  <link rel="stylesheet" href="assets/tokens.css">
-  <link rel="stylesheet" href="assets/site.css">
-</head>
-<body>
-  <header class="site-header">
-    <div class="wrap header-row">
-      <a class="brand" href="./" aria-label="Murati Systems – zur Startseite">
-        <svg viewBox="0 0 44 44" aria-hidden="true"><path d="M10 31V14l6.4 10.4L22 14l5.6 10.4L34 14v17" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="34.2" cy="8.6" r="2.6" style="fill: var(--color-accent-secondary)"/></svg>
-        <span class="brand-text"><strong>Murati</strong><span>Systems</span></span>
+<html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><title>Impressum – Murati Systems</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/redesign.css">
+</head><body class="legal_page">
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+<header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="index.html" aria-label="Murati Systems – Startseite">
+        <img src="assets/favicon.svg" alt="" width="36" height="36">
+        <span><strong>Murati</strong><small>SYSTEMS</small></span>
       </a>
-      <a class="btn btn-ghost" href="./">Zur Startseite</a>
+      <nav class="desktop-nav" aria-label="Hauptnavigation">
+        <a href="index.html">Start</a><a href="leistungen.html">Leistungen</a><a href="arbeitsweise.html">Arbeitsweise</a><a href="kontakt.html">Kontakt</a>
+      </nav>
+      <a class="header-cta" href="website-check.html">Website-Check <span aria-hidden="true">↗</span></a>
+      <details class="mobile-menu"><summary>Menü</summary><nav aria-label="Mobile Navigation"><a href="index.html">Start</a><a href="leistungen.html">Leistungen</a><a href="website-check.html">Website-Check</a><a href="arbeitsweise.html">Arbeitsweise</a><a href="kontakt.html">Kontakt</a></nav></details>
     </div>
   </header>
-
-  <main class="legal">
-    <div class="wrap">
+<main id="inhalt" class="legal">
+    <div class="shell legal-shell">
       <h1>Impressum</h1>
 
       <h2>Angaben gemäß § 5 DDG</h2>
@@ -57,15 +48,9 @@
       <p>Die Inhalte dieser Website wurden mit Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität können wir jedoch keine Gewähr übernehmen. Für Inhalte externer Websites, auf die wir verlinken, sind ausschließlich deren Betreiber verantwortlich. Bei Bekanntwerden von Rechtsverletzungen entfernen wir entsprechende Inhalte oder Links umgehend.</p>
     </div>
   </main>
-
-  <footer class="site-footer">
-    <div class="wrap footer-grid">
-      <p>© 2026 Murati Systems · Endrit Murati · Dortmund</p>
-      <nav class="footer-links" aria-label="Rechtliches">
-        <a href="impressum.html">Impressum</a>
-        <a href="datenschutz.html">Datenschutz</a>
-      </nav>
-    </div>
-  </footer>
-</body>
-</html>
+<footer class="site-footer"><div class="shell footer-inner">
+    <div><a class="footer-brand" href="index.html">Murati Systems</a><p>Websites und digitale Abläufe für Betriebe im Ruhrgebiet.</p></div>
+    <nav aria-label="Footer"><a href="leistungen.html">Leistungen</a><a href="website-check.html">Website-Check</a><a href="kontakt.html">Kontakt</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav>
+    <span class="copyright">© 2026 Murati Systems</span>
+  </div></footer>
+</body></html>

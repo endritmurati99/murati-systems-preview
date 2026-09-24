@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Geführter Website-Check von Murati Systems: Beschreiben Sie Ihre Website, Ihre Probleme und Ziele in wenigen Schritten.">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://muratisystems.de/website-check.html">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/redesign.css">
+  <script src="assets/redesign.js" defer></script>
+  <title>Kostenloser Website-Check – Murati Systems</title>
+</head>
+<body class="website_check">
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="index.html" aria-label="Murati Systems – Startseite">
+        <img src="assets/favicon.svg" alt="" width="36" height="36">
+        <span><strong>Murati</strong><small>SYSTEMS</small></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Hauptnavigation">
+        <a href="index.html">Start</a><a href="leistungen.html">Leistungen</a><a href="arbeitsweise.html">Arbeitsweise</a><a href="kontakt.html">Kontakt</a>
+      </nav>
+      <a class="header-cta" href="website-check.html">Website-Check <span aria-hidden="true">↗</span></a>
+      <details class="mobile-menu"><summary>Menü</summary><nav aria-label="Mobile Navigation"><a href="index.html">Start</a><a href="leistungen.html">Leistungen</a><a href="website-check.html">Website-Check</a><a href="arbeitsweise.html">Arbeitsweise</a><a href="kontakt.html">Kontakt</a></nav></details>
+    </div>
+  </header>
+  <main id="inhalt">
+  <section class="page-hero check-hero"><div class="shell"><p class="eyebrow"><span class="eyebrow-line"></span> KOSTENLOSER WEBSITE-CHECK / 01</p><h1>Zeigen Sie uns,<br><em>wo es hakt.</em></h1><p>Ein paar gezielte Fragen reichen. Wir schauen persönlich auf Ihre Ausgangslage und geben Ihnen drei Schwachstellen, drei Verbesserungen und eine Empfehlung.</p></div></section>
+  <section class="section check-section"><div class="shell check-layout"><div class="check-aside"><span class="index-label">SO FUNKTIONIERT ES</span><h2>Drei kurze Schritte.<br>Ein klarer Blick.</h2><p>Ihre Antworten helfen, den Check auf Ihren Betrieb zuzuschneiden. Bitte keine Gesundheits- oder Patientendaten eintragen.</p><ol class="steps"><li><span>01</span> Ausgangslage</li><li><span>02</span> Ziel</li><li><span>03</span> Rückmeldung</li></ol></div>
+    <form id="guided-check" class="wizard" data-to="info@muratisystems.de" novalidate>
+      <div class="wizard-top"><span id="step-label">SCHRITT 1 VON 3</span><span>KOSTENLOS & UNVERBINDLICH</span></div><div class="progress"><span id="progress-fill"></span></div>
+      <fieldset data-step="1"><legend tabindex="-1">Was trifft auf Ihre Situation zu?</legend><p class="field-help">Wählen Sie alles aus, was Sie gerade beschäftigt. Bitte keine Gesundheits- oder Patientendaten eintragen.</p>
+        <div class="choices"><label><input type="checkbox" name="problem" value="Unsere Website wirkt veraltet"><span>Unsere Website wirkt veraltet</span></label><label><input type="checkbox" name="problem" value="Wir bekommen zu wenige Anfragen"><span>Wir bekommen zu wenige Anfragen</span></label><label><input type="checkbox" name="problem" value="Auf dem Handy funktioniert sie schlecht"><span>Auf dem Handy funktioniert sie schlecht</span></label><label><input type="checkbox" name="problem" value="Anfragen landen an der falschen Stelle"><span>Anfragen landen an der falschen Stelle</span></label><label><input type="checkbox" name="problem" value="Wir haben noch keine Website"><span>Wir haben noch keine Website</span></label></div>
+        <label class="field">Ihre Website <small>(falls vorhanden)</small><input type="url" name="website" placeholder="https://www.ihr-betrieb.de" inputmode="url"></label>
+      </fieldset>
+      <fieldset data-step="2" hidden><legend tabindex="-1">Was soll sich zuerst verbessern?</legend><p class="field-help">Eine Richtung genügt. Wir stellen bei Bedarf Rückfragen.</p>
+        <div class="choices"><label><input type="radio" name="ziel" value="Mehr passende Anfragen" required><span>Mehr passende Anfragen</span></label><label><input type="radio" name="ziel" value="Leistungen verständlicher zeigen"><span>Leistungen verständlicher zeigen</span></label><label><input type="radio" name="ziel" value="Abläufe nach der Anfrage vereinfachen"><span>Abläufe nach der Anfrage vereinfachen</span></label><label><input type="radio" name="ziel" value="Erst Orientierung bekommen"><span>Erst Orientierung bekommen</span></label></div>
+        <label class="field">Was sollten wir zusätzlich wissen? <small>(optional)</small><textarea name="hinweis" rows="3" placeholder="Ein Satz reicht."></textarea></label>
+      </fieldset>
+      <fieldset data-step="3" hidden><legend tabindex="-1">Wie erreichen wir Sie?</legend><p class="field-help">Wir benötigen einen Kontaktweg für Ihre persönliche Rückmeldung.</p>
+        <div class="field-pair"><label class="field">Name <input name="name" autocomplete="name" required></label><label class="field">E-Mail <input type="email" name="email" autocomplete="email" required></label></div>
+        <label class="field">Telefon / WhatsApp <small>(optional)</small><input type="tel" name="telefon" autocomplete="tel"></label>
+        <div class="channel"><span>Bevorzugte Antwort</span><label><input type="radio" name="kanal" value="E-Mail" checked> E-Mail</label><label><input type="radio" name="kanal" value="WhatsApp"> WhatsApp</label></div>
+        <p class="fineprint">Ihre Angaben nutzen wir für diesen Check. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+      </fieldset>
+      <p class="wizard-status" id="wizard-status" role="status" aria-live="polite"></p>
+      <div class="wizard-actions"><button class="button subtle" type="button" id="back-step" hidden>Zurück</button><button class="button primary" type="button" id="next-step">Weiter <span aria-hidden="true">→</span></button><button class="button primary" type="submit" id="send-check" hidden>E-Mail mit Angaben öffnen <span aria-hidden="true">↗</span></button></div>
+      <p class="draft-note">Entwurf: Der letzte Schritt öffnet derzeit Ihr E-Mail-Programm mit den Antworten. Die Anfrage wird erst mit Ihrem Klick auf „Senden“ verschickt.</p>
+    </form>
+  </div></section>
+</main>
+  <footer class="site-footer"><div class="shell footer-inner">
+    <div><a class="footer-brand" href="index.html">Murati Systems</a><p>Websites und digitale Abläufe für Betriebe im Ruhrgebiet.</p></div>
+    <nav aria-label="Footer"><a href="leistungen.html">Leistungen</a><a href="website-check.html">Website-Check</a><a href="kontakt.html">Kontakt</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav>
+    <span class="copyright">© 2026 Murati Systems</span>
+  </div></footer>
+</body>
+</html>
