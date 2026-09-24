@@ -19,6 +19,10 @@ CORE_PAGES = (
     "ki-automatisierung.html",
     "impressum.html",
     "datenschutz.html",
+    "faq.html",
+    "website-handwerk-dortmund.html",
+    "website-praxis-dortmund.html",
+    "website-dienstleister-dortmund.html",
 )
 REQUIRED_PRICES = ("790 €", "1.490 €", "690 €", "2.500 €", "49 €", "79 €")
 EXTERNAL = re.compile(r"^(?:https?:)?//", re.I)
