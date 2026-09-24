@@ -10,7 +10,7 @@ Live seit 2026-09-23 auf dem Hostinger-VPS (KVM 2, Frankfurt, 76.13.154.245).
 
 ## Redesign live seit 24.09.2026
 
-Auf Anweisung des Inhabers veröffentlicht (siehe `handoff.md`). Release = Root-`*.html` (inkl. Google-Verifizierung `googlee0ef753932ea7e7a.html`), Root-`*.txt` (`robots.txt`, IndexNow-Schlüssel), `sitemap.xml`, `assets/` ohne `site.css`/`site.js`/`tokens.css`; Dateien 644, Ordner 755. Backup vor jedem Release unter `/srv/murati-website-backups/`.
+Auf Anweisung des Inhabers veröffentlicht (siehe `handoff.md`). Release = Root-`*.html` (inkl. Google-Verifizierung `googlee0ef753932ea7e7a.html`), Root-`*.txt` (`robots.txt`, IndexNow-Schlüssel), `BingSiteAuth.xml`, `sitemap.xml`, `assets/` ohne `site.css`/`site.js`/`tokens.css`; Dateien 644, Ordner 755. Backup vor jedem Release unter `/srv/murati-website-backups/`.
 
 ## Frühere Vorschau-Notiz (historisch)
 
