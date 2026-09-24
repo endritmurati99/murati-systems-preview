@@ -8,7 +8,11 @@ Live seit 2026-09-23 auf dem Hostinger-VPS (KVM 2, Frankfurt, 76.13.154.245).
 - HTTPS: Let's Encrypt, automatisch durch Caddy. Keine Zugriffsprotokolle.
 - DNS (Hostinger): A `@` → 76.13.154.245 (TTL 60), CNAME `www` → muratisystems.de. Mail-Einträge unverändert.
 
-## Vorschau vom 24.09.2026: noch nicht veröffentlichen
+## Redesign live seit 24.09.2026
+
+Auf Anweisung des Inhabers veröffentlicht (siehe `handoff.md`). Release = Root-`*.html`, `robots.txt`, `sitemap.xml`, `assets/` ohne `site.css`/`site.js`/`tokens.css`; Dateien 644, Ordner 755. Backup vor jedem Release unter `/srv/murati-website-backups/`.
+
+## Frühere Vorschau-Notiz (historisch)
 
 Der Branch `codex/website-redesign` enthält eine neue Mehrseiten-Website und rechtliche Entwürfe. Vor jeder Veröffentlichung `../LEGAL-REVIEW.md` abarbeiten: Betreiber-/Vertragsangaben, Hosting-/Mailanbieter, Auftragsverarbeitung, Löschpraxis und B2B/Verbraucher-Vertragsweg bestätigen. Die aktuelle Live-Website verwendet Theme-localStorage; die neue Vorschau verwendet keinen dauerhaften Browserspeicher. Rechtstexte nicht ungeprüft zwischen den Ständen kopieren.
 
