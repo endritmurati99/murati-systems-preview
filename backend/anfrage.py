@@ -405,9 +405,9 @@ def selftest():
     assert validate({**kontakt, "anliegen": ["x"]})[2] == "anliegen"
     assert validate({**kontakt, "nachricht": [" "]})[2] == "nachricht"
     assert re.fullmatch(r"MS-\d{6}-[A-HJ-NP-Z2-9]{4}", new_nr())
-    assert wa_link("0162 7760311") == "https://wa.me/491627760311"
-    assert wa_link("+49 (0)162 776-0311") == "https://wa.me/491627760311"
-    assert wa_link("0049 162 7760311") == "https://wa.me/491627760311"
+    assert wa_link("0152 33955912") == "https://wa.me/4915233955912"
+    assert wa_link("+49 (0)152 339-55912") == "https://wa.me/4915233955912"
+    assert wa_link("0049 152 33955912") == "https://wa.me/4915233955912"
     assert wa_link("12") == ""
     assert not any(rate_limited("t", now=1000 + i) for i in range(RATE_LIMIT))
     assert rate_limited("t", now=1010)
