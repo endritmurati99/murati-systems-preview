@@ -4,7 +4,7 @@ Overlays auf `assets/redesign.css`, nicht ausgeliefert. Farbe A („Orange leise
 
 - `farbe-b-signalgelb.css`: Akzent Gelb statt Orange (dazu `favicon.svg` mit `#FFC21A`).
 - `farbe-c-dunkler-einstieg.css`: Kopf und Hero der Startseite auf Graphit.
-- `logo-2-nur-schriftzug.css`, `logo-3-kompakt.css`: Logo-Varianten; Logo 1 ist der heutige Stand. Die Logo-Wahl ist offen.
+- `logo-2-nur-schriftzug.css`: verworfene Logo-Variante. Logo 3 „kompakt“ ist gewählt (Inhaber, 25.09.2026) und in `assets/redesign.css` übernommen, das Overlay ist deshalb gelöscht. Logo 1 („Murati“ über „SYSTEMS“) war der Stand davor.
 
 Vorschau bauen: Overlay an eine Kopie von `assets/redesign.css` anhängen (siehe `deploy/preview.sh`, Ordner `vorschau/<variante>/`, noindex).
 
