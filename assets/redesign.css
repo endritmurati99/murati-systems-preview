@@ -159,10 +159,10 @@ p { margin-bottom: 20px; }
 .example dt { color: var(--accent); }
 .example dd { margin: 0; }
 .ki-hero-grid { display: block; }
-.use-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 65px; border-top: 1px solid var(--line); }
-.use-grid article { padding-block: 28px; border-bottom: 1px solid var(--line); }
-.use-grid h3 { margin: 0 0 10px; }
-.use-grid p { color: var(--muted); max-width: 450px; margin: 0; }
+.use-grid { display: grid; gap: 12px; }
+.use-grid article { padding: 22px 20px; border: 1px solid var(--line); border-radius: 18px; background: #fff; }
+.use-grid h3 { margin: 0 0 8px; font-size: 21px; letter-spacing: -.02em; }
+.use-grid p { margin: 0; color: var(--muted); }
 .flow { list-style: none; margin: 0; padding: 0; }
 .limits { padding-left: 18px; margin: 0; }
 .limits li { color: var(--muted); margin-block: 12px; }
@@ -245,7 +245,6 @@ p { margin-bottom: 20px; }
   .timeline, .flow { grid-template-columns: 1fr; gap: 0; }
   .timeline article, .flow li { padding-block: 23px; border-bottom: 1px solid var(--line); }
   .timeline article::before, .flow li::before { margin-bottom: 12px; }
-  .use-grid { grid-template-columns: 1fr; }
   .example dl { grid-template-columns: 1fr; gap: 4px; }
   .example dd { margin-bottom: 12px; }
   .footer-inner { grid-template-columns: 1fr; gap: 28px; }
@@ -350,7 +349,6 @@ html:has(.jump) { scroll-padding-top: 72px; }
   .detail-panel { border-left: 0; padding-left: 0; }
   .detail-panel:not(.faq-list) { padding: 20px 18px; border: 1px solid var(--line); border-top: 3px solid var(--signal); border-radius: var(--radius); background: var(--surface); }
   .detail-panel hr { margin: 20px 0; }
-  .use-grid article { padding-block: 22px; }
   .timeline article, .flow li { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 4px 16px; }
   .timeline article::before, .flow li::before { grid-row: span 2; margin: 8px 0 0; }
   .timeline h3, .flow h3 { margin: 4px 0 4px; font-size: 20px; }
@@ -742,7 +740,8 @@ html:has(.jump) { scroll-padding-top: 72px; }
   .offer-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "copy art" "plans art"; gap: 34px 72px; align-items: start; }
   .offer-copy { grid-area: copy; }
   .offer-art { grid-area: art; position: sticky; top: 90px; min-height: 440px; padding: 40px 34px; }
-  .plans { grid-area: plans; grid-template-columns: 1fr 1fr; }
+  .plans { grid-template-columns: 1fr 1fr; }
+  .offer-grid > .plans { grid-area: plans; }
   .plans > :not(.plan) { grid-column: 1 / -1; }
   .offer.flip .offer-grid { grid-template-areas: "art copy" "art plans"; }
   #ki .plans { grid-template-columns: 1fr; }
@@ -879,6 +878,24 @@ article.tile:hover { transform: none; box-shadow: none; }
 /* Website-Check (Lux, 2026-09-25): Ergebnis-Vorschau, Direktweg als Karte */
 .gets { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
 .website_check .header-cta { display: none; }
+.branch-phone { margin: 0; }
+.branch-phone .device-phone { width: min(236px, 60vw); aspect-ratio: 9 / 16.5; }
+.no-wa .new-bar span { background: #fff; }
+.no-wa .new-bar span:first-child { background: var(--stone); }
+.branch-phone figcaption { margin-top: 14px; color: var(--muted); font-size: 13px; text-align: center; }
+.flag.good::before { background: #30a46c; box-shadow: 0 0 0 4px #30a46c2e; }
+.new-cta .alt { background: var(--stone); color: var(--text); }
+.new-site { position: relative; }
+.new-lines { display: grid; gap: 5px; }
+.new-lines i { display: block; height: 5px; border-radius: 2px; background: #e6e4de; }
+.new-lines i.short { width: 60%; }
+.new-bar { position: absolute; right: 8px; bottom: 10px; left: 8px; display: grid; grid-template-columns: 1fr 1.6fr; gap: 4px; padding: 4px; border-radius: 9px; background: #141414; }
+.new-bar span { height: 14px; border-radius: 6px; background: var(--wa); }
+.new-bar span + span { background: #fff; }
+.branch-phone .flag-img { top: 50%; left: 0; }
+.branch-phone .flag-text { top: auto; right: 0; bottom: 20%; }
+@media (min-width: 760px) { .use-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1100px) { .use-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .gets li { display: inline-flex; align-items: center; gap: 8px; padding: 6px 13px 6px 6px; border: 1px solid var(--line); border-radius: 999px; background: #fff; font-size: 14.5px; font-weight: 640; }
 .gets span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--graphite); color: #fff; }
 .gets svg { width: 15px; height: 15px; }
