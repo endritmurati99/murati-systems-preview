@@ -26,8 +26,7 @@ for (const name of ["index.html","leistungen.html","ki-automatisierung.html","ar
  assert.match(html, /assets\/privacy\.js/);
 }
 const form = fs.readFileSync(path.join(root,"website-check.html"),"utf8");
-assert.match(form, /<form[^>]+id="guided-check"[^>]+hidden/);
-assert.match(form, /<noscript>[\s\S]*mailto:info@muratisystems\.de[\s\S]*<\/noscript>/);
-const wizard = fs.readFileSync(path.join(root,"assets/redesign.js"),"utf8");
-assert(wizard.indexOf('check.hidden = false') > wizard.indexOf('check.addEventListener("submit"'));
-console.log("PASS: privacy open/close/fallback, all-page integration, form no-JS protection");
+assert.match(form, /<form[^>]+method="post"[^>]+action="\/api\/anfrage"/); // first-party, works without JS
+assert.match(form, /name="homepage"/); assert.match(form, /datenschutz\.html#anfragen/);
+assert.doesNotMatch(form, /<script(?![^>]+src="assets\/privacy\.js")/);
+console.log("PASS: privacy open/close/fallback, all-page integration, first-party form without JS");

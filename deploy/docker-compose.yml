@@ -1,4 +1,5 @@
 # Murati Systems Website: statische Dateien aus ./site, HTTPS automatisch per Caddy.
+# Formular-Backend "anfrage" ist nur im internen Netz erreichbar (kein Port nach außen).
 services:
   caddy:
     image: caddy:2-alpine
@@ -13,6 +14,23 @@ services:
       - ./site:/srv/site:ro
       - caddy_data:/data
       - caddy_config:/config
+    depends_on:
+      - anfrage
+  anfrage:
+    image: python:3.13-alpine
+    container_name: murati-anfrage
+    restart: unless-stopped
+    command: ["python", "-u", "/app/anfrage.py"]
+    user: "1000:1000"
+    read_only: true
+    env_file: ./anfrage.env
+    volumes:
+      - ./backend/anfrage.py:/app/anfrage.py:ro
+      - ./anfragen:/data
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
 volumes:
   caddy_data:
   caddy_config:
