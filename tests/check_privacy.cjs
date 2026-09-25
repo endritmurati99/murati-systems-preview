@@ -28,5 +28,5 @@ for (const name of ["index.html","leistungen.html","ki-automatisierung.html","ar
 const form = fs.readFileSync(path.join(root,"website-check.html"),"utf8");
 assert.match(form, /<form[^>]+method="post"[^>]+action="\/api\/anfrage"/); // first-party, works without JS
 assert.match(form, /name="homepage"/); assert.match(form, /datenschutz\.html#anfragen/);
-assert.doesNotMatch(form, /<script(?![^>]+src="assets\/privacy\.js")/);
+assert.doesNotMatch(form, /<script(?![^>]+src="assets\/(privacy|main)\.js")/);
 console.log("PASS: privacy open/close/fallback, all-page integration, first-party form without JS");

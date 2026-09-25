@@ -25,3 +25,7 @@ Vor Umschaltung: externes Backup des bisherigen Releases, lokale Vorschautests, 
 ## Relaunch mit Formular-Backend (25.09.2026)
 
 Zweiter Container `murati-anfrage` (python:3.13-alpine, nur internes Docker-Netz, read-only) aus `backend/anfrage.py`; Caddy leitet `/api/*` dorthin. Auf dem Server: `/srv/murati-website/backend/anfrage.py`, `anfragen/` (Eigentümer 1000, 0700) und `anfrage.env` (root, 0600, SMTP-Zugang, nie ins Repository). Nach einem Tausch des Ordners `site/` oder des Caddyfile den Caddy-Container mit `docker compose up -d --force-recreate caddy` neu erstellen, weil Bind-Mounts sonst auf die alten Dateien zeigen.
+
+## Vorschau vor der Freigabe (ab 25.09.2026)
+
+`sh deploy/preview.sh` kopiert den Arbeitsstand von `website/` nach `/srv/murati-website/site/vorschau/` und setzt dort auf allen Seiten `noindex, nofollow`. So kann der Inhaber eine Seite unter https://muratisystems.de/vorschau/ am eigenen Handy prüfen, bevor sie live geht. Die Live-Dateien im Wurzelverzeichnis bleiben dabei unverändert. Nach dem Release die Vorschau wieder löschen oder mit dem nächsten Stand überschreiben.

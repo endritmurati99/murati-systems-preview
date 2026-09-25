@@ -70,7 +70,7 @@ class PageParser(HTMLParser):
 
 def local_target(page: Path, value: str) -> Path | None:
     value = value.strip()
-    if not value or value.startswith(("#", "mailto:", "tel:", "javascript:", "data:")):
+    if not value or value.startswith(("#", "%23", "mailto:", "tel:", "javascript:", "data:")):  # %23 = fragment inside an inline SVG
         return None
     if EXTERNAL.match(value):
         return None

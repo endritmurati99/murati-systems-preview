@@ -1,8 +1,28 @@
 # Murati Systems: Design und wiederverwendbare Prüfroutine
 
-Stand: 24.09.2026. Arbeitsstand der unveröffentlichten Vorschau. Maßgeblich bleiben `handoff.md` und `business-context.md` im übergeordneten Projektordner.
+Stand: 25.09.2026. Maßgeblich bleiben `handoff.md` und `business-context.md` im übergeordneten Projektordner.
 
-## Aktueller Stand: neutrale Gestaltung und Datenschutzprüfung
+## Aktueller Stand ab 25.09.2026: Lux-Richtung
+
+Arbeitsweise und dauerhafte Regeln des Inhabers stehen im Skill `lux` (`/home/hermes/Murati-Systems/.agents/skills/lux/SKILL.md`): keine Nummerierung als Gestaltungsmittel, keine leeren oder generischen Abschnitte, lebendig ohne Video, mobil zuerst, WhatsApp grün mit Symbol, keine Ortslabels als Deko. Seiten werden einzeln überarbeitet, zuerst die Startseite.
+
+Richtung: warmes Papierweiß und tiefes Graphit im Wechsel, Orange als Licht und Handlungsfarbe, große, eng gesetzte Schibsted Grotesk. Bilder sind echte Projekt-Screenshots in Geräterahmen, echte Fotos und im Code gebaute UI-Szenen, die zeigen, was die Leistung tut. Bewegung: wechselndes Wort im Hero, Check-Karte baut sich auf, Laufband, Einblenden beim Scrollen; bei reduzierter Bewegung ruhig.
+
+| Rolle | CSS-Variable | Wert |
+| --- | --- | --- |
+| Papier (Seitenhintergrund) | `--bg` | `#fafaf7` |
+| Stein (Wechselflächen) | `--stone` | `#f1f0ec` |
+| Graphit (dunkle Bühnen, Footer) | `--graphite` | `#111111` |
+| Text | `--text` | `#242424` |
+| Signal-Orange (Aktionen, Licht) | `--signal` | `#ec4e14`, Text darauf `--signal-ink` `#141414` |
+| Orange als Schrift auf Weiß | `--signal-deep` | `#b93a0a` |
+| WhatsApp | `--wa`, `--wa-ink` | `#25d366`, Text `#07301a` |
+
+Bausteine der Startseite (CSS ab `/* Startseite */`): `hero` mit `rotator` und `url-form` (GET an `website-check.html`, `assets/main.js` übernimmt die Adresse), `scan`-Karte, `marquee`, `problem` mit `device-phone` und `flag`, `bento` mit `tile`-Szenen (am Handy als Wisch-Karussell), `stage` mit `devices` (Laptop und Handy), `path` für Abläufe ohne Nummern, `id-card`, `faq-teaser`, `finale`. Globale Bausteine: `button wa` und `wa-i` (WhatsApp-Symbol als CSS-Maske), dunkler Footer, Cookie-Dialog mit Status-Badges, `reveal` für Einblenden per `animation-timeline: view()`.
+
+Offen: Die Lighthouse-Angabe in der `id-card` nach jeder größeren Änderung neu messen. Die Angaben zur Person („Wer dahintersteckt“) stammen aus dem Lebenslauf vom März 2025 und sind vom Inhaber zu bestätigen.
+
+## Historisch: neutrale Gestaltung und Datenschutzprüfung
 
 Auch die warme Farbpalette wurde vom Inhaber verworfen. Die aktive Gestaltung ist nun weiß, hellgrau und anthrazit, ohne farbige Akzente; Überschriften verwenden die vorhandene Sans-Schrift statt Georgia. Farbwerte ausschließlich aus der aktuellen CSS-Datei übernehmen. Alle neun Seiten haben einen erreichbaren Cookie-Informationsdialog, der keine Auswahl speichert. Es sind keine optionalen Dienste aktiv. Die rechtliche Prüfung und noch offene Betreiberangaben stehen in LEGAL-REVIEW.md. Datenschutzerklärung und Impressum sind ausdrücklich Entwürfe, keine Veröffentlichungsfreigabe.
 
