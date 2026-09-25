@@ -138,7 +138,7 @@ p { margin-bottom: 20px; }
 .mobile-contact { display: none; }
 .legal { padding-block: 80px 100px; }
 .legal-shell { max-width: 810px; }
-.legal h1 { font-size: clamp(36px, 5.8vw, 64px); overflow-wrap: anywhere; margin-bottom: 45px; }
+.legal h1 { font-size: clamp(36px, 5.8vw, 64px); overflow-wrap: break-word; hyphens: auto; margin-bottom: 45px; }
 .legal h2 { font-size: 26px; margin: 40px 0 13px; letter-spacing: -.025em; }
 .legal p, .legal address { color: var(--muted); line-height: 1.8; }
 .legal address { font-style: normal; }
@@ -684,6 +684,7 @@ html:has(.jump) { scroll-padding-top: 72px; }
 .inbox-draft b { flex: none; padding: 6px 12px; border-radius: 999px; background: #fff; color: var(--text); font-size: 13px; }
 .inbox figcaption { margin-top: 12px; color: var(--muted); font-size: 13px; }
 article.tile:hover { transform: none; box-shadow: none; }
+.tile-art > .art-tag { position: absolute; top: 10px; right: 10px; z-index: 5; margin: 0; }
 .art-sort, .art-voice { display: grid; align-content: center; gap: 8px; padding: 16px 18px; background: linear-gradient(160deg, #f7f6f2, #efeee9); }
 .sort-row { display: grid; grid-template-columns: 62px minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid #e6e4de; border-radius: 12px; background: #fff; font-size: 13px; box-shadow: 0 8px 20px -16px #00000059; }
 .sort-row em { color: var(--muted); font-style: normal; font-size: 12px; }
