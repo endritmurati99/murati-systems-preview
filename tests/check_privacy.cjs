@@ -28,5 +28,14 @@ for (const name of ["index.html","leistungen.html","ki-automatisierung.html","ar
 const form = fs.readFileSync(path.join(root,"website-check.html"),"utf8");
 assert.match(form, /<form[^>]+method="post"[^>]+action="\/api\/anfrage"/); // first-party, works without JS
 assert.match(form, /name="homepage"/); assert.match(form, /datenschutz\.html#anfragen/);
-assert.doesNotMatch(form, /<script(?![^>]+src="assets\/(privacy|main)\.js")/);
-console.log("PASS: privacy open/close/fallback, all-page integration, first-party form without JS");
+assert.doesNotMatch(form, /<script(?![^>]+src="assets\/(privacy|main|anfrage)\.js")/);
+const contact = fs.readFileSync(path.join(root,"kontakt.html"),"utf8");
+assert.match(contact, /<form[^>]+method="post"[^>]+action="\/api\/anfrage"/); // Kontaktformular, auch ohne JS
+assert.match(contact, /name="typ" value="kontakt"/); assert.match(contact, /name="homepage"/);
+assert.match(contact, /datenschutz\.html#anfragen/);
+assert.doesNotMatch(contact, /<script(?![^>]+src="assets\/(privacy|anfrage)\.js")/);
+const enhance = fs.readFileSync(path.join(root, "assets/anfrage.js"), "utf8");
+assert.doesNotMatch(enhance, /localStorage|sessionStorage|indexedDB|document\.cookie|innerHTML/); // kein Speicher, kein HTML aus Eingaben
+vm.runInNewContext(enhance, {window: {matchMedia: () => ({matches: false})}, document: {querySelector: () => null, querySelectorAll: () => []},
+ location: {search: "?nr=MS-260925-AB12"}, URLSearchParams, URL, crypto: globalThis.crypto}); // lädt ohne Formular fehlerfrei
+console.log("PASS: privacy open/close/fallback, all-page integration, first-party forms without JS, anfrage.js without storage");

@@ -8,6 +8,7 @@
   <link rel="icon" href="assets/favicon.svg?v=5" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/redesign.css?v=11">
+  <link rel="stylesheet" href="assets/formular.css?v=1">
   <title>Kostenloser Website-Check – Murati Systems</title>
 <meta name="theme-color" content="#242424">
   <meta property="og:type" content="website">
@@ -23,6 +24,7 @@
   <meta name="twitter:card" content="summary_large_image">
 <script src="assets/privacy.js" defer></script>
 <script src="assets/main.js" defer></script>
+<script src="assets/anfrage.js" defer></script>
 </head>
 <body class="website_check">
   <a class="skip" href="#inhalt">Zum Inhalt springen</a>
@@ -46,16 +48,17 @@
     <p class="hero-lead">Drei Fragen, zwei Minuten. Sie bekommen drei Schwachstellen, drei schnelle Verbesserungen und eine Empfehlung, persönlich geprüft.</p>
   </div></section>
   <section class="check-form-section"><div class="shell check-layout">
-    <form id="formular" class="check-form" method="post" action="/api/anfrage" accept-charset="utf-8">
-      <fieldset><legend>Was trifft zu?</legend><p class="field-help">Mehrfachauswahl möglich.</p>
+    <form id="formular" class="check-form" method="post" action="/api/anfrage" accept-charset="utf-8" data-anfrage data-schritte>
+      <input type="hidden" name="typ" value="check">
+      <fieldset data-titel="Situation"><legend>Was trifft zu?</legend><p class="field-help">Mehrfachauswahl möglich.</p>
         <div class="choices"><label><input type="checkbox" name="problem" value="Unsere Website wirkt veraltet"><span>Unsere Website wirkt veraltet</span></label><label><input type="checkbox" name="problem" value="Wir bekommen zu wenige Anfragen"><span>Wir bekommen zu wenige Anfragen</span></label><label><input type="checkbox" name="problem" value="Auf dem Handy funktioniert sie schlecht"><span>Auf dem Handy funktioniert sie schlecht</span></label><label><input type="checkbox" name="problem" value="Anfragen landen an der falschen Stelle"><span>Anfragen landen an der falschen Stelle</span></label><label><input type="checkbox" name="problem" value="Wir haben noch keine Website"><span>Wir haben noch keine Website</span></label></div>
         <label class="field">Ihre Website <small>(falls vorhanden)</small><input type="text" name="website" maxlength="250" placeholder="www.ihr-betrieb.de" inputmode="url" autocomplete="url"></label>
       </fieldset>
-      <fieldset><legend>Was soll sich zuerst verbessern?</legend>
+      <fieldset data-titel="Ziel"><legend>Was soll sich zuerst verbessern?</legend>
         <div class="choices"><label><input type="radio" name="ziel" value="Mehr passende Anfragen" required><span>Mehr passende Anfragen</span></label><label><input type="radio" name="ziel" value="Leistungen verständlicher zeigen"><span>Leistungen verständlicher zeigen</span></label><label><input type="radio" name="ziel" value="Abläufe nach der Anfrage vereinfachen"><span>Abläufe nach der Anfrage vereinfachen</span></label><label><input type="radio" name="ziel" value="Erst Orientierung bekommen"><span>Erst Orientierung bekommen</span></label></div>
         <label class="field">Was sollten wir noch wissen? <small>(optional)</small><textarea name="hinweis" rows="3" maxlength="1000" placeholder="Ein Satz reicht."></textarea></label>
       </fieldset>
-      <fieldset><legend>Wie erreichen wir Sie?</legend>
+      <fieldset data-titel="Kontakt"><legend>Wie erreichen wir Sie?</legend>
         <label class="field">Name<input name="name" maxlength="100" autocomplete="name" required></label>
         <label class="field">E-Mail<input type="email" name="email" maxlength="254" autocomplete="email" required></label>
         <label class="field">Telefon / WhatsApp <small>(optional)</small><input type="tel" name="telefon" maxlength="40" autocomplete="tel"></label>

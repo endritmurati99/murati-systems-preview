@@ -1,0 +1,98 @@
+/* Anfrageformulare: geführter Website-Check, Kontaktformular, Erfolgsansicht.
+   Ergänzt redesign.css; nur Klassen, die assets/anfrage.js setzt oder die Formularseiten nutzen.
+   Ohne JavaScript greift nichts davon außer .choices.chips und dem Kontaktabschnitt. */
+
+:root { --error: #b3261e; --error-soft: #fdf0ef; }
+
+/* Fortschritt: Balken mit Abschnittstitel, keine Nummern */
+.form-progress { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; margin: 0 0 26px; }
+.form-progress-item { position: relative; padding-top: 14px; color: var(--muted); font-size: 13px; font-weight: 620; letter-spacing: .01em; }
+.form-progress-item::before, .form-progress-item::after { content: ""; position: absolute; left: 0; top: 0; height: 4px; border-radius: 4px; }
+.form-progress-item::before { right: 0; background: var(--line); }
+.form-progress-item::after { width: 0; background: var(--signal); transition: width .35s ease, background-color .35s ease; }
+.form-progress-item.is-current, .form-progress-item.is-done { color: var(--text); }
+.form-progress-item.is-current::after, .form-progress-item.is-done::after { width: 100%; }
+.form-progress-item.is-done::after { background: var(--text); }
+
+/* Ein Abschnitt zur Zeit */
+.is-stepped > fieldset:not(.is-current) { display: none; }
+.is-stepped > fieldset.is-current { animation: form-in .28s ease both; }
+.is-stepped > fieldset:focus { outline: none; }
+.is-stepped:not(.is-last) > .fineprint { display: none; }
+@keyframes form-in { from { opacity: 0; transform: translateY(8px); } }
+
+.form-nav { display: flex; gap: 10px; align-items: stretch; }
+.form-nav > .button { flex: 1 1 auto; }
+.form-nav > .form-back { flex: 0 0 auto; justify-content: center; padding-inline: 18px; }
+.form-nav > .button.wide { width: auto; }
+
+/* Zusammenfassung vor dem Absenden */
+.form-summary { display: grid; gap: 2px; margin: 0 0 24px; padding: 6px 16px; border-radius: var(--radius); background: var(--stone, #f1f0ec); }
+.form-summary-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 14px; align-items: center; margin: 0; padding: 10px 0; font-size: 14px; }
+.form-summary-row + .form-summary-row { border-top: 1px solid var(--line); }
+.form-summary-label { grid-column: 1; color: var(--muted); font-size: 12px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; }
+.form-summary-value { grid-column: 1; overflow-wrap: anywhere; }
+.form-summary-edit { grid-column: 2; grid-row: 1 / span 2; min-height: 44px; padding: 0 4px; border: 0; background: none; color: var(--signal-deep, #b93a0a); font-weight: 650; text-decoration: underline; text-underline-offset: 4px; }
+
+/* Fehler direkt am Feld */
+.field-error { margin: -10px 0 18px; color: var(--error); font-size: 14px; font-weight: 580; line-height: 1.45; }
+.choices + .field-error, .channel + .field-error { margin: -16px 0 22px; }
+.check-form .field [aria-invalid="true"] { border-color: var(--error); box-shadow: 0 0 0 1px var(--error); }
+.check-form .choices.is-invalid, .check-form .channel.is-invalid { border-radius: 6px; outline: 2px solid var(--error); outline-offset: 6px; }
+.form-alert { margin: 0 0 16px; padding: 12px 14px; border-left: 3px solid var(--error); border-radius: 4px; background: var(--error-soft); color: #7a1a13; font-size: 15px; }
+
+/* Senden */
+.is-sending [type="submit"] { cursor: progress; opacity: .88; }
+.form-spinner { flex: none; width: 18px; height: 18px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: form-spin .8s linear infinite; }
+@keyframes form-spin { to { transform: rotate(360deg); } }
+.is-sending [type="submit"] { justify-content: center; gap: 12px; }
+
+/* Erfolg */
+.form-success { margin: 0 -20px; padding: 30px 20px 32px; background: var(--surface); border-top: 3px solid var(--signal); animation: form-in .35s ease both; }
+.form-success:focus { outline: none; }
+.form-success h2 { margin-bottom: 12px; font-size: clamp(30px, 7vw, 42px); }
+.form-success-mark { display: grid; place-items: center; width: 58px; height: 58px; margin-bottom: 22px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 8px var(--signal-soft); }
+.form-success-mark::after { content: ""; width: 24px; height: 12px; border: solid var(--signal-ink); border-width: 0 0 3px 3px; transform: translateY(-3px) rotate(-45deg); animation: form-tick .45s .2s ease both; }
+@keyframes form-tick { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.form-success-nr { color: var(--muted); font-size: 15px; }
+.form-success-nr strong { margin-left: 4px; padding: 4px 9px; border-radius: 6px; background: var(--accent-soft); color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: .05em; white-space: nowrap; }
+.form-success-path { display: grid; gap: 18px; margin: 26px 0 28px; padding: 0; list-style: none; }
+.form-success-path li { position: relative; padding-left: 32px; line-height: 1.55; }
+.form-success-path li::before { content: ""; position: absolute; left: 3px; top: .45em; width: 11px; height: 11px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 4px var(--signal-soft); }
+.form-success-path li:not(:last-child)::after { content: ""; position: absolute; left: 8px; top: calc(.45em + 17px); bottom: -15px; width: 2px; background: var(--line); }
+.form-success-note { color: var(--muted); font-size: 15px; }
+.form-success .button.wa { width: 100%; min-height: 54px; font-size: 16px; }
+
+/* Auswahl als Chips (Kontaktformular) */
+.check-form .choices.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.check-form .choices.chips label { flex: 0 1 auto; }
+.check-form .choices.chips span { padding: 11px 16px 11px 40px; font-size: 15px; }
+.check-form .choices.chips span::before { top: 50%; transform: translateY(-50%); }
+
+/* Kontaktformular-Abschnitt auf kontakt.html */
+.contact-form-section { padding-block: 8px 64px; }
+.contact-form-layout { display: grid; gap: 26px; }
+.contact-form-intro h2 { margin-bottom: 16px; font-size: clamp(30px, 7vw, 46px); }
+.contact-form-intro p:not(.eyebrow) { color: var(--muted); font-size: 17px; }
+.contact-form-intro .eyebrow { margin-bottom: 18px; }
+.contact-form-intro p a { color: var(--text); font-weight: 620; text-decoration-color: var(--signal); text-decoration-thickness: 2px; }
+
+/* Danke-Seite (Versand ohne JavaScript) */
+.check-top .form-success-mark { margin-bottom: 20px; }
+.check-top .form-success-nr { margin: 18px 0 0; }
+.check-top .form-success-path { max-width: 620px; }
+
+@media (min-width: 700px) {
+  .form-success { margin: 0; padding: 42px; border: 1px solid var(--line); border-top: 3px solid var(--signal); border-radius: var(--radius); }
+  .form-success .button.wa { width: auto; }
+  .form-nav > .button.primary { flex: 0 1 auto; margin-left: auto; min-width: 240px; }
+}
+@media (min-width: 951px) {
+  .contact-form-layout { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 70px; align-items: start; }
+  .contact-form-intro { position: sticky; top: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-stepped > fieldset.is-current, .form-success, .form-success-mark::after { animation: none; }
+  .form-progress-item::after { transition: none; }
+  .form-spinner { animation-duration: 2.4s; }
+}
