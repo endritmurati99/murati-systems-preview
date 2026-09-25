@@ -34,3 +34,23 @@ muratisystems.de {
 www.muratisystems.de {
 	redir https://muratisystems.de{uri} permanent
 }
+
+# MTA-STS (RFC 8461): fremde Mailserver liefern an @muratisystems.de nur noch verschlüsselt.
+# Voraussetzung: DNS A mta-sts -> 76.13.154.245. Erst danach TXT _mta-sts setzen.
+# Policy ändern (z. B. testing -> enforce) = id im TXT-Eintrag _mta-sts erhöhen.
+mta-sts.muratisystems.de {
+	header Content-Type "text/plain; charset=utf-8"
+	respond /.well-known/mta-sts.txt `version: STSv1
+mode: testing
+mx: mx1.hostinger.com
+mx: mx2.hostinger.com
+max_age: 86400
+` 200
+	respond 404
+}
+
+# Kurzer Weg ins Postfach: webmail.muratisystems.de -> Hostinger-Webmail.
+# Eigene Weiterleitung statt CNAME, weil das Hostinger-Zertifikat die eigene Domain nicht abdeckt.
+webmail.muratisystems.de {
+	redir https://mail.hostinger.com/ 302
+}
