@@ -876,6 +876,15 @@ article.tile:hover { transform: none; box-shadow: none; }
 .way-ico svg { width: 21px; height: 21px; }
 .way:first-child .way-ico { background: var(--graphite); color: #fff; }
 .contact-form-section { background: var(--stone); border-top: 1px solid var(--line); }
+/* Website-Check (Lux, 2026-09-25): Ergebnis-Vorschau, Direktweg als Karte */
+.gets { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.website_check .header-cta { display: none; }
+.gets li { display: inline-flex; align-items: center; gap: 8px; padding: 6px 13px 6px 6px; border: 1px solid var(--line); border-radius: 999px; background: #fff; font-size: 14.5px; font-weight: 640; }
+.gets span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--graphite); color: #fff; }
+.gets svg { width: 15px; height: 15px; }
+.check-aside { padding: 22px 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--stone); }
+.check-aside .eyebrow { margin-bottom: 12px; }
+.check-aside .button.wa { margin-top: 4px; }
 @media (prefers-reduced-motion: reduce) {
   .rotator > span, .marquee-track, .swipe-hint span, .scan-list li b.wait, .note, .aw-btn, .beat path, .mini-phone, .live-dot, .bars i, .scan-list li, .scan-result, .scan-bar span { animation: none !important; }
   .rotator > span:first-child { opacity: 1; translate: 0 0; }
