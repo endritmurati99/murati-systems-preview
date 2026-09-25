@@ -1,0 +1,6 @@
+/* Variante B: Signalgelb statt Orange (Vorschau, per Playwright injiziert) */
+:root { --signal: #ffc21a; --signal-hover: #ffcd45; --signal-ink: #141414; --signal-soft: #fff5d1; --signal-deep: #8a6300; --signal-light: #ffd45c; }
+.rotator { color: var(--text); }
+.rotator > span { background: linear-gradient(transparent 55%, var(--signal) 55%, var(--signal) 90%, transparent 90%); padding-inline: .04em; }
+.text-link, .url-note a, .faq-item a { text-decoration-color: var(--signal-deep); }
+.mobile-contact a:last-child::after { color: var(--signal-deep); }

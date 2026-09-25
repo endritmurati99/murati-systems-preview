@@ -1,0 +1,8 @@
+/* Logo-Variante 2: nur Wortmarke in einer Zeile, Signalquadrat als Punkt */
+.brand img { display: none; }
+.brand span { display: flex; align-items: baseline; gap: .28em; }
+.brand strong, .brand small { font-size: 22px; letter-spacing: -.04em; line-height: 1; }
+.brand strong { font-weight: 760; }
+.brand small { margin: 0; font-weight: 430; text-transform: none; }
+.brand span::after { content: ""; align-self: flex-end; width: .26em; height: .26em; margin: 0 0 .12em -.18em; background: var(--signal); }
+@media (max-width: 699px) { .brand strong, .brand small { font-size: 21px; } }

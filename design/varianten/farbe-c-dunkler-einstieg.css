@@ -1,0 +1,20 @@
+/* Variante C: dunkler Einstieg (Kopf und Hero auf Graphit), Orange bleibt Akzent */
+.index .site-header { background: var(--graphite); border-bottom-color: #ffffff1a; }
+.index .brand { color: #fff; }
+.index .brand img { box-shadow: 0 0 0 1px #ffffff26; border-radius: 8px; }
+.index .mobile-menu summary { color: #fff; border-color: #ffffff33; }
+.index .desktop-nav a { color: #bdbcb7; }
+.index .desktop-nav a[aria-current="page"], .index .desktop-nav a:hover { color: #fff; }
+.index .header-cta { background: #fff; color: var(--text); }
+.hero { background: var(--graphite); color: #f3f2ee; isolation: isolate; }
+.hero::before { background-image: linear-gradient(#ffffff0f 1px, transparent 1px), linear-gradient(90deg, #ffffff0f 1px, transparent 1px); }
+.hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background-image: var(--noise); opacity: .06; pointer-events: none; }
+.hero h1 { color: #fff; }
+.hero-lead, .url-note { color: #bdbcb7; }
+.url-note a, .url-form label { color: #fff; }
+.hero-kicker { background: #ffffff0f; border-color: #ffffff26; color: #e8e7e2; }
+.url-row input { border-color: #fff; }
+@media (min-width: 560px) { .url-row { border-color: #fff; } }
+.scan { border-color: #ffffff1f; box-shadow: 0 40px 90px -40px #000, 0 0 0 1px #ffffff0d; }
+.marquee { border-top: 1px solid #ffffff14; }
+.scan { color: var(--text); }
