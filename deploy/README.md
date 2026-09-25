@@ -21,3 +21,7 @@ Das Caddyfile in diesem Branch ist für die neue Vorschau verschärft: keine Inl
 Für einen später freigegebenen Release müssen alle acht Hauptseiten und deren benötigte Assets gemeinsam ausgeliefert werden. `design/`, `tests/`, `deploy/`, interne Markdown-Prüfnotizen sowie die alten Prototypen `hell/` und `light/` gehören nicht in den öffentlichen Release. Die bisherige Kopieranweisung mit nur Start/Impressum/Datenschutz ist für die Mehrseiten-Version unvollständig und wurde entfernt.
 
 Vor Umschaltung: externes Backup des bisherigen Releases, lokale Vorschautests, Cookie-/Netzwerkinventar, Legal-Freigabe und Prüfung der endgültigen Canonicals/Indexierung. Danach erst den ausdrücklich freigegebenen Stand atomar veröffentlichen und HTTPS, Header, Navigation, Formular, Rechtstexte und echte Kontaktzustellung produktiv prüfen. Ein Restart ist für reine Dateiinhalte nicht erforderlich; eine Caddy-Konfigurationsänderung ist separat kontrolliert zu aktivieren.
+
+## Relaunch mit Formular-Backend (25.09.2026)
+
+Zweiter Container `murati-anfrage` (python:3.13-alpine, nur internes Docker-Netz, read-only) aus `backend/anfrage.py`; Caddy leitet `/api/*` dorthin. Auf dem Server: `/srv/murati-website/backend/anfrage.py`, `anfragen/` (Eigentümer 1000, 0700) und `anfrage.env` (root, 0600, SMTP-Zugang, nie ins Repository). Nach einem Tausch des Ordners `site/` oder des Caddyfile den Caddy-Container mit `docker compose up -d --force-recreate caddy` neu erstellen, weil Bind-Mounts sonst auf die alten Dateien zeigen.
