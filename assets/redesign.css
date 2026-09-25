@@ -96,7 +96,7 @@ p { margin-bottom: 20px; }
 .section-kicker { margin-bottom: 24px; }
 .page-hero { padding-block: 55px 58px; border-bottom: 1px solid var(--line); background: var(--bg); }
 .page-hero h1 { max-width: 850px; font-size: clamp(42px, 5vw, 64px); font-weight: 570; }
-.page-hero p:not(.eyebrow) { max-width: 590px; color: var(--muted); font-size: 17px; margin-bottom: 0; }
+.page-hero h1 ~ p { max-width: 590px; color: var(--muted); font-size: 17px; margin-bottom: 0; }
 .page-hero .eyebrow { margin-bottom: 22px; }
 .price-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-block: 1px solid var(--line); }
 .price-card { padding: 36px 50px 36px 0; }
@@ -158,12 +158,6 @@ p { margin-bottom: 20px; }
 .example dl { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 16px 20px; font-size: 14px; }
 .example dt { color: var(--accent); }
 .example dd { margin: 0; }
-.contact-grid { border-top: 1px solid var(--line); }
-.contact-card { display: grid; grid-template-columns: 135px minmax(0, 1fr) minmax(0, 1fr) 25px; align-items: center; gap: 25px; min-height: 135px; padding-block: 25px; border-bottom: 1px solid var(--line); text-decoration: none; }
-.contact-card h2 { margin: 0; font-size: 28px; overflow-wrap: anywhere; }
-.contact-card p { margin: 0; color: var(--muted); }
-.card-arrow { color: var(--accent); font-size: 24px; }
-.contact-card:hover h2 { color: var(--accent); }
 .ki-hero-grid { display: block; }
 .use-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 65px; border-top: 1px solid var(--line); }
 .use-grid article { padding-block: 28px; border-bottom: 1px solid var(--line); }
@@ -218,10 +212,6 @@ p { margin-bottom: 20px; }
   .check-aside { max-width: 600px; }
   .check-aside h2 { font-size: 34px; }
   .timeline, .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 35px; }
-  .contact-card { grid-template-columns: 100px minmax(0, 1fr) 25px; gap: 15px; }
-  .contact-card p { grid-column: 2; }
-  .contact-card .card-arrow { grid-column: 3; grid-row: 1; }
-  .contact-card h2 { font-size: 25px; }
   .callout-inner { align-items: flex-start; flex-direction: column; }
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 30px; }
 }
@@ -243,7 +233,7 @@ p { margin-bottom: 20px; }
   .callout { padding-block: 50px; }
   .page-hero { padding-block: 52px 58px; }
   .page-hero h1 { font-size: clamp(40px, 9.6vw, 56px); }
-  .page-hero p:not(.eyebrow) { font-size: 17px; margin-bottom: 0; }
+  .page-hero h1 ~ p { font-size: 17px; margin-bottom: 0; }
   .page-hero .eyebrow { margin-bottom: 25px; }
   .price-grid { grid-template-columns: 1fr; }
   .price-card, .price-card + .price-card { padding: 28px 0; border-left: 0; }
@@ -258,11 +248,6 @@ p { margin-bottom: 20px; }
   .use-grid { grid-template-columns: 1fr; }
   .example dl { grid-template-columns: 1fr; gap: 4px; }
   .example dd { margin-bottom: 12px; }
-  .contact-card { grid-template-columns: minmax(0, 1fr) 25px; gap: 10px; min-height: 0; }
-  .contact-card .tag { grid-column: 1 / -1; }
-  .contact-card h2 { grid-column: 1; grid-row: 2; }
-  .contact-card p { grid-column: 1; font-size: 14px; }
-  .contact-card .card-arrow { grid-column: 2; grid-row: 2; }
   .footer-inner { grid-template-columns: 1fr; gap: 28px; }
   .footer-inner nav { justify-content: flex-start; }
   /* Aktionsleiste: dunkle Schwebeleiste, WhatsApp grün und schmaler, Check hell; kein Grün direkt an Orange */
@@ -348,7 +333,7 @@ html:has(.jump) { scroll-padding-top: 72px; }
   .page-hero { padding-block: 30px 30px; }
   .page-hero h1 { font-size: clamp(36px, 10.4vw, 52px); line-height: 1.02; margin-bottom: 16px; }
   .page-hero .eyebrow { margin-bottom: 16px; }
-  .page-hero p:not(.eyebrow) { font-size: 17px; }
+  .page-hero h1 ~ p { font-size: 17px; }
   .page-hero .actions { display: grid; gap: 10px; margin-top: 22px; }
   .page-hero .actions .button { width: 100%; min-height: 52px; font-size: 16px; justify-content: space-between; }
   h2 { font-size: 30px; }
@@ -371,8 +356,6 @@ html:has(.jump) { scroll-padding-top: 72px; }
   .timeline h3, .flow h3 { margin: 4px 0 4px; font-size: 20px; }
   .callout .button { width: 100%; justify-content: space-between; min-height: 54px; font-size: 16px; }
   .callout h2 { font-size: 28px; }
-  .contact-card { padding-block: 20px; }
-  .contact-card h2 { font-size: 24px; }
   .legal { padding-block: 36px 50px; }
   .legal h1 { font-size: 38px; margin-bottom: 28px; }
   .legal h2 { font-size: 21px; margin-top: 30px; }
@@ -881,6 +864,18 @@ article.tile:hover { transform: none; box-shadow: none; }
 @media (prefers-reduced-motion: reduce) {
   .tracker-list li.now::before { animation: none !important; }
 }
+/* Kontakt (Lux, 2026-09-25): Kontaktwege, Personenkarte, Formular als Karte */
+.ways { display: grid; gap: 10px; margin-top: 26px; }
+.way { display: flex; align-items: center; gap: 14px; min-height: 64px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 16px; background: #fff; text-decoration: none; transition: border-color .2s, transform .2s; }
+.way:hover { border-color: var(--text); transform: translateY(-2px); }
+.way > span:nth-child(2) { display: grid; flex: 1; min-width: 0; }
+.way b { font-size: 17px; }
+.way small { overflow: hidden; color: var(--muted); font-size: 14px; white-space: nowrap; text-overflow: ellipsis; }
+.way i { color: var(--signal-deep); font-style: normal; font-size: 20px; }
+.way-ico { display: grid; flex: none; place-items: center; width: 44px; height: 44px; border-radius: 13px; background: var(--stone); }
+.way-ico svg { width: 21px; height: 21px; }
+.way:first-child .way-ico { background: var(--graphite); color: #fff; }
+.contact-form-section { background: var(--stone); border-top: 1px solid var(--line); }
 @media (prefers-reduced-motion: reduce) {
   .rotator > span, .marquee-track, .swipe-hint span, .scan-list li b.wait, .note, .aw-btn, .beat path, .mini-phone, .live-dot, .bars i, .scan-list li, .scan-result, .scan-bar span { animation: none !important; }
   .rotator > span:first-child { opacity: 1; translate: 0 0; }

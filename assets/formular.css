@@ -51,8 +51,8 @@
 .form-success { margin: 0 -20px; padding: 30px 20px 32px; background: var(--surface); border-top: 3px solid var(--signal); animation: form-in .35s ease both; }
 .form-success:focus { outline: none; }
 .form-success h2 { margin-bottom: 12px; font-size: clamp(30px, 7vw, 42px); }
-.form-success-mark { display: grid; place-items: center; width: 58px; height: 58px; margin-bottom: 22px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 8px var(--signal-soft); }
-.form-success-mark::after { content: ""; width: 24px; height: 12px; border: solid var(--signal-ink); border-width: 0 0 3px 3px; transform: translateY(-3px) rotate(-45deg); animation: form-tick .45s .2s ease both; }
+.form-success-mark { display: grid; place-items: center; width: 58px; height: 58px; margin-bottom: 22px; border-radius: 50%; background: var(--graphite); box-shadow: 0 0 0 8px var(--stone, #f1f0ec); }
+.form-success-mark::after { content: ""; width: 24px; height: 12px; border: solid #fff; border-width: 0 0 3px 3px; transform: translateY(-3px) rotate(-45deg); animation: form-tick .45s .2s ease both; }
 @keyframes form-tick { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 .form-success-nr { color: var(--muted); font-size: 15px; }
 .form-success-nr strong { margin-left: 4px; padding: 4px 9px; border-radius: 6px; background: var(--accent-soft); color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: .05em; white-space: nowrap; }
@@ -61,7 +61,7 @@
 .form-success-path li::before { content: ""; position: absolute; left: 3px; top: .45em; width: 11px; height: 11px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 4px var(--signal-soft); }
 .form-success-path li:not(:last-child)::after { content: ""; position: absolute; left: 8px; top: calc(.45em + 17px); bottom: -15px; width: 2px; background: var(--line); }
 .form-success-note { color: var(--muted); font-size: 15px; }
-.form-success .button.wa { width: 100%; min-height: 54px; font-size: 16px; }
+.form-success .button.wa { min-height: 48px; font-size: 15px; }
 
 /* Auswahl als Chips (Kontaktformular) */
 .check-form .choices.chips { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -70,7 +70,7 @@
 .check-form .choices.chips span::before { top: 50%; transform: translateY(-50%); }
 
 /* Kontaktformular-Abschnitt auf kontakt.html */
-.contact-form-section { padding-block: 8px 64px; }
+.contact-form-section { padding-block: 56px 64px; }
 .contact-form-layout { display: grid; gap: 26px; }
 .contact-form-intro h2 { margin-bottom: 16px; font-size: clamp(30px, 7vw, 46px); }
 .contact-form-intro p:not(.eyebrow) { color: var(--muted); font-size: 17px; }
@@ -83,6 +83,7 @@
 .check-top .form-success-path { max-width: 620px; }
 
 @media (min-width: 700px) {
+  .contact-form-section .check-form { border-radius: 20px; }
   .form-success { margin: 0; padding: 42px; border: 1px solid var(--line); border-top: 3px solid var(--signal); border-radius: var(--radius); }
   .form-success .button.wa { width: auto; }
   .form-nav > .button.primary { flex: 0 1 auto; margin-left: auto; min-width: 240px; }
