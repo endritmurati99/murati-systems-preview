@@ -58,7 +58,7 @@
 .form-success-nr strong { margin-left: 4px; padding: 4px 9px; border-radius: 6px; background: var(--accent-soft); color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: .05em; white-space: nowrap; }
 .form-success-path { display: grid; gap: 18px; margin: 26px 0 28px; padding: 0; list-style: none; }
 .form-success-path li { position: relative; padding-left: 32px; line-height: 1.55; }
-.form-success-path li::before { content: ""; position: absolute; left: 3px; top: .45em; width: 11px; height: 11px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 4px var(--signal-soft); }
+.form-success-path li::before { content: ""; position: absolute; left: 3px; top: .45em; width: 11px; height: 11px; border-radius: 50%; background: var(--graphite); box-shadow: 0 0 0 4px var(--stone, #f1f0ec); }
 .form-success-path li:not(:last-child)::after { content: ""; position: absolute; left: 8px; top: calc(.45em + 17px); bottom: -15px; width: 2px; background: var(--line); }
 .form-success-note { color: var(--muted); font-size: 15px; }
 .form-success .button.wa { min-height: 48px; font-size: 15px; }
