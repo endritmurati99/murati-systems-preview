@@ -28,12 +28,14 @@ for (const name of ["index.html","leistungen.html","ki-automatisierung.html","ar
 const form = fs.readFileSync(path.join(root,"website-check.html"),"utf8");
 assert.match(form, /<form[^>]+method="post"[^>]+action="\/api\/anfrage"/); // first-party, works without JS
 assert.match(form, /name="homepage"/); assert.match(form, /datenschutz\.html#anfragen/);
-assert.doesNotMatch(form, /<script(?![^>]+src="assets\/(privacy|main|anfrage)\.js")/);
+// B87: BreadcrumbList-JSON-LD hat keinen src, ist aber reine Daten ohne Ausfuehrung - zulassen.
+const NO_UNEXPECTED_SCRIPT = /<script(?![^>]*src="assets\/(privacy|main|anfrage)\.js")(?![^>]*type="application\/ld\+json")/;
+assert.doesNotMatch(form, NO_UNEXPECTED_SCRIPT);
 const contact = fs.readFileSync(path.join(root,"kontakt.html"),"utf8");
 assert.match(contact, /<form[^>]+method="post"[^>]+action="\/api\/anfrage"/); // Kontaktformular, auch ohne JS
 assert.match(contact, /name="typ" value="kontakt"/); assert.match(contact, /name="homepage"/);
 assert.match(contact, /datenschutz\.html#anfragen/);
-assert.doesNotMatch(contact, /<script(?![^>]+src="assets\/(privacy|anfrage)\.js")/);
+assert.doesNotMatch(contact, NO_UNEXPECTED_SCRIPT); // B81: main.js schliesst das Mobil-Menue per Escape/Klick aussen
 const enhance = fs.readFileSync(path.join(root, "assets/anfrage.js"), "utf8");
 assert.doesNotMatch(enhance, /localStorage|sessionStorage|indexedDB|document\.cookie|innerHTML/); // kein Speicher, kein HTML aus Eingaben
 vm.runInNewContext(enhance, {window: {matchMedia: () => ({matches: false})}, document: {querySelector: () => null, querySelectorAll: () => []},
