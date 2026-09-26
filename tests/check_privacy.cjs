@@ -29,7 +29,7 @@ const form = fs.readFileSync(path.join(root,"website-check.html"),"utf8");
 assert.match(form, /<form[^>]+method="post"[^>]+action="\/api\/anfrage"/); // first-party, works without JS
 assert.match(form, /name="homepage"/); assert.match(form, /datenschutz\.html#anfragen/);
 // B87: BreadcrumbList-JSON-LD hat keinen src, ist aber reine Daten ohne Ausfuehrung - zulassen.
-const NO_UNEXPECTED_SCRIPT = /<script(?![^>]*src="assets\/(privacy|main|anfrage)\.js")(?![^>]*type="application\/ld\+json")/;
+const NO_UNEXPECTED_SCRIPT = /<script(?![^>]*src="assets\/(privacy|main|anfrage)\.js(\?v=\d+)?")(?![^>]*type="application\/ld\+json")/;
 assert.doesNotMatch(form, NO_UNEXPECTED_SCRIPT);
 const contact = fs.readFileSync(path.join(root,"kontakt.html"),"utf8");
 assert.match(contact, /<form[^>]+method="post"[^>]+action="\/api\/anfrage"/); // Kontaktformular, auch ohne JS
