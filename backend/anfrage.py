@@ -210,8 +210,8 @@ def owner_text(data):
     return "\n".join(lines)
 
 
-def confirmation_text(data):
-    """Fester Text: nur Vorgangsnummer und Werte aus festen Auswahllisten, nie Freitext."""
+def confirmation_parts(data):
+    """Fester Inhalt der Bestätigung: nur Vorgangsnummer und Werte aus festen Auswahllisten, nie Freitext."""
     weg = "per WhatsApp" if data["kanal"] == "WhatsApp" else "per E-Mail"
     if data["typ"] == "check":
         intro = "vielen Dank für Ihre Anfrage zum kostenlosen Website-Check. Sie ist bei uns angekommen."
@@ -219,25 +219,115 @@ def confirmation_text(data):
                  f"Wir melden uns {weg}, {ANTWORTZEIT}.",
                  "Sie bekommen drei Schwachstellen, drei schnelle Verbesserungen und eine Empfehlung. "
                  "Kostenlos und unverbindlich."]
-        choice = ["Was trifft zu: " + ("; ".join(data["problem"]) or "keine Auswahl"),
-                  "Zuerst verbessern: " + data["ziel"]]
+        choice = [("Was trifft zu", "; ".join(data["problem"]) or "keine Auswahl"),
+                  ("Zuerst verbessern", data["ziel"])]
     else:
         intro = "vielen Dank für Ihre Nachricht. Sie ist bei uns angekommen."
         steps = ["Wir lesen Ihre Nachricht persönlich.", f"Wir antworten {weg}, {ANTWORTZEIT}."]
-        choice = ["Anliegen: " + data["anliegen"]]
+        choice = [("Anliegen", data["anliegen"])]
+    return intro, steps, choice
+def confirmation_text(data):
+    intro, steps, choice = confirmation_parts(data)
     lines = ["Guten Tag,", "", intro, "", "Vorgangsnummer: " + data["nr"], "", "So geht es weiter:"]
     lines += ["- " + step for step in steps]
-    lines += ["", "Ihre Auswahl:"] + choice
+    lines += ["", "Ihre Auswahl:"] + [f"{k}: {v}" for k, v in choice]
     lines += ["", "Sie möchten etwas ergänzen? Antworten Sie einfach auf diese E-Mail."]
     if WHATSAPP_NR:
         lines += ["Oder schreiben Sie uns per WhatsApp: https://wa.me/" + WHATSAPP_NR]
-    lines += ["", "Freundliche Grüße", "Murati Systems", "https://muratisystems.de", "",
+    lines += ["", "Freundliche Grüße", "Endrit Murati", "Murati Systems", "Telefon " + TELEFON,
+              SITE, "",
               "Sie haben diese Anfrage nicht gestellt? Dann können Sie diese E-Mail ignorieren "
-              "oder uns kurz Bescheid geben, wir löschen die Angaben dann."]
+              "oder uns kurz Bescheid geben, wir löschen die Angaben dann.", "", ANSCHRIFT]
     return "\n".join(lines)
-
-
-def mail(subject, text, to, reply_to=None, sender=None, auto=False):
+# HTML-Fassung: Tabellen und Inline-Styles, weil Mailprogramme kaum CSS können. Farben wie redesign.css.
+SITE = "https://muratisystems.de"
+TELEFON = "0152 33955912"
+ANSCHRIFT = "Endrit Murati, handelnd unter Murati Systems, Enscheder Straße 5, 44145 Dortmund"
+FONT = "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"
+def _page(preheader, body):
+    e = html.escape
+    return f"""<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light"><title>Murati Systems</title></head>
+<body style="margin:0;padding:0;background:#f1f0ec;{FONT}">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0">{e(preheader)}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f1f0ec"><tr><td align="center" style="padding:24px 12px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:14px;overflow:hidden;border:1px solid #ddddda">
+<tr><td style="background:#161616;padding:20px 28px"><table role="presentation" cellpadding="0" cellspacing="0"><tr>
+<td style="vertical-align:middle"><img src="{SITE}/assets/logo.png" width="40" height="40" alt="M" style="display:block;border:0;border-radius:8px"></td>
+<td style="vertical-align:middle;padding-left:12px;color:#ffffff;font-size:18px;font-weight:700;{FONT}">Murati Systems</td>
+</tr></table></td></tr>
+<tr><td style="height:4px;background:#ec4e14;line-height:4px;font-size:0">&nbsp;</td></tr>
+<tr><td style="padding:32px 28px 8px;color:#242424;font-size:16px;line-height:1.55;{FONT}">{body}</td></tr>
+</table>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px"><tr><td style="padding:18px 28px;color:#626262;font-size:12px;line-height:1.6;{FONT}">
+{e(ANSCHRIFT)}<br><a href="{SITE}/impressum.html" style="color:#626262">Impressum</a> &middot; <a href="{SITE}/datenschutz.html" style="color:#626262">Datenschutz</a>
+</td></tr></table>
+</td></tr></table></body></html>"""
+def _button(href, label, bg, ink):
+    return (f'<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 8px 10px 0;display:inline-table">'
+            f'<tr><td style="background:{bg};border-radius:10px"><a href="{html.escape(href)}" '
+            f'style="display:inline-block;padding:13px 20px;color:{ink};font-size:15px;font-weight:700;'
+            f'text-decoration:none;{FONT}">{html.escape(label)}</a></td></tr></table>')
+def _rows(pairs):
+    return "".join(f'<tr><td style="padding:6px 14px 6px 0;color:#626262;font-size:14px;vertical-align:top;white-space:nowrap">{html.escape(k)}</td>'
+                   f'<td style="padding:6px 0;font-size:15px;vertical-align:top">{v}</td></tr>' for k, v in pairs)
+def confirmation_html(data):
+    e = html.escape
+    intro, steps, choice = confirmation_parts(data)
+    title = "Ihre Anfrage ist angekommen." if data["typ"] == "check" else "Ihre Nachricht ist angekommen."
+    step_rows = "".join(f'<tr><td style="padding:7px 12px 7px 0;vertical-align:top"><div style="width:10px;height:10px;'
+                        f'margin-top:7px;background:#ec4e14;border-radius:3px"></div></td>'
+                        f'<td style="padding:7px 0;font-size:16px">{e(x)}</td></tr>' for x in steps)
+    buttons = ""
+    if WHATSAPP_NR:
+        text = f"Hallo Murati Systems, ich möchte meine Anfrage {data['nr']} ergänzen."
+        buttons += _button(f"https://wa.me/{WHATSAPP_NR}?" + urlencode({"text": text}).replace("+", "%20"),
+                           "Per WhatsApp ergänzen", "#25d366", "#07301a")
+    buttons += _button(SITE, "muratisystems.de", "#242424", "#ffffff")
+    tel = "+49" + TELEFON[1:].replace(" ", "")
+    body = f"""<h1 style="margin:0 0 16px;font-size:26px;line-height:1.2;color:#161616">{title}</h1>
+<p style="margin:0 0 20px">Guten Tag,<br>{e(intro)}</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 26px"><tr>
+<td style="background:#fff0e9;border-left:4px solid #ec4e14;border-radius:8px;padding:14px 18px">
+<div style="font-size:13px;color:#b93a0a;font-weight:700">Ihre Vorgangsnummer</div>
+<div style="font-size:24px;font-weight:800;letter-spacing:.5px;color:#161616">{e(data["nr"])}</div></td></tr></table>
+<h2 style="margin:0 0 8px;font-size:18px;color:#161616">So geht es weiter</h2>
+<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 24px">{step_rows}</table>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 26px"><tr>
+<td style="background:#f1f0ec;border-radius:10px;padding:14px 18px"><div style="font-size:14px;font-weight:700;margin-bottom:4px">Ihre Auswahl</div>
+<table role="presentation" cellpadding="0" cellspacing="0">{_rows((k, e(v).replace("; ", "<br>")) for k, v in choice)}</table></td></tr></table>
+<p style="margin:0 0 16px">Sie möchten etwas ergänzen? Antworten Sie einfach auf diese E-Mail.</p>
+<div style="margin:0 0 22px">{buttons}</div>
+<p style="margin:0 0 24px">Freundliche Grüße<br><strong>Endrit Murati</strong><br>Murati Systems<br>
+Telefon <a href="tel:{tel}" style="color:#242424">{TELEFON}</a></p>
+<p style="margin:0 0 24px;padding-top:16px;border-top:1px solid #ddddda;font-size:13px;color:#626262">Sie haben diese Anfrage nicht gestellt?
+Dann können Sie diese E-Mail ignorieren oder uns kurz Bescheid geben, wir löschen die Angaben dann.</p>"""
+    return _page(f"Vorgangsnummer {data['nr']}. {steps[1]}", body)
+def owner_html(data):
+    """Weiterleitung an info@: enthält Freitext, darum alles escapen."""
+    e = html.escape
+    check = data["typ"] == "check"
+    pairs = [("Vorgang", f"<strong>{e(data['nr'])}</strong>")]
+    if check:
+        pairs += [("Website", e(data["website"] or "-")),
+                  ("Probleme", e("; ".join(data["problem"]) or "Keine Auswahl").replace("; ", "<br>")),
+                  ("Ziel", e(data["ziel"])), ("Hinweis", e(data["hinweis"] or "-").replace("\n", "<br>"))]
+    else:
+        pairs += [("Anliegen", e(data["anliegen"])), ("Nachricht", e(data["nachricht"]).replace("\n", "<br>"))]
+    pairs += [("Name", e(data["name"])), ("E-Mail", e(data["email"])), ("Telefon", e(data["telefon"] or "-")),
+              ("Antwort per", e(data["kanal"])), ("Eingang", e(data["eingang"]))]
+    subject = urlencode({"subject": f"Ihre Anfrage {data['nr']}"}).replace("+", "%20")
+    buttons = _button(f"mailto:{data['email']}?{subject}", "Per E-Mail antworten", "#242424", "#ffffff")
+    link = wa_link(data["telefon"]) if data["telefon"] else ""
+    if link:
+        buttons += _button(link, "WhatsApp-Chat öffnen", "#25d366", "#07301a")
+    body = f"""<h1 style="margin:0 0 16px;font-size:22px;color:#161616">{"Neuer Website-Check" if check else "Neue Nachricht"}</h1>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 22px">{_rows(pairs)}</table>
+<div style="margin:0 0 18px">{buttons}</div>
+<p style="margin:0 0 24px;font-size:13px;color:#626262">Antworten auf diese E-Mail gehen direkt an {e(data["email"])}.</p>"""
+    return _page(f"{data['nr']} von {data['name']}", body)
+def mail(subject, text, to, reply_to=None, sender=None, auto=False, html_body=None):
     user = os.environ["SMTP_USER"]
     msg = EmailMessage()
     msg["Subject"] = subject
@@ -251,6 +341,8 @@ def mail(subject, text, to, reply_to=None, sender=None, auto=False):
         msg["Auto-Submitted"] = "auto-generated"   # RFC 3834: keine Abwesenheitsnotizen zurück
         msg["X-Auto-Response-Suppress"] = "All"
     msg.set_content(text)
+    if html_body:
+        msg.add_alternative(html_body, subtype="html")
     return msg
 
 
@@ -265,11 +357,13 @@ def mail_safely(data, confirm):
     what = "Website-Check" if data["typ"] == "check" else "Nachricht"
     topic = "" if data["typ"] == "check" else data["anliegen"] + " – "
     messages = [("Weiterleitung", mail(f"{what} {data['nr']}: {topic}{data['name']}", owner_text(data),
-                                        MAIL_TO, reply_to=data["email"], sender="Website muratisystems.de"))]
+                                        MAIL_TO, reply_to=data["email"], sender="Website muratisystems.de",
+                                        html_body=owner_html(data)))]
     if confirm:
         messages.append(("Bestätigung", mail(f"Ihre Anfrage bei Murati Systems ({data['nr']})",
                                              confirmation_text(data), data["email"],
-                                             sender="Murati Systems", auto=True)))
+                                             sender="Murati Systems", auto=True,
+                                             html_body=confirmation_html(data))))
     try:
         with smtplib.SMTP_SSL(os.environ["SMTP_HOST"], int(os.environ.get("SMTP_PORT", "465")), timeout=20) as smtp:
             smtp.login(os.environ["SMTP_USER"], os.environ["SMTP_PASS"])
@@ -434,6 +528,13 @@ def selftest():
     text = confirmation_text(data)
     assert "MS-260925-TEST" in text and "Kaufen" not in text and "spam.example" not in text
     assert "Kaufen Sie jetzt" in owner_text(data) and "wa.me" not in owner_text(data)
+    page = confirmation_html(data)
+    assert "MS-260925-TEST" in page and "Kaufen" not in page and "spam.example" not in page
+    evil = {**data, "name": "<script>x</script>", "hinweis": "<img src=x>"}
+    assert "<script>x" not in owner_html(evil) and "&lt;img" in owner_html(evil)
+    os.environ.setdefault("SMTP_USER", "info@example.de")
+    msg = mail("s", confirmation_text(data), "a@example.de", html_body=page)
+    assert [p.get_content_type() for p in msg.iter_parts()] == ["text/plain", "text/html"]
 
     # Durchstich über HTTP: JSON-Modus, Nonce, Fehlerfeld, Weiterleitung ohne JS, Honeypot.
     with tempfile.TemporaryDirectory() as tmp:
