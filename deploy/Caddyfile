@@ -29,6 +29,8 @@ muratisystems.de {
 	}
 	@assets path /assets/*
 	header @assets Cache-Control "public, max-age=604800"
+	@html path / *.html
+	header @html Cache-Control "no-cache"
 }
 
 www.muratisystems.de {
