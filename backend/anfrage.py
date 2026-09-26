@@ -42,6 +42,7 @@ MAX_BODY = 20_000
 RATE_LIMIT = 5          # Anfragen je IP ...
 RATE_WINDOW = 600       # ... in 10 Minuten
 NONCE_TTL = 3600        # doppelt abgeschickte Formulare (gleiche Nonce) zählen eine Stunde lang einmal
+DOUBLE_SUBMIT_TTL = 15  # B51: No-JS-Fallback ohne Client-Nonce, gleiche Daten+IP zaehlen nur kurz als Doppel-Submit
 
 PROBLEMS = {
     "Unsere Website wirkt veraltet",
@@ -85,10 +86,10 @@ def rate_limited(ip, now=None):
         return len(recent) > RATE_LIMIT
 
 
-def recall(nonce, now):
+def recall(nonce, now, ttl=NONCE_TTL):
     with _lock:
         hit = _done.get(nonce)
-        return hit[1] if hit and now - hit[0] < NONCE_TTL else None
+        return hit[1] if hit and now - hit[0] < ttl else None
 
 
 def remember(nonce, result, now):
@@ -284,7 +285,11 @@ def mail_safely(data, confirm):
 PAGE = """<!doctype html><html lang="de"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
 <link rel="stylesheet" href="/assets/redesign.css"><title>Angabe prüfen – Murati Systems</title></head>
-<body><main class="legal"><div class="shell legal-shell"><p class="eyebrow">{eyebrow}</p>
+<body>
+<header class="site-header"><div class="shell header-inner">
+<a class="brand" href="/index.html" aria-label="Murati Systems – Startseite"><img src="/assets/favicon.svg?v=5" alt="" width="36" height="36"><span><strong>Murati</strong><small>Systems</small></span></a>
+</div></header>
+<main class="legal"><div class="shell legal-shell"><p class="eyebrow">{eyebrow}</p>
 <h1>Bitte kurz prüfen.</h1><p>{msg}</p><p>Tipp: Mit der Zurück-Taste Ihres Browsers bleiben Ihre Eingaben meist erhalten.</p>
 <p><a class="button primary" href="{back}">Zum Formular</a></p>
 <p>Oder direkt per E-Mail: <a href="mailto:info@muratisystems.de">info@muratisystems.de</a></p>
@@ -354,14 +359,24 @@ class Handler(BaseHTTPRequestHandler):
             print("Honeypot ausgelöst, Anfrage verworfen", file=sys.stderr)
             return self._done({"nr": new_nr(), "typ": typ, "kanal": "E-Mail", "bestaetigung": False})
         now = time.time()
-        nonce = first("nonce") if NONCE_RE.match(first("nonce")) else ""
-        earlier = recall(nonce, now) if nonce else None
-        if earlier:             # derselbe Versand noch einmal (Doppelklick, Rückfall ohne JS)
-            return self._done(earlier)
         # Letzter Eintrag = von unserem Caddy gesetzt; die vorderen kann der Absender frei erfinden.
         ip = (self.headers.get("X-Forwarded-For") or self.client_address[0]).split(",")[-1].strip()
+        nonce = first("nonce") if NONCE_RE.match(first("nonce")) else ""
+        ttl = NONCE_TTL
+        if not nonce:
+            # B51: Ohne JavaScript liefert der Client keine Nonce (assets/anfrage.js Zeile 40-44
+            # erzeugt sie nur per Skript). Fallback: Formulardaten + IP kurz hashen, damit ein
+            # Doppelklick oder Zurueck-Button-Resubmit trotzdem dedupliziert wird, ohne dass zwei
+            # verschiedene Besucher sich durch einen langlebigen, gemeinsamen Schluessel blockieren.
+            raw = "&".join(sorted(f"{k}={v}" for k, values in form.items() if k != "nonce" for v in values))
+            nonce = "auto-" + hashlib.sha256(f"{ip}|{raw}".encode()).hexdigest()
+            ttl = DOUBLE_SUBMIT_TTL
+        earlier = recall(nonce, now, ttl)
+        if earlier:             # derselbe Versand noch einmal (Doppelklick, Rückfall ohne JS)
+            return self._done(earlier)
         if rate_limited(ip, now):
-            return self._fail(429, "Zu viele Anfragen in kurzer Zeit. Bitte versuchen Sie es später erneut.", typ=typ)
+            return self._fail(429, "Zu viele Anfragen in kurzer Zeit. Bitte versuchen Sie es später erneut. "
+                                    "Oder schreiben Sie uns per WhatsApp oder E-Mail.", typ=typ)
         data, error, field = validate(form)
         if error:
             return self._fail(400, error, field, typ)
@@ -370,8 +385,7 @@ class Handler(BaseHTTPRequestHandler):
         store(data)
         confirm = CONFIRM_MAIL and smtp_ready() and may_confirm(data["email"], now)
         result = {"nr": data["nr"], "typ": data["typ"], "kanal": data["kanal"], "bestaetigung": confirm}
-        if nonce:
-            remember(nonce, result, now)
+        remember(nonce, result, now)
         threading.Thread(target=mail_safely, args=(data, confirm), daemon=True).start()
         self._done(result)
 
