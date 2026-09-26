@@ -17,6 +17,26 @@ if (jumpLinks.length && "IntersectionObserver" in window) {
   linkFor.forEach((_, id) => { const section = document.getElementById(id); if (section) spy.observe(section); });
 }
 
+// B81: Mobil-Menü per Escape oder Klick ausserhalb schliessen (auch Klick auf den abgedunkelten
+// Hintergrund), Fokus zurück auf den Menü-Knopf.
+const mobileMenu = document.querySelector(".mobile-menu");
+if (mobileMenu) {
+  const summary = mobileMenu.querySelector("summary");
+  const panel = mobileMenu.querySelector("nav");
+  const closeMenu = () => mobileMenu.removeAttribute("open");
+  document.addEventListener("click", event => {
+    if (!mobileMenu.hasAttribute("open")) return;
+    if (summary.contains(event.target) || (panel && panel.contains(event.target))) return;
+    closeMenu();
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && mobileMenu.hasAttribute("open")) {
+      closeMenu();
+      summary.focus();
+    }
+  });
+}
+
 // Startseite: getippte Adresse erscheint in der Beispiel-Karte; statt Beispielwerten steht dort dann "prüfen wir".
 const heroField = document.getElementById("hero-url");
 const scanCard = document.querySelector(".scan");
