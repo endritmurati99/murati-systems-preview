@@ -853,3 +853,7 @@ article.tile:hover { transform: none; box-shadow: none; }
   .rotator > span:first-child { opacity: 1; translate: 0 0; }
   .marquee { overflow-x: auto; }
 }
+
+/* Zielgröße mind. 24 px (WCAG 2.5.8): Desktop-Navigation und Kontaktlinks im Datenschutz */
+.desktop-nav a { display: inline-block; padding-block: 3px; }
+.legal_page address a { display: inline-block; min-height: 24px; line-height: 24px; }
