@@ -318,7 +318,7 @@
     ).forEach(text => path.append(el("li", "", text)));
     panel.append(mark, heading, number, path);
     if (result.bestaetigung) {
-      panel.append(el("p", "form-success-note", "Eine Bestätigung mit der Vorgangsnummer ist an Ihre E-Mail-Adresse unterwegs."));
+      panel.append(el("p", "form-success-note", "Sie erhalten in der Regel innerhalb weniger Minuten eine Bestätigung mit dieser Vorgangsnummer. Falls nicht, sehen Sie bitte im Spam-Ordner nach."));
     }
     if (waNumber) {
       const wa = el("a", "button wa");

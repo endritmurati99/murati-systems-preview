@@ -24,6 +24,6 @@ case "$answer" in
   *) echo "Aborted, nothing deployed."; exit 1 ;;
 esac
 
-sudo rsync -a --delete dist/ /srv/murati-website/site/
+sudo rsync -rt --delete --chown=root:root --chmod=D755,F644 dist/ /srv/murati-website/site/
 echo "Deployed. Restart Caddy if it needs to pick up moved/removed files:"
 echo "  cd /srv/murati-website && docker compose up -d --force-recreate caddy"

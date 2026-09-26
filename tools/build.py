@@ -181,7 +181,8 @@ def build_assets(out_dir: Path) -> dict[str, str]:
     dst_assets = out_dir / "assets"
     if dst_assets.exists():
         shutil.rmtree(dst_assets)
-    shutil.copytree(src_assets, dst_assets)
+    # Legacy files of the old design are not part of the release (deploy/README.md).
+    shutil.copytree(src_assets, dst_assets, ignore=shutil.ignore_patterns("site.css", "site.js", "tokens.css"))
 
     hashes: dict[str, str] = {}
     for name in ASSET_FILES:
