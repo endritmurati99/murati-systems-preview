@@ -129,7 +129,7 @@ p { margin-bottom: 20px; }
 .use-grid p { margin: 0; color: var(--muted); }
 .site-footer { padding-block: 55px 25px; border-top: 1px solid var(--line); background: var(--bg); }
 .footer-inner { display: grid; grid-template-columns: 1fr 1.25fr; gap: 42px; color: var(--muted); font-size: 13px; }
-.footer-brand { color: var(--text); font-size: 21px; font-weight: 650; text-decoration: none; letter-spacing: -.035em; }
+.footer-brand { display: inline-flex; align-items: center; min-height: 44px; color: var(--text); font-size: 21px; font-weight: 650; text-decoration: none; letter-spacing: -.035em; }
 .footer-inner p { max-width: 310px; margin: 10px 0 0; }
 .footer-inner nav { display: flex; flex-wrap: wrap; gap: 12px 24px; align-content: start; justify-content: flex-start; }
 .footer-inner nav a, .cookie-settings { min-height: 44px; display: inline-flex; align-items: center; color: var(--muted); text-decoration: none; padding-block: 10px; }
