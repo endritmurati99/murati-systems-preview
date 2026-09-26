@@ -5,11 +5,12 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path(__file__).resolve().parents[1]
 CORE_PAGES = (
     "index.html",
     "leistungen.html",
@@ -23,7 +24,11 @@ CORE_PAGES = (
     "website-handwerk-dortmund.html",
     "website-praxis-dortmund.html",
     "website-dienstleister-dortmund.html",
+    "danke.html",
+    "404.html",
 )
+# Pages that are intentionally noindex on the live site (not reachable via nav/sitemap as content pages).
+NOINDEX_ALLOWED = {"danke.html", "404.html"}
 REQUIRED_PRICES = ("790 €", "1.490 €", "690 €", "2.500 €", "49 €", "79 €")
 EXTERNAL = re.compile(r"^(?:https?:)?//", re.I)
 
@@ -103,7 +108,7 @@ def main() -> int:
         text = page.read_text(encoding="utf-8")
         parser = PageParser()
         parser.feed(text)
-        if "noindex" in text and page.parent == ROOT:
+        if "noindex" in text and page.parent == ROOT and page.name not in NOINDEX_ALLOWED:
             errors.append(f"{page.relative_to(ROOT)}: live page must not be noindex")
         if parser.h1_count != 1:
             errors.append(f"{page.relative_to(ROOT)}: expected one h1, got {parser.h1_count}")
